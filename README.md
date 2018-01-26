@@ -1,5 +1,5 @@
-# Vant-demo
-Vant 示例页面汇总。
+# demo
+demo 示例页面汇总。
 
 
 ## 示例

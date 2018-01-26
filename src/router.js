@@ -1,19 +1,24 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-const User = r => require.ensure([], () => r(require('./view/user')), 'user');
-const Cart = r => require.ensure([], () => r(require('./view/cart')), 'cart');
-const Goods = r => require.ensure([], () => r(require('./view/goods')), 'goods');
-const Home = r => require.ensure([], () => r(require('./view/home')), 'home');
+import User from '@/view/user/index';
+import Cart from '@/view/cart/index';
+import Goods from '@/view/goods/index';
+import Home from '@/view/home/sss';
 
 Vue.use(Router);
 
 const routes = [
   {
-    path: '*',
-    redirect: '/user'
+    path: '/',
+    name: 'home',
+    component: Home,
+    meta: {
+      title: '首页'
+    }
   },
   {
+    path: '/user',
     name: 'user',
     component: User,
     meta: {
@@ -21,6 +26,7 @@ const routes = [
     }
   },
   {
+    path: '/cart',
     name: 'cart',
     component: Cart,
     meta: {
@@ -28,17 +34,11 @@ const routes = [
     }
   },
   {
+    path: '/goods',
     name: 'goods',
     component: Goods,
     meta: {
       title: '商品详情'
-    }
-  },
-  {
-    name: 'home',
-    component: Home,
-    meta: {
-      title: '首页'
     }
   }
 ];

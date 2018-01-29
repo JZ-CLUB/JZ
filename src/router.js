@@ -1,11 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+
 import User from '@/view/user/index';
 import Cart from '@/view/cart/index';
 import Goods from '@/view/goods/index';
-import Home from '@/view/home/sss';
-import Register from '@/view/register/index';
+import Home from '@/view/home/home';
+import ActivityGoods from '@/view/activityGoods/index';
+
 Vue.use(Router);
+
 const routes = [
   {
     path: '/',
@@ -40,11 +43,18 @@ const routes = [
     }
   },
   {
-    path: '/register',
-    name: 'register',
-    component: Register,
+    path: '/activityGoods',
+    name: 'activityGoods',
+    component: ActivityGoods,
     meta: {
-      title: '注册'
+      title: '活动详情'
+    }
+  },
+  {
+    name: 'home',
+    component: Home,
+    meta: {
+      title: '首页'
     }
   }
 ];

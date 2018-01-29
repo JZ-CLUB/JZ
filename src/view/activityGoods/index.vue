@@ -32,8 +32,8 @@
     </van-cell-group>
 
     <van-goods-action>
-      <van-goods-action-big-btn primary>
-        立即购买
+      <van-goods-action-big-btn primary @click="showShu">
+        我要购票
       </van-goods-action-big-btn>
     </van-goods-action>
 
@@ -53,14 +53,14 @@
       @add-cart="handleAddCartClicked"
     >
       <!-- 自定义 sku header -->
-      <template slot="sku-header">
+      <template slot="sku-header" slot-scope="props">
         <div class="van-sku-header van-hairline--bottom">
           <div class="van-sku-header__img-wrap">
-            <img class="van-sku__goods-img jing" :src="goodsImg" >
+            <img class="van-sku__goods-img" :src="goodsImg" >
           </div>
           <div class="van-sku-header__goods-info">
             <div class="van-sku__goods-name">{{ goods.title }}</div>
-            <span class="van-sku__close-icon" @click="skuEventBus.$emit('sku:close')" />
+            <span class="van-sku__close-icon" @click="props.skuEventBus.$emit('sku:close')" />
           </div>
         </div>
       </template>
@@ -126,7 +126,7 @@
             'https://img.yzcdn.cn/public_files/2017/10/24/1791ba14088f9c2be8c610d0a6cc0f93.jpeg'
           ]
         },
-        showCustomAction: true,
+        showCustomAction: false,
         sku: {
           // 所有sku规格类目与其值的从属关系，比如商品有颜色和尺码两大类规格，颜色下面又有红色和蓝色两个规格值。
           // 可以理解为一个商品可以有多个规格类目，一个规格类目下可以有多个规格值。
@@ -238,8 +238,10 @@
     methods: {
       formatPrice() {
         return '¥' + (this.goods.price / 100).toFixed(2);
+      },
+      showShu() {
+        return this.showCustomAction= true;
       }
-
     }
   };
 </script>

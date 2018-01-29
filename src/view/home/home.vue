@@ -1,5 +1,5 @@
 <template>
-  <div class="goods">
+  <div class="goodsList">
     <van-search placeholder="请输入商品名称"/>
     <van-swipe :autoplay="3000">
       <van-swipe-item v-for="(image, index) in imageList" :key="index">

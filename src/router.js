@@ -4,6 +4,8 @@ import Router from 'vue-router';
 import User from '@/view/user/index';//demo
 import Cart from '@/view/cart/index';//demo
 import Goods from '@/view/goods/index';//demo
+import Register from '@/view/register/index';//demo
+import MyInfo from '@/view/myInfo/index';//demo
 
 import Home from '@/view/home/home';//活动列表
 import ActivityGoods from '@/view/activityGoods/index';//活动详情
@@ -33,6 +35,23 @@ const routes = [
       title: '会员中心'
     }
   },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register,
+    meta: {
+      title: '注册'
+    }
+  },
+  {
+    path: '/myInfo',
+    name: 'myInfo',
+    component: MyInfo,
+    meta: {
+      title: '我的信息'
+    }
+  },
+
   {
     path: '/cart',
     name: 'cart',

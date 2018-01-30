@@ -48,7 +48,7 @@ const routes = [
     name: 'myInfo',
     component: MyInfo,
     meta: {
-      title: '个人信息'
+      title: '我的信息'
     }
   },
 

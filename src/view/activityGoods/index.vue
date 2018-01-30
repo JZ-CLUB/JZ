@@ -20,7 +20,7 @@
     <van-cell-group class="goods-cell-group">
       <van-cell value="进入店铺" icon="shop" is-link>
         <template slot="title">
-          <span class="van-cell-text">有赞的店</span>
+          <span class="van-cell-text">JZ官方商店</span>
           <van-tag type="danger">官方</van-tag>
         </template>
       </van-cell>
@@ -50,16 +50,16 @@
       :reset-stepper-on-hide="true"
       :initial-sku="initialSku"
       @buy-clicked="handleBuyClicked"
-      @add-cart="handleAddCartClicked"
     >
       <!-- 自定义 sku header -->
       <template slot="sku-header" slot-scope="props">
         <div class="van-sku-header van-hairline--bottom">
-          <div class="van-sku-header__img-wrap">
-            <img class="van-sku__goods-img" :src="goodsImg" >
+          <div class="van-sku-header__img-wrap" v-show="imgShow">
+            <img class="van-sku__goods-img" :src="goods_con.Img">
           </div>
           <div class="van-sku-header__goods-info">
             <div class="van-sku__goods-name">{{ goods.title }}</div>
+            <div class="van-sku__goods-price"><span class="van-sku__price-symbol">￥</span><span class="van-sku__price-num">{{ price }}</span></div>
             <span class="van-sku__close-icon" @click="props.skuEventBus.$emit('sku:close')" />
           </div>
         </div>
@@ -116,13 +116,26 @@
 
     data() {
       return {
+        quota: 0,
+        goodsId: 123,
+        quotaUsed: 0,
+        imgShow: false,
+        price: 100,
+        initialSku: {
+          price: '1.00', // 默认价格（单位元）
+          stock_num: 227, // 商品总库存
+          collection_id: 2270, // 无规格商品 skuId 取 collection_id，否则取所选 sku 组合对应的 id
+          none_sku: false, // 是否无规格商品
+          messages: [
+          ],
+          hide_stock: true // 是否隐藏剩余库存
+        },
         goods: {
           title: '美国伽力果（约680g/3个）',
           price: 2680,
           express: '免运费',
           remain: 19,
           thumb: [
-            'https://img.yzcdn.cn/public_files/2017/10/24/e5a5a0s2309a41f9f5def56684808d9ae.jpeg',
             'https://img.yzcdn.cn/public_files/2017/10/24/1791ba14088f9c2be8c610d0a6cc0f93.jpeg'
           ]
         },
@@ -156,25 +169,6 @@
                 {
                   id: '4',
                   name: '2018年01月10日',
-                }
-              ],
-              k_s: 's2'
-              // skuKeyStr：sku 组合列表（下方 list）中当前类目对应的 key 值，value 值会是从属于当前类目的一个规格值 id
-            },
-            {
-              k: '位置区域', // skuKeyName：规格类目名称
-              v: [
-                {
-                  id: '5', // skuValueId：规格值 id
-                  name: '前排', // skuValueName：规格值名
-                },
-                {
-                  id: '6',
-                  name: '中排',
-                },
-                {
-                  id: '7',
-                  name: '后排',
                 }
               ],
               k_s: 's2'
@@ -227,7 +221,8 @@
 
         goods_con: {
           // 商品标题
-          title: '测试商品'
+          title: '测试商品',
+          Img: 'https://img.yzcdn.cn/1.jpg'
         },
 
 
@@ -241,6 +236,9 @@
       },
       showShu() {
         return this.showCustomAction= true;
+      },
+      handleBuyClicked(e){
+        console.log(e)
       }
     }
   };
@@ -278,6 +276,11 @@
       .van-cell__value {
         color: #999;
       }
+    }
+  }
+  .van-sku-row{
+    &__title {
+      font-size: 12px;
     }
   }
 </style>

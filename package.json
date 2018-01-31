@@ -14,7 +14,10 @@
     "vant": "^0.12.2",
     "vant-css": "^0.12.2",
     "vue": "^2.5.13",
-    "vue-router": "^3.0.0"
+    "vue-router": "^3.0.0",
+    "vuex": "^3.0.0",
+    "axios": "^0.17.1",
+    "fastclick": "^1.0.6"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.4",

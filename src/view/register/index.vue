@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { Row, Col, Icon, Cell, CellGroup, Field, Button} from 'vant';
+import { Row, Col, Icon, Cell, CellGroup, Field, Button, Toast } from 'vant';
 const TIME_COUNT = 60;
 export default {
   components: {
@@ -43,7 +43,8 @@ export default {
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup,
     [Field.name]: Field,
-    [Button.name]: Button
+    [Button.name]: Button,
+    [Toast.name]: Toast
   },
   data(){
       return {
@@ -62,9 +63,9 @@ export default {
       getCode(formData){
         var reg=11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
         if(this.phoneNum=='' || this.phoneNum== undefined){
-          alert("请输入手机号码");
+          Toast("请输入手机号码");
         }else if(!reg.test(this.phoneNum)){
-          alert("手机格式不正确");
+          Toast("手机格式不正确");
         }else{
           if (!this.timer) {
             this.count = TIME_COUNT;
@@ -84,12 +85,12 @@ export default {
       registerClick(){
         var reg=11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
         if(this.phoneNum == "" || this.phoneNum == undefined){
-          alert("请填写手机号！")
+          Toast("请填写手机号！")
         }else if(!reg.test(this.phoneNum)){
-          alert("手机格式不正确");
+          Toast("手机格式不正确");
         }else{
           if(this.yzCode.length != 6){
-              alert("请输入验证码！");
+              Toast("请输入验证码！");
           }
         }
       }

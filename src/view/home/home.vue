@@ -10,32 +10,12 @@
       <img src="../../images/go.png" alt="">
     </div>
     <van-row class="cardBox" gutter="10">
-      <van-col span="12">
-        <img class="cardImg" src="../../images/cardImg.jpg" alt="">
-        <p class="cardText">失眠 The Terry Hsieh
-          Collective </p>
+      <van-col span="12" v-for="(item,index) in activityList" :key="index">
+        <div @click="goodDetail(item.goodsId)">
+          <img class="cardImg" :src=item.goodsImage alt="">
+          <p class="cardText">{{item.goodsName}}</p>
+        </div>
       </van-col>
-      <van-col span="12">
-        <img class="cardImg" src="../../images/cardImg.jpg" alt="">
-        <p class="cardText">失眠 The Terry Hsieh
-          Collective </p>
-      </van-col>
-      <van-col span="12">
-        <img class="cardImg" src="../../images/cardImg.jpg" alt="">
-        <p class="cardText">失眠 The Terry Hsieh
-          Collective </p>
-      </van-col>
-      <van-col span="12">
-        <img class="cardImg" src="../../images/cardImg.jpg" alt="">
-        <p class="cardText">失眠 The Terry Hsieh
-          Collective </p>
-      </van-col>
-      <van-col span="12">
-        <img class="cardImg" src="../../images/cardImg.jpg" alt="">
-        <p class="cardText">失眠 The Terry Hsieh
-          Collective </p>
-      </van-col>
-
     </van-row>
   </div>
 </template>
@@ -67,7 +47,9 @@
           'https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg',
           'https://img.yzcdn.cn/public_files/2017/09/05/c0dab461920687911536621b345a0bc9.jpg',
           'https://img.yzcdn.cn/public_files/2017/09/05/4e3ea0898b1c2c416eec8c11c5360833.jpg',
-        ]
+        ],
+        activityList: [],
+        ssdd:'111'
       };
     },
   created () {
@@ -75,10 +57,12 @@
     vm.send()
   },
     methods: {
-      send: function () {
+      send () {
+        let that=this
+        Toast.loading({ mask: true,duration:0 });
         let data={
-          searchType:'gcIdSearch',
-          keyword:'gcid',
+          searchType:'keywordSearch',
+          keyword:'',
           pageNo:'',
           brandId:'',
           areaId:'',
@@ -88,16 +72,29 @@
           pageField:'',
           sortSize:''
         }
-        // Ajax.get('/static/test.json')
-        // Ajax.post('api/app/product/goodsBody',{goodsId:3299,storeId:175})
+        // Ajax.get('/static/activityList.json')
         Ajax.post('target/goods/api/goodslist',data)
         .then(function (response) {
-          // console.log(response);
+          let res=response.data;
+          if(res.data.length!==0){
+            that.activityList = res.data
+            Toast.clear()
+          }else{
+            Toast(res.msg)
+          }
         })
         .catch(function (error) {
-          // console.log(error);
+          console.log(error)
+          Toast('加载失败error')
         });
+      },
+      goodDetail:function (id) {
+        let that=this
+        console.log(id)
       }
+    },
+    mounted: function () {
+      console.group('mounted 挂载结束状态===============》');
     }
   };
 </script>

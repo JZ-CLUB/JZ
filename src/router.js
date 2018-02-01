@@ -11,7 +11,7 @@ import Home from '@/view/home/home';//活动列表
 import ActivityGoods from '@/view/activityGoods/index';//活动详情
 import MemberInfo  from '@/view/memberInfo/memberInfo';//个人信息
 import MyDot  from '@/view/myDot/myDot';//我的爵士豆
-import ToPay  from '@/view/toPay/toPay';//去支付
+import ToPay  from '@/view/ToPay/toPay';//去支付
 import Address  from '@/view/address/index';//收货地址
 import AddressEdit  from '@/view/address/addressEdit';//地址编辑
 import BuySuccessful  from '@/view/buySuccessful/buySuccessful';//购票成功

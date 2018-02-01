@@ -4,7 +4,7 @@ var path = require('path')
 module.exports = {
   build: {
     env: require('./prod.env'),
-    index: path.resolve(__dirname, '../index.html'),
+    index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: '',
     assetsPublicPath: '/',
@@ -23,19 +23,19 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 8080,
+    port: 3000,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {
-        target: 'http://ffp.airchina.com.cn/', // target host
+      '/target': {
+        target: 'http://15.146.38.175:8000/hpeshop-front', // target host
         secure: false,
         changeOrigin: true,               // needed for virtual hosted sites
         ws: true,                         // proxy websockets
         ignorePath: false,
         pathRewrite: {
-          '^/api': '/'
+          '^/target': '/'
           //这里理解成用‘/api’代替target里面的地址，
           // 后面组件中我们掉接口时直接用api代替 比如我要调
           // 用'http://10.10.99.67:8651/user/add'，直接写‘/api/user/add’即可

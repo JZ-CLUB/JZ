@@ -1,9 +1,18 @@
+import FastClick from 'fastclick'
 import './common/rem';
 import Vue from 'vue';
-import axios from 'axios';
 import App from './App.vue';
 import { router } from './router';
-window.Ajax = axios;
+import Vuex from 'vuex'
+import Ajax from './Ajax'
+window.Ajax = Ajax
+Vue.config.productionTip = false
+FastClick.attach(document.body)
+
+Vue.use(Vuex)
+import storeObject from './store/index'
+var store = new Vuex.Store(storeObject)
+
 import './common/reset.css';
 new Vue({
   router,

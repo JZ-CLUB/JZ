@@ -76,8 +76,21 @@
   },
     methods: {
       send: function () {
+        let data={
+          searchType:'gcIdSearch',
+          keyword:'gcid',
+          pageNo:'',
+          brandId:'',
+          areaId:'',
+          specFilter:'',
+          sortField:'',
+          sortOrder:'',
+          pageField:'',
+          sortSize:''
+        }
         // Ajax.get('/static/test.json')
-        Ajax.get('api/app/inmail/getInmailNum?id=1')
+        // Ajax.post('api/app/product/goodsBody',{goodsId:3299,storeId:175})
+        Ajax.post('target/goods/api/goodslist',data)
         .then(function (response) {
           // console.log(response);
         })

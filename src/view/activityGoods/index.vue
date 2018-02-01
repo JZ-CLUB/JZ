@@ -1,35 +1,7 @@
 <template>
   <div class="goods">
-    <van-swipe class="goods-swipe" :autoplay="3000">
-      <van-swipe-item v-for="thumb in goods.thumb" :key="thumb">
-        <img :src="thumb" >
-      </van-swipe-item>
-    </van-swipe>
 
-    <van-cell-group>
-      <van-cell>
-        <div class="goods-title">{{ goods.title }}</div>
-        <div class="goods-price">{{ formatPrice(goods.price) }}</div>
-      </van-cell>
-      <van-cell class="goods-express">
-        <van-col span="10">运费：{{ goods.express }}</van-col>
-        <van-col span="14">剩余：{{ goods.remain }}</van-col>
-      </van-cell>
-    </van-cell-group>
-
-    <van-cell-group class="goods-cell-group">
-      <van-cell value="进入店铺" icon="shop" is-link>
-        <template slot="title">
-          <span class="van-cell-text">JZ官方商店</span>
-          <van-tag type="danger">官方</van-tag>
-        </template>
-      </van-cell>
-      <van-cell title="线下门店" icon="location" is-link />
-    </van-cell-group>
-
-    <van-cell-group class="goods-cell-group">
-      <van-cell title="查看商品详情" is-link />
-    </van-cell-group>
+ 123
 
     <van-goods-action>
       <van-goods-action-big-btn primary @click="showShu">
@@ -67,11 +39,11 @@
       <!-- 隐藏 sku messages -->
       <template slot="sku-messages"></template>
       <!-- 自定义 sku actions -->
-      <template slot="sku-actions">
+      <template slot="sku-actions" slot-scope="props">
         <div class="van-sku-actions">
           <!--<van-button bottom-action @click="handlePointClicked">积分兑换</van-button>-->
           <!-- 直接触发 sku 内部事件，通过内部事件执行 handleBuyClicked 回调 -->
-          <van-button type="primary" bottom-action @click="props.skuEventBus.$emit('sku:buy')">立即购买</van-button>
+          <van-button type="primary" bottom-action  @click="props.skuEventBus.$emit('sku:buy')">立即购买</van-button>
         </div>
       </template>
     </van-sku>
@@ -126,8 +98,6 @@
           stock_num: 227, // 商品总库存
           collection_id: 2270, // 无规格商品 skuId 取 collection_id，否则取所选 sku 组合对应的 id
           none_sku: false, // 是否无规格商品
-          messages: [
-          ],
           hide_stock: true // 是否隐藏剩余库存
         },
         goods: {

@@ -67,7 +67,7 @@
       <!-- 隐藏 sku messages -->
       <template slot="sku-messages"></template>
       <!-- 自定义 sku actions -->
-      <template slot="sku-actions" slot-scope="props">
+      <template slot="sku-actions">
         <div class="van-sku-actions">
           <!--<van-button bottom-action @click="handlePointClicked">积分兑换</van-button>-->
           <!-- 直接触发 sku 内部事件，通过内部事件执行 handleBuyClicked 回调 -->

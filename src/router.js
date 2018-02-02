@@ -15,6 +15,9 @@ import ToPay  from '@/view/ToPay/toPay';//去支付
 import Address  from '@/view/address/index';//收货地址
 import AddressEdit  from '@/view/address/addressEdit';//地址编辑
 import BuySuccessful  from '@/view/buySuccessful/buySuccessful';//购票成功
+import MyOrder  from '@/view/MyOrder/myOrder';//我的订单列表
+import OrderDetail  from '@/view/MyOrder/orderDetail';//订单详情
+import Calendar  from '@/view/ShowCalendar/calendar';//演出日历
 
 Vue.use(Router);
 
@@ -77,6 +80,7 @@ const routes = [
     }
   },
   {
+    path: '/memberInfo',
     name: 'memberInfo',
     component: MemberInfo,
     meta: {
@@ -84,6 +88,7 @@ const routes = [
     }
   },
   {
+    path: '/MyDot',
     name: 'myDot',
     component: MyDot,
     meta: {
@@ -91,6 +96,7 @@ const routes = [
     }
   },
   {
+    path: '/ToPay',
     name: 'toPay',
     component: ToPay,
     meta: {
@@ -98,6 +104,7 @@ const routes = [
     }
   },
   {
+    path: '/address',
     name: 'address',
     component: Address,
     meta: {
@@ -105,6 +112,7 @@ const routes = [
     }
   },
   {
+    path: '/address',
     name: 'addressEdit',
     component: AddressEdit,
     meta: {
@@ -112,10 +120,35 @@ const routes = [
     }
   },
   {
+    path: '/buySuccessful',
     name: 'buySuccessful',
     component: BuySuccessful,
     meta: {
       title: '购票成功'
+    }
+  },
+  {
+    path: '/MyOrder',
+    name: 'myOrder',
+    component: MyOrder,
+    meta: {
+      title: '我的活动'
+    }
+  },
+  {
+    path: '/MyOrder',
+    name: 'orderDetail',
+    component: OrderDetail,
+    meta: {
+      title: '活动票详情'
+    }
+  },
+  {
+    path: '/ShowCalendar',
+    name: 'calendar',
+    component: Calendar,
+    meta: {
+      title: '演出日历'
     }
   }
 ];

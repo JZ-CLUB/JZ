@@ -72,7 +72,7 @@ const routes = [
     }
   },
   {
-    path: '/activityGoods',
+    path: '/activityGoods/:id',
     name: 'activityGoods',
     component: ActivityGoods,
     meta: {

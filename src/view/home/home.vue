@@ -49,7 +49,7 @@
         imageList: [],
         activityList: [],
         disabled: false,
-        pageNo:1,
+        pageNo:0,
         sendData:{},
         showFlag: true,
         search:''
@@ -59,7 +59,6 @@
       let vm = this
       Toast.loading({ mask: true,duration:0 });
       vm.recommend()
-      vm.send()
     },
     computed: {
       // 计算属性的 getter
@@ -97,13 +96,12 @@
     methods: {
       recommend() {
         let that=this
-        // Ajax.get('/static/recoment.json')
-        Ajax.post('target/recommendGoodsApi/api/Recommedgoodslist',{goodsflagsname:'recommend'})
+        Ajax.get('/static/recoment.json')
+        // Ajax.post('target/recommendGoodsApi/api/Recommedgoodslist',{goodsflagsname:'recommend'})
           .then(function (response) {
             let res=response.data;
             if(res.data.length!==0){
               that.imageList = res.data
-              Toast.clear()
             }else{
               Toast(res.msg)
             }
@@ -113,24 +111,6 @@
             Toast('加载失败error')
           });
       },
-      send () {
-        let that=this
-        // Ajax.get('/static/activityList.json')
-        Ajax.post('target/goods/api/goodslist',this.sendData)
-        .then(function (response) {
-          let res=response.data;
-          if(res.data.length!==0){
-            that.activityList = res.data
-            Toast.clear()
-          }else{
-            Toast(res.msg)
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-          Toast('加载失败error')
-        });
-      },
       goodDetail:function (id) {
         let that=this
         console.log(id)
@@ -138,17 +118,23 @@
       loadMore() {
         let that = this
         that.pageNo ++
-        that.disabled = false;
-        // Ajax.get('/static/activityList.json')
-        Ajax.post('target/goods/api/goodslist',that.setData)
+        that.disabled = true;
+        Ajax.get('/static/activityList.json')
+        // Ajax.post('target/goods/api/goodslist',that.setData)
           .then(function (response) {
             let res=response.data
-            res.data.map(function(x){
-              that.activityList.push(x)
-            })
+            if(res.data.length!==0){
+              res.data.map(function(x){
+                that.activityList.push(x)
+              })
+              Toast.clear()
+            }else{
+              Toast(res.msg)
+            }
             that.disabled = false;
           })
           .catch(function (error) {
+            Toast('加载失败error')
           });
       }
     },

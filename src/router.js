@@ -112,7 +112,7 @@ const routes = [
     }
   },
   {
-    path: '/address',
+    path: '',
     name: 'addressEdit',
     component: AddressEdit,
     meta: {
@@ -136,7 +136,7 @@ const routes = [
     }
   },
   {
-    path: '/MyOrder',
+    path: '',
     name: 'orderDetail',
     component: OrderDetail,
     meta: {

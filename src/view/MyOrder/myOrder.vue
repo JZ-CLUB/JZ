@@ -1,43 +1,51 @@
 <template>
-  <div class="orderList">
-    <van-tabs :active="active" sticky  @click="handleTabClick">
-      <van-tab v-for="(item,index) in allOrder"
-               :title="(index===0?'全部':(index===1?'待付款':'已出票'))"
-               :key="index">
-        <div class="tttt"
-             v-waterfall-lower="aaa"
-             waterfall-disabled="disabled"
-             waterfall-offset="10">
-            <van-card v-for="(it,int) in item"
-              :title="it.goodsName"
-              :desc="it.specInfo"
-              :thumb="imageURL"
-            >
-              <div slot="footer">
-                <van-button size="mini" @click="$router.push({ name: 'activityGoods', params: { id:it.goodsId }})">按钮</van-button>
-                <van-button size="mini">按钮</van-button>
-              </div>
-            </van-card>
+  <div class="user">
+    <van-row class="user-links">
+      <van-col span="8" v-for="(item,index) in tabList">
+        <div @click="tabFun(item.list,index)" :class="{cur:activity===index}">
+          <van-icon :name="item.icon" />
+          {{item.name}}
         </div>
-
-      </van-tab>
-    </van-tabs>
+      </van-col>
+      <!--<van-col span="8">
+        <div @click="tabFun(allList)">
+          <van-icon name="pending-payment" />
+          全部
+        </div>
+      </van-col>
+      <van-col span="8">
+        <div @click="tabFun(unPayList)">
+          <van-icon name="pending-orders" />
+          待付款
+        </div>
+      </van-col>
+      <van-col span="8">
+        <div @click="tabFun(payedList)">
+          <van-icon name="pending-deliver" />
+          已出票
+        </div>
+      </van-col>-->
+    </van-row>
+    <scroller :on-infinite="infinite" ref="my_scroller">
+      <div style="height: 58px;"></div>
+      <van-card v-for="(it, index) in getItemList"
+                :key="index"
+                :title="it.goodsName"
+                :desc="it.specInfo"
+                :thumb="imageURL"
+      >
+        <div slot="footer">
+          <van-button size="mini" @click="$router.push({ name: 'activityGoods', params: { id:it.goodsId }})">按钮</van-button>
+          <van-button size="mini">按钮</van-button>
+        </div>
+      </van-card>
+    </scroller>
   </div>
 </template>
-
 <script>
-  import 'vant/lib/vant-css/icon-local.css';
-  import Vue from 'vue';
-  import VueLazyLoad from 'vue-lazyload'
-  Vue.use(VueLazyLoad,{
-    error:'',
-    loading:''
-  })
-
   import {
     Tab, Tabs, Card, Toast, Button, Row, Col, Icon, Waterfall
   } from 'vant';
-  Vue.use(Waterfall);
   export default {
     components: {
       [Tabs.name]: Tabs,
@@ -49,172 +57,171 @@
       [Col.name]: Col,
       [Icon.name]: Icon
     },
-    data() {
+    data () {
       return {
-        curIndex:0,
-        allOrder:[],
-        orderList:[],
-        unPayOrder:[],
-        payedOrder:[],
-        active: 1,
+        bottom: [],
+        flag:true,
         imageURL:'https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg',
-        title:'标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题',
-        desc:'描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述'
-      };
-    },
-    created () {
-      let vm = this
-      Toast.loading({ mask: true,duration:0 });
-      vm.orderListFun()
-      vm.unPayOrderFun()
-      vm.payedOrderFun()
-    },
-    computed: {
-
-    },
-    methods: {
-      aaa() {
-        console.log('aaa')
-      },
-      orderListFun() {
-        let that=this
-        let data={
-          memberId:'',
-          status:'0',
-          pageNo:'',
-          pageSize:''
-        }
-        Ajax.get('/static/test.json')
-        // Ajax.post('target/orderapi/orderlist',data)
-          .then(function (response) {
-            let res=response.data;
-            if(res.data.length!==0){
-              res.data.map(function (item,index) {
-                that.orderList = that.orderList.concat(item.orderGoodsList[0])//全部
-              })
-              that.allOrder.push(that.orderList)
-              Toast.clear()
-            }else{
-              Toast(res.msg)
-            }
-          })
-          .catch(function (error) {
-            console.log(error)
-            Toast('加载失败error')
-          });
-      },
-      unPayOrderFun() {
-        let that=this
-        let data={
-          memberId:'',
-          status:'1',
-          pageNo:'',
-          pageSize:''
-        }
-        Ajax.get('/static/unPay.json')
-        // Ajax.post('target/orderapi/orderlist',data)
-          .then(function (response) {
-            let res=response.data;
-            if(res.data.length!==0){
-              res.data.map(function (item,index) {
-                that.unPayOrder = that.unPayOrder.concat(item.orderGoodsList[0])//待付款
-              })
-              that.allOrder.push(that.unPayOrder)
-              Toast.clear()
-            }else{
-              Toast(res.msg)
-            }
-          })
-          .catch(function (error) {
-            console.log(error)
-            Toast('加载失败error')
-          });
-      },
-      payedOrderFun() {
-        let that=this
-        let data={
-          memberId:'',
-          status:'1',
-          pageNo:'',
-          pageSize:''
-        }
-        Ajax.get('/static/done.json')
-        // Ajax.post('target/orderapi/orderlist',data)
-          .then(function (response) {
-            let res=response.data;
-            if(res.data.length!==0){
-              res.data.map(function (item,index) {
-                that.payedOrder = that.payedOrder.concat(item.orderGoodsList[0])//已出票
-              })
-              that.allOrder.push(that.payedOrder)
-              Toast.clear()
-            }else{
-              Toast(res.msg)
-            }
-          })
-          .catch(function (error) {
-            console.log(error)
-            Toast('加载失败error')
-          });
-      },
-      handleTabClick(index) {
-        this.active=index
-        this.disabled=true
+        allList:[],
+        unPayList:[],
+        payedList:[],
+        tabList:[],
+        aaa:[{aa:this}],
+        activity:0
       }
     },
-  directives: {
-    WaterfallLower: Waterfall('lower')
-  },
-    mounted:function () {
-
+    created () {
+      Toast.loading({ mask: true,duration:0 });
+      let vm = this
+      vm.initList()
+    },
+    computed: {
+      getStateList(){
+        return this.$store.state.myOrder.stateList
+      },
+      getItemList(){
+        return this.$store.state.myOrder.items
+      }
+    },
+    mounted() {
+      this.bottom=0
+    },
+    methods: {
+      initList() {
+        let that=this
+        let url='/static/test.json'
+        let data={
+          memberId:'',
+          status:'',
+          pageNo:'',
+          pageSize:''
+        }
+        // Ajax.get(url)
+        Ajax.post('target/orderapi/orderlist',data)
+          .then(function (response) {
+            let res=response.data;
+            if(res.data.length!==0){
+              res.data.map(function (item,index) {
+                that.allList=that.allList.concat(item)
+                if(item.evaluationStatus===1){
+                  that.unPayList=that.unPayList.concat(item)
+                }else if(item.evaluationStatus===2){
+                  that.payedList=that.payedList.concat(item)
+                }
+                that.$store.commit('allOrder',that.allList)
+              })
+              that.tabList=[
+                {icon:'pending-payment',name:'全部',list:that.allList},
+                {icon:'pending-orders',name:'待付款',list:that.unPayList},
+                {icon:'pending-deliver',name:'已出票',list:that.payedList}
+              ]
+              Toast.clear()
+            }else{
+              Toast(res.msg)
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+            Toast('加载失败error')
+          });
+      },
+      tabFun(data,i) {
+        let that=this
+        that.activity=i
+        that.items=[]
+        that.bottom=10
+        that.$store.commit('allOrder',data)
+        that.$store.commit('itemShow',{data:that.$store.state.myOrder.stateList.slice(0,10),type:0})
+        // this.$refs.my_scroller.$el.childNodes[0].style='transform:translate3d(0px, 0px, 0px) scale(1)'
+      },
+      infinite(done) {
+        let that=this
+        if (that.bottom >= that.$store.state.myOrder.stateList.length) {
+          setTimeout(() => {
+            done(true)
+          }, 1500)
+          return;
+        }
+        setTimeout(() => {
+          console.log('start===='+that.bottom)
+          let start = that.bottom
+          that.$store.commit('itemShow',{data:that.$store.state.myOrder.stateList.slice(start,start+10),type:1})
+          that.bottom = that.bottom + 10;
+          setTimeout(() => {
+            done()
+          })
+        }, 1000)
+      }
     }
-  };
+  }
 </script>
-
 <style lang="less">
-  .orderList{
+  .plugin-name {
+    margin: 0;
+    padding-top: 60px;
+    text-align: center;
+    color: #666;
+    font-style: normal;
+    font-variant-ligatures: normal;
+    font-variant-caps: normal;
+    font-variant-numeric: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    font-size: 48px;
+    line-height: 48px;
+    margin-bottom: 10px;
+  }
+
+  .for-vue-js {
+    text-align: center;
+    color: #666;
+    margin-bottom: 40px;
+  }
+
+  .plugin-name, .for-vue-js {
+    font-family: Candara, Calibri, Segoe, Segoe UI, Optima, Arial, sans-serif;
+  }
+
+  .row {
+    display: block;
+    width: 100%;
+    height: 50px;
+    padding: 10px 0 10px 15px;
+    font-size: 16px;
+    line-height: 30px;
+    color: #444;
+    background-color: #fff;
+  }
+
+  .grey-bg {
+    background-color: #eee;
+  }
+
+  .arrow-right {
+    width: 8px;
+    height: 16px;
+    float: right;
+    margin-top: 7px;
+    margin-right: 15px;
+  }
+  .github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}
+
+  .user {
     &-links {
-      padding: 15px 0;
+      position: relative;
+      z-index: 22222;
+      padding: 5px 0;
       font-size: 12px;
       text-align: center;
       background-color: #fff;
+
       .van-icon {
         display: block;
         font-size: 24px;
       }
-    }
-    .van-card__title {
-      max-height: 45px;
-      height: 45px;
-      line-height: 45px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-    }
-    .van-card__desc {
-      color: #666;
-      font-size: 12px;
-      max-height: 30px;
-      height: 30px;
-      line-height: 30px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-    .van-tab span:before{
-      font: normal normal normal 14px/1 vant-icon;
-      content: "\F03E";
-    }
-    .tabCon{
-      .tabItem{
-        display: none;
-      }
       .cur{
-        display: block;
+        color: #f40;
       }
-
     }
   }
 </style>

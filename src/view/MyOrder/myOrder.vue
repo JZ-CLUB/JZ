@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <van-row class="user-links">
-      <van-col span="8" v-for="(item,index) in tabList">
+      <van-col span="8" v-for="(item,index) in tabList" :key="index">
         <div @click="tabFun(item.list,index)" :class="{cur:activity===index}">
           <van-icon :name="item.icon" />
           {{item.name}}

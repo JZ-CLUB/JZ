@@ -13,7 +13,7 @@ import MemberInfo  from '@/view/memberInfo/memberInfo';//个人信息
 import MyDot  from '@/view/myDot/myDot';//我的爵士豆
 import ToPay  from '@/view/ToPay/toPay';//去支付
 import Address  from '@/view/address/index';//收货地址
-import AddressEdit  from '@/view/address/addressEdit';//地址编辑
+import AddressEdit  from '@/view/addressEdit/index';//地址编辑
 import BuySuccessful  from '@/view/buySuccessful/buySuccessful';//购票成功
 import MyOrder  from '@/view/MyOrder/myOrder';//我的订单列表
 import OrderDetail  from '@/view/MyOrder/orderDetail';//订单详情
@@ -112,7 +112,7 @@ const routes = [
     }
   },
   {
-    path: '',
+    path: '/addressEdit',
     name: 'addressEdit',
     component: AddressEdit,
     meta: {

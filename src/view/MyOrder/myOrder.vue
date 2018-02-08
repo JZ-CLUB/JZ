@@ -7,24 +7,6 @@
           {{item.name}}
         </div>
       </van-col>
-      <!--<van-col span="8">
-        <div @click="tabFun(allList)">
-          <van-icon name="pending-payment" />
-          全部
-        </div>
-      </van-col>
-      <van-col span="8">
-        <div @click="tabFun(unPayList)">
-          <van-icon name="pending-orders" />
-          待付款
-        </div>
-      </van-col>
-      <van-col span="8">
-        <div @click="tabFun(payedList)">
-          <van-icon name="pending-deliver" />
-          已出票
-        </div>
-      </van-col>-->
     </van-row>
     <scroller :on-infinite="infinite" ref="my_scroller">
       <div style="height: 58px;"></div>
@@ -66,7 +48,6 @@
         unPayList:[],
         payedList:[],
         tabList:[],
-        aaa:[{aa:this}],
         activity:0
       }
     },

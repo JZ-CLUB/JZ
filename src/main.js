@@ -9,6 +9,10 @@ window.Ajax = Ajax
 Vue.config.productionTip = false
 FastClick.attach(document.body)
 
+
+import VueScroller from 'vue-scroller'
+Vue.use(VueScroller)
+
 Vue.use(Vuex)
 import storeObject from './store/index'
 var store = new Vuex.Store(storeObject)

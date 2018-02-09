@@ -72,7 +72,7 @@ const routes = [
     }
   },
   {
-    path: '/activityGoods',
+    path: '/activityGoods/:id',
     name: 'activityGoods',
     component: ActivityGoods,
     meta: {
@@ -112,7 +112,7 @@ const routes = [
     }
   },
   {
-    path: '/address',
+    path: '',
     name: 'addressEdit',
     component: AddressEdit,
     meta: {
@@ -136,7 +136,7 @@ const routes = [
     }
   },
   {
-    path: '/MyOrder',
+    path: '',
     name: 'orderDetail',
     component: OrderDetail,
     meta: {

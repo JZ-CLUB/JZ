@@ -59,6 +59,26 @@ export default {
     [Icon.name]: Icon,
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup
+  },
+  created () {
+    let vm = this
+    vm.getMyInfo()
+  },
+  methods: {
+    getMyInfo: function () {
+      let data={
+        memberId:'111'
+      }
+      // Ajax.get('/static/test.json')
+      // Ajax.post('api/app/product/goodsBody',{goodsId:3299,storeId:175})
+      Ajax.post('target/memberapi/memberDetail',data)
+      .then(function (response) {
+        // console.log(response);
+      })
+      .catch(function (error) {
+        // console.log(error);
+      });
+    }
   }
 };
 </script>
@@ -123,4 +143,3 @@ export default {
     }
   }
 </style>
-

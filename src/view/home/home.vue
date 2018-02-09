@@ -1,22 +1,28 @@
 <template>
   <div class="goodsList">
-    <van-search placeholder="请输入商品名称"/>
-    <van-swipe :autoplay="3000">
-      <van-swipe-item v-for="(image, index) in imageList" :key="index">
-        <img v-lazy="image" />
-      </van-swipe-item>
-    </van-swipe>
-    <div class="goImg">
-      <img src="../../images/go.png" alt="">
-    </div>
-    <van-row class="cardBox" gutter="10">
-      <van-col span="12" v-for="(item,index) in activityList" :key="index">
-        <div @click="goodDetail(item.goodsId)">
-          <img class="cardImg" :src=item.goodsImage alt="">
-          <p class="cardText">{{item.goodsName}}</p>
+    <scroller :on-infinite="refresh" ref="my_scroller">
+      <van-search v-model='info' placeholder="请输入商品名称"/>
+
+      <van-swipe v-show="showFlag">
+        <div v-for="(image, index) in imageList" :key="index" @click="$router.push({ name: 'activityGoods', params: { id:image.goodsId }})">
+          <van-swipe-item>
+            <img v-lazy="image.goodsImage" />
+          </van-swipe-item>
         </div>
-      </van-col>
-    </van-row>
+      </van-swipe>
+      <div class="goImg" v-show="showFlag">
+        <img src="../../images/go.png" alt="">
+      </div>
+
+      <van-row class="cardBox">
+        <van-col span="12" v-for="(item,index) in searchData" :key="index">
+          <div @click="$router.push({ name: 'activityGoods', params: { id:item.goodsId }})">
+            <img class="cardImg" :src=item.goodsImage alt="">
+            <p class="cardText">{{item.goodsName}}</p>
+          </div>
+        </van-col>
+      </van-row>
+    </scroller>
   </div>
 </template>
 
@@ -28,9 +34,9 @@
     loading:''
   })
   import {
-    Search,Toast,Swipe,SwipeItem,Row, Col
+    Search,Toast,Swipe,SwipeItem,Row, Col, Waterfall
   } from 'vant';
-
+  Vue.use(Waterfall);
   export default {
     components: {
       [Search.name]: Search,
@@ -40,30 +46,15 @@
       [Row.name]: Row,
       [Col.name]: Col
     },
-
     data() {
       return {
-        imageList: [
-          'https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg',
-          'https://img.yzcdn.cn/public_files/2017/09/05/c0dab461920687911536621b345a0bc9.jpg',
-          'https://img.yzcdn.cn/public_files/2017/09/05/4e3ea0898b1c2c416eec8c11c5360833.jpg',
-        ],
+        imageList: [],
         activityList: [],
-        ssdd:'111'
-      };
-    },
-  created () {
-    let vm = this
-    vm.send()
-  },
-    methods: {
-      send () {
-        let that=this
-        Toast.loading({ mask: true,duration:0 });
-        let data={
+        disabled: false,
+        sendData:{
           searchType:'keywordSearch',
           keyword:'',
-          pageNo:'',
+          pageNo:0,
           brandId:'',
           areaId:'',
           specFilter:'',
@@ -71,30 +62,85 @@
           sortOrder:'',
           pageField:'',
           sortSize:''
-        }
-        // Ajax.get('/static/activityList.json')
-        Ajax.post('target/goods/api/goodslist',data)
-        .then(function (response) {
-          let res=response.data;
-          if(res.data.length!==0){
-            that.activityList = res.data
-            Toast.clear()
-          }else{
-            Toast(res.msg)
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-          Toast('加载失败error')
-        });
+        },
+        info:'',
+        flag:true
+      };
+    },
+    created () {
+      let vm = this
+      Toast.loading({ mask: true,duration:0 });
+      vm.recommend()
+    },
+    computed: {
+      showFlag:function () {
+        return this.info===''?true:false
       },
-      goodDetail:function (id) {
-        let that=this
-        console.log(id)
+      searchData: function() {
+        let search = this.info;
+        if (search) {
+          return this.activityList.filter(function(product) {
+            return Object.keys(product).some(function(key) {
+              return String(product[key]).toLowerCase().indexOf(search) > -1
+            })
+          })
+        }
+        return this.activityList;
       }
     },
-    mounted: function () {
-      console.group('mounted 挂载结束状态===============》');
+    methods: {
+      recommend() {
+        let that=this
+        Ajax.get('/static/recoment.json')
+        // Ajax.post('target/recommendGoodsApi/api/Recommedgoodslist',{goodsflagsname:'recommend'})
+          .then(function (response) {
+            let res=response.data;
+            if(res.data.length!==0){
+              that.imageList = res.data
+            }else{
+              Toast(res.msg)
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+            Toast('加载失败error')
+          });
+      },
+      refresh(done) {
+        let that=this
+        that.pageNo ++
+        if(!that.flag){
+          setTimeout(() => {
+            done(true)
+          }, 1500)
+          return;
+        }
+        if(that.flag){
+          Ajax.get('/static/activityList.json')
+          // Ajax.post('target/goods/api/goodslist',that.setData)
+            .then(function (response) {
+              let res=response.data;
+              if(res.data.length!==0){
+                res.data.map(function(x){
+                  that.activityList.push(x)
+                })
+                if(res.data.length<10){
+                  that.flag=false
+                }
+                setTimeout(() => {
+                  done()
+                }, 1500)
+                Toast.clear()
+              }else{
+                Toast(res.msg)
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+              Toast('加载失败error')
+            });
+        }
+      }
     }
   };
 </script>
@@ -106,6 +152,10 @@
   .searchBox{
     height: 1rem;
     padding: 0.2rem 0.24rem;
+  }
+  .van-search__input{
+    height: 18px;
+    line-height: 18px;
   }
   .van-swipe-item{
     height: 4.18rem;
@@ -122,6 +172,11 @@
     padding: 0 15px;
     .van-col-12{
       margin: 15px 0px 0 0;
+      .cardImg{
+        width: 3.4rem;
+        height: 1.9rem;
+        margin: 0 auto;
+      }
       .cardText{
         padding-top: 10px;
         line-height: 0.35rem;

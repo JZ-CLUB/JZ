@@ -1,26 +1,28 @@
 <template>
   <div class="goodsList">
-    <van-search  v-model="search" placeholder="请输入商品名称"/>
-    <van-swipe v-show="showFlag" :autoplay="3000">
-      <van-swipe-item v-for="(image, index) in imageList" :key="index">
-        <img v-lazy="image.goodsImage" />
-      </van-swipe-item>
-    </van-swipe>
-    <div class="goImg" v-show="showFlag">
-      <img src="../../images/go.png" alt="">
-    </div>
+    <scroller :on-infinite="refresh" ref="my_scroller">
+      <van-search v-model='info' placeholder="请输入商品名称"/>
 
-    <van-row class="cardBox"
-         v-waterfall-lower="loadMore"
-         waterfall-disabled="disabled"
-         waterfall-offset="10">
-      <van-col span="12" v-for="(item,index) in searchData" :key="index">
-        <div @click="goodDetail(item.goodsId)">
-          <img class="cardImg" :src=item.goodsImage alt="">
-          <p class="cardText">{{item.goodsName}}</p>
+      <van-swipe v-show="showFlag">
+        <div v-for="(image, index) in imageList" :key="index" @click="$router.push({ name: 'activityGoods', params: { id:image.goodsId }})">
+          <van-swipe-item>
+            <img v-lazy="image.goodsImage" />
+          </van-swipe-item>
         </div>
-      </van-col>
-    </van-row>
+      </van-swipe>
+      <div class="goImg" v-show="showFlag">
+        <img src="../../images/go.png" alt="">
+      </div>
+
+      <van-row class="cardBox">
+        <van-col span="12" v-for="(item,index) in searchData" :key="index">
+          <div @click="$router.push({ name: 'activityGoods', params: { id:item.goodsId }})">
+            <img class="cardImg" :src=item.goodsImage alt="">
+            <p class="cardText">{{item.goodsName}}</p>
+          </div>
+        </van-col>
+      </van-row>
+    </scroller>
   </div>
 </template>
 
@@ -49,10 +51,20 @@
         imageList: [],
         activityList: [],
         disabled: false,
-        pageNo:0,
-        sendData:{},
-        showFlag: true,
-        search:''
+        sendData:{
+          searchType:'keywordSearch',
+          keyword:'',
+          pageNo:0,
+          brandId:'',
+          areaId:'',
+          specFilter:'',
+          sortField:'',
+          sortOrder:'',
+          pageField:'',
+          sortSize:''
+        },
+        info:'',
+        flag:true
       };
     },
     created () {
@@ -61,34 +73,17 @@
       vm.recommend()
     },
     computed: {
-      // 计算属性的 getter
-      setData: function () {
-        // `this` 指向 vm 实例
-        this.sendData={
-          searchType:'keywordSearch',
-          keyword:this.message,
-          pageNo:this.pageNo,
-          brandId:'',
-          areaId:'',
-          specFilter:'',
-          sortField:'',
-          sortOrder:'',
-          pageField:'',
-          sortSize:''
-        }
-        return this.sendData
+      showFlag:function () {
+        return this.info===''?true:false
       },
       searchData: function() {
-        let search = this.search;
+        let search = this.info;
         if (search) {
-          this.showFlag=false
           return this.activityList.filter(function(product) {
             return Object.keys(product).some(function(key) {
               return String(product[key]).toLowerCase().indexOf(search) > -1
             })
           })
-        }else{
-          this.showFlag=true
         }
         return this.activityList;
       }
@@ -111,38 +106,41 @@
             Toast('加载失败error')
           });
       },
-      goodDetail:function (id) {
+      refresh(done) {
         let that=this
-        console.log(id)
-      },
-      loadMore() {
-        let that = this
         that.pageNo ++
-        that.disabled = true;
-        Ajax.get('/static/activityList.json')
-        // Ajax.post('target/goods/api/goodslist',that.setData)
-          .then(function (response) {
-            let res=response.data
-            if(res.data.length!==0){
-              res.data.map(function(x){
-                that.activityList.push(x)
-              })
-              Toast.clear()
-            }else{
-              Toast(res.msg)
-            }
-            that.disabled = false;
-          })
-          .catch(function (error) {
-            Toast('加载失败error')
-          });
+        if(!that.flag){
+          setTimeout(() => {
+            done(true)
+          }, 1500)
+          return;
+        }
+        if(that.flag){
+          Ajax.get('/static/activityList.json')
+          // Ajax.post('target/goods/api/goodslist',that.setData)
+            .then(function (response) {
+              let res=response.data;
+              if(res.data.length!==0){
+                res.data.map(function(x){
+                  that.activityList.push(x)
+                })
+                if(res.data.length<10){
+                  that.flag=false
+                }
+                setTimeout(() => {
+                  done()
+                }, 1500)
+                Toast.clear()
+              }else{
+                Toast(res.msg)
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+              Toast('加载失败error')
+            });
+        }
       }
-    },
-    directives: {
-      WaterfallLower: Waterfall('lower')
-    },
-    mounted: function () {
-      console.group('mounted 挂载结束状态===============》');
     }
   };
 </script>
@@ -154,6 +152,10 @@
   .searchBox{
     height: 1rem;
     padding: 0.2rem 0.24rem;
+  }
+  .van-search__input{
+    height: 18px;
+    line-height: 18px;
   }
   .van-swipe-item{
     height: 4.18rem;

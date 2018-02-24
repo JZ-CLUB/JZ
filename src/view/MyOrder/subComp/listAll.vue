@@ -1,62 +1,91 @@
 <template>
-  <div class="user">
-    <van-row class="user-links">
-      <van-col span="8" v-for="(item,index) in tabList" :key="index">
-        <div @click="tabFun(index,item.comp)" :class="{cur:activity===index}">
-          <van-icon :name="item.icon" />
-          {{item.name}}
+  <scroller :on-infinite="refresh" ref="my_scroller">
+    <div style="height: 58px;"></div>
+    <div v-for="(it, index) in items"
+         :key="index"
+         @click="$router.push({ name: 'activityGoods', params: { id:it.goodsId }})">
+      <van-card
+                :title="it.goodsName"
+                :desc="it.specInfo"
+                :thumb="imageURL"
+      >
+        <div slot="footer">
+          <van-button v-if="it.evaluationStatus===0" size="mini">待付款</van-button>
+          <van-button v-if="it.evaluationStatus===1" size="mini">已出票</van-button>
         </div>
-      </van-col>
-    </van-row>
-    <keep-alive>
-      <div :is="currentTab"></div>
-    </keep-alive>
-  </div>
+      </van-card>
+    </div>
+  </scroller>
 </template>
 <script>
-  import TabAll from '@/view/MyOrder/subComp/listAll'
-  import TabUnpay from '@/view/MyOrder/subComp/listUnpay'
-  import TabDone from '@/view/MyOrder/subComp/listDone'
   import {
-    Tab, Tabs, Toast, Row, Col, Icon
+    Card, Toast, Button, Row, Col, Icon
   } from 'vant';
   export default {
+    name: "Test",
     components: {
-      [Tabs.name]: Tabs,
-      [Tab.name]: Tab,
+      [Card.name]: Card,
       [Toast.name]: Toast,
+      [Button.name]:Button,
       [Row.name]: Row,
       [Col.name]: Col,
-      [Icon.name]: Icon,
-      TabAll,TabUnpay,TabDone
+      [Icon.name]: Icon
     },
     data () {
       return {
-        currentTab:'tabAll',
-        bottom: [],
+        items: [],
+        flag:true,
         imageURL:'https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg',
-        tabList:[
-          {icon:'pending-payment',name:'全部',comp:'tabAll'},
-          {icon:'pending-orders',name:'待付款',comp:'tabUnpay'},
-          {icon:'pending-deliver',name:'已出票',comp:'tabDone'}
-        ],
-        activity:0
+        param:{
+          memberId:'',
+          status:'',
+          pageNo:0,
+          pageSize:10
+        }
       }
     },
     created () {
-      Toast.loading({ mask: true,duration:0 });
       let vm = this
-    },
-    computed: {
-
     },
     mounted() {
 
     },
     methods: {
-      tabFun(i,e) {
-        this.activity = i
-        this.currentTab = e;  // tab 为当前触发标签页的组件名
+      refresh(done) {
+        let that=this
+        that.param.pageNo ++
+        if(!that.flag){
+          setTimeout(() => {
+            done(true)
+          }, 300)
+          return;
+        }
+        if(that.flag){
+          let url='/static/test.json'
+          Ajax.get(url)
+          // Ajax.post('target/orderapi/orderlist',that.param)
+            .then(function (response) {
+              let res=response.data;
+              if(res.data.length!==0){
+                res.data.map(function (item,index) {
+                  that.items=that.items.concat(item.orderGoodsList[0])
+                })
+                if(res.data.length<that.param.pageSize){
+                  that.flag=false
+                }
+                setTimeout(() => {
+                  done()
+                }, 300)
+                Toast.clear()
+              }else{
+                Toast(res.msg)
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+              Toast('加载失败error')
+            });
+        }
       }
     }
   }
@@ -124,9 +153,6 @@
       .van-icon {
         display: block;
         font-size: 24px;
-      }
-      .cur{
-        color: #f40;
       }
     }
   }

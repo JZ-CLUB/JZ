@@ -1,43 +1,28 @@
 <template>
-  <div class="user">
-    <van-row class="user-links">
-      <van-col span="8">
-        <van-icon name="pending-payment" />
-        全部
-      </van-col>
-      <van-col span="8">
-        <van-icon name="pending-orders" />
-        待付款
-      </van-col>
-      <van-col span="8">
-        <van-icon name="pending-deliver" />
-        已出票
-      </van-col>
-    </van-row>
-    <scroller :on-infinite="refresh" ref="my_scroller">
-      <div style="height: 58px;"></div>
-      <van-card v-for="(it, index) in items"
-                :key="index"
-                :title="it.goodsName"
-                :desc="it.specInfo"
-                :thumb="imageURL"
+  <scroller :on-infinite="refresh" ref="my_scroller">
+    <div style="height: 58px;"></div>
+    <div v-for="(it, index) in items"
+         :key="index"
+         @click="$router.push({ name: 'activityGoods', params: { id:it.goodsId }})">
+      <van-card
+        :title="it.goodsName"
+        :desc="it.specInfo"
+        :thumb="imageURL"
       >
         <div slot="footer">
-          <van-button size="mini" @click="$router.push({ name: 'activityGoods', params: { id:it.goodsId }})">按钮</van-button>
-          <van-button size="mini">按钮</van-button>
+          <van-button size="mini">待付款</van-button>
         </div>
       </van-card>
-    </scroller>
-  </div>
+    </div>
+  </scroller>
 </template>
 <script>
   import {
-    Tab, Tabs, Card, Toast, Button, Row, Col, Icon, Waterfall
+    Card, Toast, Button, Row, Col, Icon
   } from 'vant';
   export default {
+    name: "TestTwo",
     components: {
-      [Tabs.name]: Tabs,
-      [Tab.name]: Tab,
       [Card.name]: Card,
       [Toast.name]: Toast,
       [Button.name]:Button,
@@ -49,7 +34,13 @@
       return {
         items: [],
         flag:true,
-        imageURL:'https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg'
+        imageURL:'https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg',
+        param:{
+          memberId:'',
+          status:'',
+          pageNo:0,
+          pageSize:10
+        }
       }
     },
     created () {
@@ -61,34 +52,29 @@
     methods: {
       refresh(done) {
         let that=this
+        that.param.pageNo ++
         if(!that.flag){
           setTimeout(() => {
             done(true)
-          }, 1500)
+          }, 300)
           return;
         }
         if(that.flag){
-          let data={
-            memberId:'',
-            status:status,
-            pageNo:'',
-            pageSize:''
-          }
-          let url='/static/test.json'
+          let url='/static/unPay.json'
           Ajax.get(url)
-          // Ajax.post('target/orderapi/orderlist',data)
+          // Ajax.post('target/orderapi/orderlist',that.param)
             .then(function (response) {
               let res=response.data;
               if(res.data.length!==0){
                 res.data.map(function (item,index) {
                   that.items=that.items.concat(item.orderGoodsList[0])
                 })
-                if(res.data.length<10){
+                if(res.data.length<that.param.pageSize){
                   that.flag=false
                 }
                 setTimeout(() => {
                   done()
-                }, 1500)
+                }, 300)
                 Toast.clear()
               }else{
                 Toast(res.msg)

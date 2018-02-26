@@ -6,7 +6,7 @@
                    <li class="first_tit_con">爵士豆</li>
                    <li class="second_tit_con">0</li>
                </ul>
-           </div> 
+           </div>
            <div class="bean_con">
                <img src="../../images/bean_05.png">
            </div>
@@ -51,7 +51,7 @@
                     </van-row>
                    </li>
                </ul>
-           </div> 
+           </div>
            <div class="no_more">
                <p>------------ 没有更多消费记录 -----------</p>
            </div>
@@ -83,13 +83,13 @@
             }
         },
         methods:{
-            
+
         }
     }
-    
+
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
     .bean_tit{
         width: 100%;
         height: 2.21rem;
@@ -128,7 +128,7 @@
                margin: 0 auto;
                border-bottom: 1px solid #ccc;
                position: relative;
-           } 
+           }
            .con_bean_con_icon{
                width: 10%;
                height: 1.5rem;
@@ -156,7 +156,7 @@
                 position: absolute;
                 top:50%;
                 margin-top: -0.4rem;
-                left:0.5rem; 
+                left:0.5rem;
                 // padding-top: 0.2rem;
                 .con_bean_con_tit{
                     color: #666;

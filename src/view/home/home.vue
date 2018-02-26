@@ -145,10 +145,7 @@
   };
 </script>
 
-<style lang="less">
-  body{
-    background: #f8f4ea;
-  }
+<style lang="less" scoped>
   .searchBox{
     height: 1rem;
     padding: 0.2rem 0.24rem;

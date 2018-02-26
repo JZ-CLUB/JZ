@@ -27,7 +27,7 @@
     </van-cell>
 
     <div class="textR van-panel__footer van-hairline--top">
-      <van-button size="small" @click="checkOpr">取消订单</van-button>
+      <van-button size="small" @click="checkOpr(1)">取消订单</van-button>
       <van-button size="small" type="danger">付款</van-button>
     </div>
 
@@ -71,6 +71,7 @@
     },
     methods: {
       checkOpr:function (id) {
+        console.log(id)
         Dialog.confirm({
           message: '确定取消订单？'
         }).then(() => {
@@ -82,7 +83,7 @@
         });
       },
       orderCancel:function (id) {
-        Ajax.post('target//orderapi/cancleorder',id)
+        Ajax.get('target/orderapi/cancleorder',id)
           .then(function (response) {
             let res=response.data;
             Toast(res.msg)
@@ -95,7 +96,7 @@
     }
   }
 </script>
-<style lang="less">
+<style lang="less" scoped>
   .textR {
     text-align: right;
   }

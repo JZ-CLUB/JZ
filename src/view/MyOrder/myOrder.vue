@@ -61,7 +61,7 @@
     }
   }
 </script>
-<style lang="less">
+<style lang="less" scoped>
   .plugin-name {
     margin: 0;
     padding-top: 60px;

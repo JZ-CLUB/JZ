@@ -63,7 +63,7 @@
 
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 
   .van-address-list__add.van-cell{
     background-color: #f44;

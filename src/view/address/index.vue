@@ -5,12 +5,12 @@
       <van-cell-group>
         <van-cell v-for="(item, index) in list" :key="index">
           <van-cell-swipe :right-width="65">
-          <div class="add_info">
-            <van-radio v-on:click="counter += 1" :name="index+1" v-model="radio" @click="onSelect(item, index)">
+          <div class="add_info" @click="onSelect(item, index)">
+            <van-radio v-on:click="counter += 1" :name="index+1" v-model="radio" ref="radio">
               <div class="van-address-list__name">{{ item.trueName }}，{{ item.telPhone }}</div>
               <div class="van-address-list__address">{{ item.areaInfo }}{{item.address}}</div>
             </van-radio>
-            <van-icon slot="right" name="edit" class="van-address-list__edit"  v-bind:class="{'van-icon-check':indexTrue,'van-icon-checked':!indexTrue}" @click="onEdit(item, index)" />
+            <van-icon slot="right" name="edit" class="van-address-list__edit" v-bind:class="{'van-icon-check':indexTrue,'van-icon-checked':!indexTrue}" @click="onEdit(item, index)" />
           </div>
           <!-- <div class="van-cell-swipe__right"><span>删除</span></div> -->
           <span slot="right" @click="onClose('right', index)">删除</span>
@@ -29,11 +29,10 @@
   </div>
 </template>
 
-
 <script>
   let address_id;
   let address_id_str=[];
-  import { AddressList, Radio, CellGroup, RadioGroup, Cell, Icon, CellSwipe  } from 'vant';
+  import { AddressList, Radio, CellGroup, RadioGroup, Cell, Icon, CellSwipe } from 'vant';
   import { Toast } from 'vant';
   import { Dialog } from 'vant';
   export default {
@@ -51,24 +50,28 @@
       return {
         chosenAddressId: '1',
         list: [],
-        indexTrue: -1,
+        indexTrue: "false",
         radio: '1',
         counter: 0,
-        address_str:''
+        address_str:'',
+        tar:'tar',
+        addressJson:{}
       }  
     },
     created () {
       let vm = this
-      vm.getAddressList()
+      vm.getAddressList();
     },
     methods: {
       onAdd() {
-        Toast('新增收货地址');
+        // Toast('新增收货地址');
+        this.$router.push({path: '/addressEdit'});
       },
       onEdit(item, index) {
         address_id = index;
-        Toast('编辑收货地址:' + index);
+        // Toast('编辑收货地址:' + index);
         sessionStorage.setItem("addressId", address_id_str[index]);
+        this.$router.push({path: '/addressEdit', query: { tart:'124' }});
       },
       onSelect(item, index) {
         if(index+1){
@@ -82,18 +85,17 @@
             Dialog.confirm({
               message: '确定删除吗？'
             }).then(() => {
-              $(".van-cell").eq(instance).remove();
-              // console.log("instance" + instance);
+              this.list.splice(instance, 1); 
             });
-            break;
+          break;
         }
     },
       getAddressList: function () {
         let that = this;
         Ajax.get('/static/address.json')
         .then(function (res) {
-          // console.log(res.data.data);
           that.list = res.data.data;
+          // console.log(that.list);
           for(let i = 0; i< res.data.data.length; i++){
             address_id_str[i] = res.data.data[i].addressId;
           }

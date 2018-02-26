@@ -29,7 +29,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/target': {
-        target: 'http://15.146.38.175:8000/hpeshop-front', // target host
+        target: 'http://10.0.106.10:8000/hpeshop-front', // target host
         secure: false,
         changeOrigin: true,               // needed for virtual hosted sites
         ws: true,                         // proxy websockets

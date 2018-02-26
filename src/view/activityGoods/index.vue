@@ -21,7 +21,7 @@
       :quota-used="quotaUsed"
       :reset-stepper-on-hide="true"
       :initial-sku="initialSku"
-      @buy-clicked="handleBuyClicked"
+      @buy-clicked="handleBuyClicked($route.params.id)"
     >
       <!-- 自定义 sku header -->
       <template slot="sku-header" slot-scope="props">
@@ -151,15 +151,16 @@
         console.log(e)
       },
       send:function (e) {
-        //Ajax.post('target/goods/api/goodsdetail', {
-        Ajax.post('http://rap.taobao.org/mockjsdata/31603/get', {
-          goodsId: "129"
+        Ajax.post('target/goods/api/goodsdetail', {
+        //Ajax.post('http://rap.taobao.org/mockjsdata/31603/get', {
+          goodsId: e.$route.params.id
         })
           .then(function (response) {
             //console.log(response)
             if(response.statusText=="OK"){
+              console.log("ee:"+e.$route.params.id);
 
-              let nData = response.data.data[0];
+              let nData = response;
               let oData = e.sku;
               let i = 0;
               let j = 0;

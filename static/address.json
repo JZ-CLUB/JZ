@@ -3,9 +3,10 @@
   "data":[
     {
       "provinceId":15,
-      "areaInfo":"山东省,青岛市,市南区",
+      "areaInfo":"北京省,北京市,东城区",
       "trueName":"阿爸",
       "telPhone":"88888888",
+      "tel":"13838888828",
       "mobPhone":"13500000000",
       "isDefault":"1",
       "cityId":224,
@@ -13,7 +14,10 @@
       "zipCode":500006,
       "memberId":5,
       "areaId":2528,
-      "addressId":38
+      "addressId":38,
+      "city":"北京市",
+      "county":"county",
+      "province":"北京省"
     },
     {
       "provinceId":15,

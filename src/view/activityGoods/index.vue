@@ -1,7 +1,7 @@
 <template>
   <div class="goods">
 
-    <div></div>
+    <div v-html="goodsBody">{{goodsBody}}</div>
 
     <van-goods-action>
       <van-goods-action-big-btn primary @click="showShu">
@@ -21,7 +21,7 @@
       :quota-used="quotaUsed"
       :reset-stepper-on-hide="true"
       :initial-sku="initialSku"
-      @buy-clicked="handleBuyClicked($route.params.id)"
+      @buy-clicked="handleBuyClicked"
     >
       <!-- 自定义 sku header -->
       <template slot="sku-header" slot-scope="props">
@@ -105,6 +105,7 @@
             'https://img.yzcdn.cn/public_files/2017/10/24/1791ba14088f9c2be8c610d0a6cc0f93.jpeg'
           ]
         },
+        goodsBody:'内容详情',
         showCustomAction: false,
         sku: {
           // 所有sku规格类目与其值的从属关系，比如商品有颜色和尺码两大类规格，颜色下面又有红色和蓝色两个规格值。
@@ -148,7 +149,46 @@
         return this.showCustomAction= true;
       },
       handleBuyClicked(e){
-        console.log(e)
+        console.log(e);
+        let oData = this.sku;
+        let goodsId = e.goodsId;
+        let specId="";
+        let vue = this;
+        for (let z in oData.tree){
+          let a = "s"+z;
+          e.selectedSkuComb[a];
+          if(specId!=''){
+            specId=specId+","+e.selectedSkuComb[a];
+          }else{
+            specId=e.selectedSkuComb[a];
+          }
+
+
+
+        }
+
+        var data={
+          goodsId:this.$route.params.id,
+          memberId:88,
+          specId:specId,
+          selectedNum:e.selectedNum
+        };
+
+        console.log(data);
+        Ajax.post('target/cartapi/addCart', data
+          //Ajax.post('http://rap.taobao.org/mockjsdata/31603/get', {
+        )
+          .then(
+            function (response) {
+              console.log(vue);
+              if(response.data.result==1){
+                console.log("成功");
+                vue.$router.push({ name: 'orderDetail', params: { cartIds:response.data.data[0].cartIds }})
+              }
+            }
+          );
+
+
       },
       send:function (e) {
         Ajax.post('target/goods/api/goodsdetail', {
@@ -160,11 +200,12 @@
             if(response.statusText=="OK"){
               console.log("ee:"+e.$route.params.id);
 
-              let nData = response;
+              let nData = response.data.data[0];
               let oData = e.sku;
               let i = 0;
               let j = 0;
               let o = 0;
+              e.goodsBody = nData.goodsBody;
               e.goodsId = nData.goodsId;
               e.goods.title = nData.goodsName;
               e.price = nData.goodsStorePrice;

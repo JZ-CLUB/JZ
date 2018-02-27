@@ -136,7 +136,7 @@ const routes = [
     }
   },
   {
-    path: '',
+    path: '/orderDetail/:cartIds',
     name: 'orderDetail',
     component: OrderDetail,
     meta: {

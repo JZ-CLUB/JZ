@@ -182,7 +182,7 @@
             function (response) {
               console.log(vue);
               if(response.data.result==1){
-                console.log("成功");
+                console.log(response.data.data[0].cartIds);
                 vue.$router.push({ name: 'orderDetail', params: { cartIds:response.data.data[0].cartIds }})
               }
             }

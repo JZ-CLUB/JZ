@@ -7,7 +7,7 @@
       <van-card
         :title="it.goodsName"
         :desc="it.specInfo"
-        :thumb="imageURL"
+        :thumb="comPath.imgPath+it.goodsImage"
       >
         <div slot="footer">
           <van-button size="mini">已出票</van-button>
@@ -32,12 +32,13 @@
     },
     data () {
       return {
+        comPath:PublicPath,
         items: [],
         flag:true,
         imageURL:'https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg',
         param:{
           memberId:'',
-          status:0,
+          status:40,
           pageNo:0,
           pageSize:10
         }
@@ -61,8 +62,8 @@
         }
         if(that.flag){
           let url='/static/done.json'
-          Ajax.get(url)
-          // Ajax.post('target/orderapi/orderlist',that.param)
+          // Ajax.get(url)
+          Ajax.post('target/orderapi/orderlist',that.param)
             .then(function (response) {
               let res=response.data;
               if(res.data.length!==0){

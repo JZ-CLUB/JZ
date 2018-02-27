@@ -6,10 +6,11 @@
       <van-swipe v-show="showFlag">
         <div v-for="(image, index) in imageList" :key="index" @click="$router.push({ name: 'activityGoods', params: { id:image.goodsId }})">
           <van-swipe-item>
-            <img v-lazy="image.goodsImage" />
+            <img v-lazy="comPath.imgPath+image.goodsImage" />
           </van-swipe-item>
         </div>
       </van-swipe>
+
       <div class="goImg" v-show="showFlag">
         <img src="../../images/go.png" alt="">
       </div>
@@ -17,7 +18,7 @@
       <van-row class="cardBox">
         <van-col span="12" v-for="(item,index) in searchData" :key="index">
           <div @click="$router.push({ name: 'activityGoods', params: { id:item.goodsId }})">
-            <img class="cardImg" :src=item.goodsImage alt="">
+            <img class="cardImg" :src=comPath.imgPath+item.goodsImage alt="">
             <p class="cardText">{{item.goodsName}}</p>
           </div>
         </van-col>
@@ -48,11 +49,12 @@
     },
     data() {
       return {
+        comPath:PublicPath,
         imageList: [],
         activityList: [],
         disabled: false,
         sendData:{
-          searchType:'keywordSearch',
+          searchType:'gcIdSearch',
           keyword:'',
           pageNo:0,
           brandId:'',
@@ -91,11 +93,14 @@
     methods: {
       recommend() {
         let that=this
-        Ajax.get('/static/recoment.json')
-        // Ajax.post('target/recommendGoodsApi/api/Recommedgoodslist',{goodsflagsname:'recommend'})
+        // Ajax.get('/static/recoment.json')
+        Ajax.post('target/recommendGoodsApi/api/Recommedgoodslist',{goodsflagsname:'recommend'})
           .then(function (response) {
             let res=response.data;
             if(res.data.length!==0){
+              res.data.map(function (item,index) {
+                item.goodsImage=that.comPath.imgPath+item.goodsImage
+              })
               that.imageList = res.data
             }else{
               Toast(res.msg)
@@ -108,7 +113,7 @@
       },
       refresh(done) {
         let that=this
-        that.pageNo ++
+        that.sendData.pageNo ++
         if(!that.flag){
           setTimeout(() => {
             done(true)
@@ -116,8 +121,8 @@
           return;
         }
         if(that.flag){
-          Ajax.get('/static/activityList.json')
-          // Ajax.post('target/goods/api/goodslist',that.setData)
+          // Ajax.get('/static/activityList.json')
+          Ajax.post('target/goods/api/goodslist',that.sendData)
             .then(function (response) {
               let res=response.data;
               if(res.data.length!==0){
@@ -145,10 +150,7 @@
   };
 </script>
 
-<style lang="less">
-  body{
-    background: #f8f4ea;
-  }
+<style lang="less" scoped>
   .searchBox{
     height: 1rem;
     padding: 0.2rem 0.24rem;

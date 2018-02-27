@@ -11,7 +11,7 @@
         @click-icon="phoneNum = ''"
         />
         <van-field
-        
+
         type="text"
         label="验证码"
         v-model="yzCode"
@@ -98,7 +98,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .register_con{
     width: 80%;
     max-width: 750px;

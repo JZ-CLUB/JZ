@@ -333,7 +333,7 @@
 
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   .goods {
     padding-bottom: 50px;
 

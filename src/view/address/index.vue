@@ -15,7 +15,7 @@
           <!-- <div class="van-cell-swipe__right"><span>删除</span></div> -->
           <span slot="right" @click="onClose('right', index)">删除</span>
         </van-cell-swipe>
-        </van-cell> 
+        </van-cell>
       </van-cell-group>
     </van-radio-group>
     <div class="van-cell van-address-list__add van-hairline--top van-hairline van-cell--clickable">
@@ -29,6 +29,7 @@
   </div>
 </template>
 
+
 <script>
   let address_id;
   let address_id_str=[];
@@ -41,7 +42,7 @@
       [Radio.name]: Radio,
       [CellGroup.name]: CellGroup,
       [RadioGroup.name]: RadioGroup,
-      [Toast.name]: Toast,  
+      [Toast.name]: Toast,
       [Cell.name]: Cell,
       [Icon.name]: Icon,
       [CellSwipe.name]: CellSwipe
@@ -56,7 +57,7 @@
         address_str:'',
         tar:'tar',
         addressJson:{}
-      }  
+      }
     },
     created () {
       let vm = this
@@ -85,7 +86,7 @@
             Dialog.confirm({
               message: '确定删除吗？'
             }).then(() => {
-              this.list.splice(instance, 1); 
+              this.list.splice(instance, 1);
             });
           break;
         }
@@ -101,14 +102,14 @@
           }
         })
         .catch(function (error) {
-          
+
         });
       }
     }
   }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .van-address-list{
   .van-cell{
     padding: 10px 0px 10px 15px !important;
@@ -136,7 +137,7 @@
           right: 0;
           -webkit-transform: translate3d(100%, 0, 0);
           transform: translate3d(100%, 0, 0);
-          
+
         }
         .van-cell-swipe__left, .van-cell-swipe__right{
           top: 0;
@@ -151,7 +152,7 @@
           line-height: 40px;
         }
       }
-  } 
+  }
 }
-  
+
 </style>

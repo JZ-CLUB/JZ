@@ -83,7 +83,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   .myInfo_con_first{
     width: 88.26%;
     margin: 0 auto;

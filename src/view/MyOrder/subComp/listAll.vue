@@ -5,12 +5,12 @@
          :key="index"
          @click="$router.push({ name: 'activityGoods', params: { id:it.goodsId }})">
       <van-card
-                :title="it.goodsName"
-                :desc="it.specInfo"
-                :thumb="imageURL"
+        :title="it.goodsName"
+        :desc="it.specInfo"
+        :thumb="comPath.imgPath+it.goodsImage"
       >
         <div slot="footer">
-          <van-button v-if="it.evaluationStatus===0" size="mini">待付款</van-button>
+          <van-button @click="aaa" v-if="it.evaluationStatus===0" size="mini">待付款</van-button>
           <van-button v-if="it.evaluationStatus===1" size="mini">已出票</van-button>
         </div>
       </van-card>
@@ -33,12 +33,12 @@
     },
     data () {
       return {
+        comPath:PublicPath,
         items: [],
         flag:true,
-        imageURL:'https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg',
         param:{
           memberId:'',
-          status:'',
+          status:'0',
           pageNo:0,
           pageSize:10
         }
@@ -51,6 +51,9 @@
 
     },
     methods: {
+      aaa(){
+        alert(1)
+      },
       refresh(done) {
         let that=this
         that.param.pageNo ++

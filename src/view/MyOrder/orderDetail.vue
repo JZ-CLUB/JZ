@@ -65,6 +65,11 @@
       Toast.loading({mask: true, duration: 0});
       let vm = this
     },
+    created: function() {
+      console.log(this.$route.params.cartIds);
+      //this.send(this);
+
+    },
     computed: {},
     mounted() {
       Toast.clear()

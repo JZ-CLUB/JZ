@@ -55,8 +55,7 @@
         radio: '1',
         counter: 0,
         address_str:'',
-        tar:'tar',
-        addressJson:{}
+        tar:'tar'
       }
     },
     created () {
@@ -93,10 +92,15 @@
     },
       getAddressList: function () {
         let that = this;
-        Ajax.get('/static/address.json')
+        // Ajax.get('/static/address.json')
+        let url = 'target/address/api/addressList'
+        let data = {
+          memberId: '5'
+        }
+        // Ajax.get('/static/address.json')
+        Ajax.post(url, data)
         .then(function (res) {
           that.list = res.data.data;
-          // console.log(that.list);
           for(let i = 0; i< res.data.data.length; i++){
             address_id_str[i] = res.data.data[i].addressId;
           }

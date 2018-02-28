@@ -32,7 +32,9 @@
         areaList: {},
         searchResult: [],
         addressId: "",
-        // nam:'hhhhh'
+        areaInfo:[],
+        saveEditInfo:[],
+        areaId:[]
       };
     },
     created() {
@@ -50,29 +52,52 @@
       // 地址编辑方法
       addEdit() {
         let that = this;
-        Ajax.get('/static/addressEditEDIT.json')
+        // Ajax.get('/static/addressEditEDIT.json')
+        let data = {
+          addressId: addressId
+        }
+        Ajax.post('target/address/api/addressDetail',data)
         .then(function (res) {
+          that.saveEditInfo = res.data.data;
           let RefInfo = that.$refs.addCon._props.addressInfo;
-          RefInfo.name = res.data.data[0].name;
-          RefInfo.tel = res.data.data[0].tel;
-          RefInfo.city = res.data.data[0].city;
-          RefInfo.province = res.data.data[0].province;
-          RefInfo.county = res.data.data[0].county;
-          RefInfo.address_detail = res.data.data[0].address_detail;
-          RefInfo.area_code = res.data.data[0].area_code;
+          that.areaInfo = res.data.data.areaInfo.split(",");
+          RefInfo.name = res.data.data.trueName;
+          RefInfo.tel = res.data.data.mobPhone;
+          RefInfo.city = that.areaInfo[1];
+          RefInfo.province = that.areaInfo[0];
+          RefInfo.county = that.areaInfo[2];
+          RefInfo.address_detail = res.data.data.address;
+          RefInfo.area_code = ''+res.data.data.areaId+'';
+          console.log("res.data.data.areaId"+res.data.data.areaId);
         })
         .catch(function (error) {
           
         });
       },
       onSave() {
-        let saveInfo = this.$refs.addCon._props.addressInfo;
-        let trueName,telphone,addressInfo,area_info;
-        trueName = saveInfo.name;
-        telphone = saveInfo.tel;
-        addressInfo = saveInfo.city + "," + saveInfo.province + "," + saveInfo.county;
-        area_info = saveInfo.area_code;
-        console.log("trueName"+trueName+"telphone"+telphone+"addressInfo"+addressInfo+"area_info"+area_info+"addressId"+addressId);
+         let saveInfo = this.$refs.addCon._props.addressInfo;
+        //  this.areaId = saveInfo.area_code;
+         console.log(this.areaId);
+         let data = {
+          memberId: this.saveEditInfo.memberId,
+          trueName: saveInfo.name,
+          mobPhone: saveInfo.tel,
+          telPhone: this.saveEditInfo.telPhone,
+          areaId: "11",
+          cityId: "22",
+          areaInfo: this.saveEditInfo.areaInfo,
+          address: saveInfo.address_detail,
+          provinceId: "00",
+          zipCode: this.saveEditInfo.zipCode,
+          addressId: addressId
+        }
+        Ajax.post('target/address/api/saveAddress',data)
+        .then(function (res) {
+          
+        })
+         .catch(function (error) {
+          
+        });
       },
       onDelete() {
         Toast("delete");

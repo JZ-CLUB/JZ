@@ -3,16 +3,20 @@
     <div style="height: 58px;"></div>
     <div v-for="(it, index) in items"
          :key="index"
-         @click="$router.push({ name: 'activityGoods', params: { id:it.goodsId }})">
-      <van-card
-        :title="it.goodsName"
-        :desc="it.specInfo"
-        :thumb="comPath.imgPath+it.goodsImage"
-      >
-        <div slot="footer">
-          <van-button size="mini">已出票</van-button>
-        </div>
-      </van-card>
+    >
+      <div v-for="(item, i) in it.orderGoodsList"
+           :key="i"
+           @click="$router.push({ name: 'orderDetail', params: { orderId:item.orderId }})">
+        <van-card
+          :title="item.goodsName"
+          :desc="item.specInfo"
+          :thumb="comPath.imgPath+item.goodsImage"
+        >
+          <div slot="footer">
+            <van-button v-if="it.orderState===40" size="mini">已出票</van-button>
+          </div>
+        </van-card>
+      </div>
     </div>
   </scroller>
 </template>
@@ -37,7 +41,7 @@
         flag:true,
         imageURL:'https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg',
         param:{
-          memberId:'',
+          memberId:88,
           status:40,
           pageNo:0,
           pageSize:10
@@ -66,10 +70,11 @@
           Ajax.post('target/orderapi/orderlist',that.param)
             .then(function (response) {
               let res=response.data;
-              if(res.data.length!==0){
-                res.data.map(function (item,index) {
+              if(res.data.length!==[]){
+                that.items=res.data
+                /*res.data.map(function (item,index) {
                   that.items=that.items.concat(item.orderGoodsList[0])
-                })
+                })*/
                 if(res.data.length<that.param.pageSize){
                   that.flag=false
                 }

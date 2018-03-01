@@ -3,17 +3,26 @@
     <div style="height: 58px;"></div>
     <div v-for="(it, index) in items"
          :key="index"
-         @click="$router.push({ name: 'activityGoods', params: { id:it.goodsId }})">
-      <van-card
-        :title="it.goodsName"
-        :desc="it.specInfo"
-        :thumb="comPath.imgPath+it.goodsImage"
-      >
+         >
+      <div v-for="(item, i) in it.orderGoodsList"
+           :key="i"
+           @click="$router.push({ name: 'orderDetail', params: { orderId:item.orderId }})">
+        <van-card
+          :title="item.goodsName"
+          :desc="item.specInfo"
+          :thumb="comPath.imgPath+item.goodsImage"
+        >
         <div slot="footer">
-          <van-button @click="aaa" v-if="it.evaluationStatus===0" size="mini">待付款</van-button>
-          <van-button v-if="it.evaluationStatus===1" size="mini">已出票</van-button>
+          <van-button @click="aaa" v-if="it.orderState===10" size="mini">待付款</van-button>
+          <van-button v-if="it.orderState===40" size="mini">已出票</van-button>
+          <van-button v-if="it.orderState===20" size="mini">待发货</van-button>
+          <van-button v-if="it.orderState===30" size="mini">已发货</van-button>
+          <van-button v-if="it.orderState===50" size="mini">已提交</van-button>
+          <van-button v-if="it.orderState===60" size="mini">已确认</van-button>
+          <van-button v-if="it.orderState===0" size="mini">已取消</van-button>
         </div>
       </van-card>
+      </div>
     </div>
   </scroller>
 </template>
@@ -37,8 +46,8 @@
         items: [],
         flag:true,
         param:{
-          memberId:'',
-          status:'0',
+          memberId:88,
+          status:'',
           pageNo:0,
           pageSize:10
         }
@@ -65,14 +74,12 @@
         }
         if(that.flag){
           let url='/static/test.json'
-          Ajax.get(url)
-          // Ajax.post('target/orderapi/orderlist',that.param)
+          // Ajax.get(url)
+          Ajax.post('target/orderapi/orderlist',that.param)
             .then(function (response) {
               let res=response.data;
               if(res.data.length!==0){
-                res.data.map(function (item,index) {
-                  that.items=that.items.concat(item.orderGoodsList[0])
-                })
+                that.items=res.data
                 if(res.data.length<that.param.pageSize){
                   that.flag=false
                 }
@@ -81,7 +88,7 @@
                 }, 300)
                 Toast.clear()
               }else{
-                Toast(res.msg)
+                Toast('数据为空')
               }
             })
             .catch(function (error) {

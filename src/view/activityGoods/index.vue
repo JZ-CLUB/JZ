@@ -180,6 +180,7 @@
 
         console.log(datalist);
         localStorage.setItem("datalist", JSON.stringify(datalist));
+        localStorage.setItem("goodstype", "1");
 
         var data = {
           goodsId:this.$route.params.id,

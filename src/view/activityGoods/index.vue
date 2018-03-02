@@ -154,6 +154,10 @@
         let goodsId = e.goodsId;
         let specId="";
         let vue = this;
+        let tree = this.sku.tree;
+
+        let datalist = {};
+        console.log(tree);
         for (let z in oData.tree){
           let a = "s"+z;
           e.selectedSkuComb[a];
@@ -165,9 +169,19 @@
 
 
 
+          for(let j in oData.tree[z].v){
+            if(e.selectedSkuComb[a] == oData.tree[z].v[j].id){
+              datalist[tree[z].k] = oData.tree[z].v[j].name;
+
+            }
+          }
+
         }
 
-        var data={
+        console.log(datalist);
+        localStorage.setItem("datalist", JSON.stringify(datalist));
+
+        var data = {
           goodsId:this.$route.params.id,
           memberId:88,
           specId:specId,

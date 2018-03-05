@@ -11,9 +11,11 @@
         </div>
       </van-swipe>
 
-      <div class="goImg" v-show="showFlag">
-        <img src="../../images/go.png" alt="">
-      </div>
+      <router-link to="/ShowCalendar">
+        <div class="goImg" v-show="showFlag">
+          <img src="../../images/go.png" alt="">
+        </div>
+      </router-link>
 
       <van-row class="cardBox">
         <van-col span="12" v-for="(item,index) in searchData" :key="index">
@@ -93,14 +95,10 @@
     methods: {
       recommend() {
         let that=this
-        // Ajax.get('/static/recoment.json')
         Ajax.post('target/recommendGoodsApi/api/Recommedgoodslist',{goodsflagsname:'recommend'})
           .then(function (response) {
             let res=response.data;
             if(res.data.length!==0){
-              res.data.map(function (item,index) {
-                item.goodsImage=that.comPath.imgPath+item.goodsImage
-              })
               that.imageList = res.data
             }else{
               Toast(res.msg)
@@ -138,10 +136,16 @@
                 Toast.clear()
               }else{
                 Toast(res.msg)
+                setTimeout(() => {
+                  done(true)
+                }, 0)
               }
             })
             .catch(function (error) {
               console.log(error)
+              setTimeout(() => {
+                done(true)
+              }, 0)
               Toast('加载失败error')
             });
         }

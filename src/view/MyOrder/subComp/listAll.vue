@@ -78,8 +78,8 @@
           Ajax.post('target/orderapi/orderlist',that.param)
             .then(function (response) {
               let res=response.data;
-              if(res.data.length!==0){
-                that.items=res.data
+              if(res.data.length!==[]){
+                that.items=that.items.concat(res.data)
                 if(res.data.length<that.param.pageSize){
                   that.flag=false
                 }
@@ -89,6 +89,9 @@
                 Toast.clear()
               }else{
                 Toast('数据为空')
+                setTimeout(() => {
+                  done(true)
+                }, 0)
               }
             })
             .catch(function (error) {

@@ -71,10 +71,7 @@
             .then(function (response) {
               let res=response.data;
               if(res.data.length!==[]){
-                that.items=res.data
-                /*res.data.map(function (item,index) {
-                  that.items=that.items.concat(item.orderGoodsList[0])
-                })*/
+                that.items=that.items.concat(res.data)
                 if(res.data.length<that.param.pageSize){
                   that.flag=false
                 }
@@ -84,6 +81,9 @@
                 Toast.clear()
               }else{
                 Toast(res.msg)
+                setTimeout(() => {
+                  done(true)
+                }, 0)
               }
             })
             .catch(function (error) {

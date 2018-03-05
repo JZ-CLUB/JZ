@@ -27,7 +27,7 @@
 
     <div v-if="orderInfo.orderStateNum===10" class="textR van-panel__footer van-hairline--top">
       <van-button size="small" @click="checkOpr($route.params.orderId)">取消订单</van-button>
-      <van-button size="small" type="danger">付款</van-button>
+      <van-button size="small" type="danger" @click="toPay">付款</van-button>
     </div>
 
     <div v-if="orderInfo.orderType===0&&orderInfo.orderStateNum===40" class="ewm">
@@ -61,6 +61,7 @@
         orderInfo:[],
         addressInfo:'',
         orderGoodsList:[],
+        signInfo:''
       }
     },
     created() {
@@ -84,6 +85,7 @@
               that.orderInfo = {
                 orderType:res.data[0].orderType,
                 orderSn:res.data[0].orderSn,
+                paySn:res.data[0].paySn,
                 orderTotalPrice:res.data[0].orderTotalPrice,
                 orderStateNum:res.data[0].orderState,
                 orderState:res.data[0].orderState === 10 ? '待付款' : (res.data[0].orderState === 20 ? '待发货' : (res.data[0].orderState === 30 ? '已发货' : (res.data[0].orderState === 40 ? '已完成' : (res.data[0].orderState === 50 ? '已提交' : (res.data[0].orderState === 60 ? '已确认' : '已出票')))))
@@ -119,6 +121,63 @@
             console.log(error)
             Toast('加载失败error')
           });
+      },
+      toPay:function () {
+        let that=this
+        let data={
+          paySn:this.orderInfo.paySn,
+          memberId:88
+        }
+        Ajax.post('target/wxpay/api/payorder',data)
+          .then(function (response) {
+            let res=response.data;
+            if(res.result===1){
+              that.signInfo = res.data
+              that.callpay()
+              Toast.clear()
+            }else{
+              Toast(res.msg)
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+            Toast('加载失败error')
+          });
+      },
+      onBridgeReady: function () {
+        let that=this
+        WeixinJSBridge.invoke(
+          'getBrandWCPayRequest', {
+            'appId': that.signInfo.appid,
+            'timeStamp': that.signInfo.timestamp,
+            'nonceStr': that.signInfo.noncestr,
+            'package': "prepay_id=that.signInfo.prepayid",
+            'signType': "MD5",
+            'paySign': that.signInfo.sign
+          },
+          function (res) {
+            console.log(res)
+            if (res.err_msg === 'get_brand_wcpay_request:ok') {
+              Toast('微信支付成功')
+            } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
+              Toast('用户取消支付')
+            } else if (res.err_msg === 'get_brand_wcpay_request:fail') {
+              Toast('网络异常，请重试')
+            }
+          }
+        )
+      },
+      callpay: function () {
+        if (typeof WeixinJSBridge === 'undefined') {
+          if (document.addEventListener) {
+            document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady(), false)
+          } else if (document.attachEvent) {
+            document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady())
+            document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady())
+          }
+        } else {
+          this.onBridgeReady()
+        }
       }
     }
   }

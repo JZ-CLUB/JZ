@@ -1,11 +1,11 @@
-import soreApp from './soreApp'
+import address from './address'
 import myOrder from './myOrder'
 export default {
   mutations: {
 
   },
   modules: {
-    soreApp,myOrder
+    address,myOrder
   },
   strict: process.env.NODE_ENV !== 'production'
 }

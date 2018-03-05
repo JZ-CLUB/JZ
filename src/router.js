@@ -96,7 +96,7 @@ const routes = [
     }
   },
   {
-    path: '/ToPay',
+    path: '/ToPay/:cartIds',
     name: 'toPay',
     component: ToPay,
     meta: {
@@ -137,7 +137,7 @@ const routes = [
   },
   {
     path: '/orderDetail/:orderId',
-    name: 'orderDetail',
+    name:'orderDetail',
     component: OrderDetail,
     meta: {
       title: '活动票详情'

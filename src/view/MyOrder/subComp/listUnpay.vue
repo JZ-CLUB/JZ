@@ -71,7 +71,7 @@
               let res=response.data;
               console.log(res.data.length)
               if(res.data.length!==[]){
-                that.items=res.data
+                that.items=that.items.concat(res.data)
                 if(res.data.length<that.param.pageSize){
                   that.flag=false
                 }
@@ -81,6 +81,9 @@
                 Toast.clear()
               }else{
                 Toast(res.msg)
+                setTimeout(() => {
+                  done(true)
+                }, 0)
               }
             })
             .catch(function (error) {

@@ -1,21 +1,27 @@
 <template>
   <div class="van-address-list">
-    <van-cell-group>
-      <van-cell v-for="(item, index) in list" :key="item.id" is-link>
-          <div class="van-address-list__name">{{ item.name }}，{{ item.tel }}</div>
-          <div class="van-address-list__address">{{ item.address }}</div>
-        <van-icon slot="right-icon" name="arrow" class="van-address-list__edit" @click="" />
+    <van-cell-group v-if="goodsType!==1">
+      <router-link to="/address">
+        <van-cell is-link>
+          <div v-if="selectAddress!==''">
+            <div class="van-address-list__name">收货人：{{ selectAddress.trueName }}，{{ selectAddress.telPhone }}</div>
+            <div class="van-address-list__address">{{ selectAddress.address }}{{ selectAddress.areaInfo }}</div>
+          </div>
 
-      </van-cell>
+          <div v-if="selectAddress===''" class="van-address-list__address">请选择收货地址</div>
+        </van-cell>
+      </router-link>
       <div class="aa"></div>
+
     </van-cell-group>
     <div class="itemInfo">
       <h1 class="">cell三重奏</h1>
       <van-cell-group>
-        <van-cell title="门票类型" value="预售门票" />
-        <van-cell title="演出时间" value="2018年01月10日" />
-        <van-cell title="区域位置" value="前排" />
-        <van-cell title="数量" value="1" />
+        <van-cell title="门票类型" :value="tickType" />
+        <van-cell v-for="(val, key, index) in carType" :key="index" :title="key" :value="val" />
+        <!--<van-cell title="演出时间" :value="tickTime" />
+        <van-cell title="区域位置" :value="tickPosition" />
+        <van-cell title="数量" :value="tickNum" />-->
       </van-cell-group>
     </div>
 
@@ -43,20 +49,119 @@
     data() {
       return {
         chosenAddressId: '1',
-        list: [
-          {
-            id: '1',
-            name: '张三',
-            tel: '13000000000',
-            address: '浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室'
-          }
-        ]
+        list:'',
+        goodsType:1,//1---二维码  2-----实体票
+        tickType:localStorage.getItem('goodstype'),
+        tickTime:'aaa',
+        tickPosition:'sss',
+        tickNum:1,
+        carType:JSON.parse(localStorage.getItem('datalist')),
+        paySn:{},
+        signInfo:'',
+        selectAddress:''
       }
     },
-
+    created() {
+      Toast.loading({mask: true, duration: 0});
+      let vm = this
+      this.cardDetail();
+    },
     methods: {
+      cardDetail() {
+        this.goodsType = localStorage.getItem('goodstype')
+        if(localStorage.getItem('selectAddress')!==undefined){
+          this.selectAddress = JSON.parse(localStorage.getItem('selectAddress'))
+        }
+        Toast.clear()
+      },
       onSubmit() {
-        Toast('立即购买')
+        let that = this
+        if(localStorage.getItem('selectAddress')===undefined){
+          Toast('请选择地址')
+          return
+        }
+        let data={
+          openId:'',
+          cartIds:localStorage.getItem('cartIds'),
+          addressId:that.selectAddress.addressId,
+          memberid:88,
+          paytype:1
+        }
+        Ajax.post('target/orderapi/saveorder',data)
+          .then(function (response) {
+            let res=response.data;
+            if(res.result===1){
+              that.paySn = res.data[0].paySn
+              that.toPay()
+            }else{
+              Toast(res.msg)
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+            Toast('加载失败error')
+          });
+      },
+      toPay:function () {
+        let that=this
+        let data={
+          paySn:that.paySn,
+          memberId:88
+        }
+        Ajax.post('target/wxpay/api/payorder',data)
+          .then(function (response) {
+            let res=response.data;
+            if(res.result===1){
+              that.signInfo = res.data
+              that.callpay()
+              Toast.clear()
+            }else{
+              Toast(res.msg)
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+            Toast('加载失败error')
+          });
+      },
+      onBridgeReady: function () {
+        let that=this
+        WeixinJSBridge.invoke(
+          'getBrandWCPayRequest', {
+            'appId': that.signInfo.appid,
+            'timeStamp': that.signInfo.timestamp,
+            'nonceStr': that.signInfo.noncestr,
+            'package': "prepay_id=that.signInfo.prepayid",
+            'signType': "MD5",
+            'paySign': that.signInfo.sign
+          },
+          function (res) {
+            console.log(res)
+            if (res.err_msg === 'get_brand_wcpay_request:ok') {
+              localStorage.cartIds=''
+              localStorage.datalist=''
+              localStorage.goodstype=''
+
+              Toast('微信支付成功')
+            } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
+              Toast('用户取消支付')
+            } else if (res.err_msg === 'get_brand_wcpay_request:fail') {
+              Toast('网络异常，请重试')
+            }
+          }
+        )
+      },
+      callpay: function () {
+        if (typeof WeixinJSBridge === 'undefined') {
+          if (document.addEventListener) {
+            document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady(), false)
+          } else if (document.attachEvent) {
+            document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady())
+            document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady())
+          }
+        } else {
+          this.onBridgeReady()
+        }
       }
     }
   }

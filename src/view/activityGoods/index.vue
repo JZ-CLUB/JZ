@@ -190,15 +190,13 @@
         };
 
         console.log(data);
-        Ajax.post('target/cartapi/addCart', data
-          //Ajax.post('http://rap.taobao.org/mockjsdata/31603/get', {
-        )
+        Ajax.post('target/cartapi/addCart', data)
           .then(
             function (response) {
               console.log(vue);
               if(response.data.result==1){
-                console.log(response.data.data[0].cartIds);
-                vue.$router.push({ name: 'orderDetail', params: { cartIds:response.data.data[0].cartIds }})
+                localStorage.setItem('cartIds',response.data.data[0].cartIds)
+                vue.$router.push({ name: 'toPay'})
               }
             }
           );

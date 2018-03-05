@@ -96,7 +96,7 @@ const routes = [
     }
   },
   {
-    path: '/ToPay/:cartIds',
+    path: '/ToPay',
     name: 'toPay',
     component: ToPay,
     meta: {

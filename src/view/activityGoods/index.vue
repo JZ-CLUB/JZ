@@ -93,12 +93,12 @@
         goodsId: 123,
         quotaUsed: 0,
         imgShow: false,
-        price: 100,
+        price: '',
         initialSku: {
         },
         goods: {
           title: '美国伽力果（约680g/3个）',
-          price: 2680,
+          price: '',
           express: '免运费',
           remain: 19,
           thumb: [
@@ -117,7 +117,7 @@
           list: [
           ],
           nlist:[],
-          price: '1.00', // 默认价格（单位元）
+          price: '', // 默认价格（单位元）
           stock_num: 227, // 商品总库存
           collection_id: 2270, // 无规格商品 skuId 取 collection_id，否则取所选 sku 组合对应的 id
           none_sku: false, // 是否无规格商品
@@ -263,20 +263,42 @@
                 oData.list.push(Data);
               }
 
+              let b;
+              function aaa(e,a) {
+                console.log("a"+a);
+                console.log(oData);
+                let len = oData.tree[a].v.length - 1;
+                for(let j in oData.tree[a].v){
+
+                  console.log(e +"===="+oData.tree[a].v[j].id);
+                  if( e == oData.tree[a].v[j].id){
+                    b = a;
+                    console.log("t");
+                    break;
+                  }else if(j == len){
+                    a++;
+                    aaa(e,a);
+                  }
+                }
+
+              }
+
               for(let k in nData.goodsSpecList){
                 let Data;
                 let goodsSpecList = nData.goodsSpecList[k];
-                let a = 0;
+                //let a = 0;
                 for(let z in goodsSpecList.specGoodsSpec){
-                  Data = "s"+a;
-                  oData.list[o]["s"+a]=z;
-                  a++;
+                  aaa(z,0);
+                  Data = "s"+b;
+                  oData.list[o]["s"+b]=z;
+                  console.log(b+":"+z);
+                  //a++;
                 }
                 o++;
               }
               console.log(oData);
               /*数组长度*/
-              let len = 1;//数据总长度
+              /*let len = 1;//数据总长度
               let row = 0;
               let span = 0;
               let cc = 0;
@@ -332,7 +354,7 @@
                 if(row<span){
                   row++;
                 }
-              }
+              }*/
             }
 
           })

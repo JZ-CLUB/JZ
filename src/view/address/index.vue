@@ -1,20 +1,16 @@
 <template>
   <div>
    <div class="van-address-list">
-    <van-radio-group class="van-address-list__group">
+    <van-radio-group class="van-address-list__group" v-model="radio">
       <van-cell-group>
         <van-cell v-for="(item, index) in list" :key="index">
-          <van-cell-swipe :right-width="65">
           <div class="add_info" @click="onSelect(item, index)">
-            <van-radio v-on:click="counter += 1" :name="index+1" v-model="radio" ref="radio">
+            <van-radio :name="item.addressId">
               <div class="van-address-list__name">{{ item.trueName }}，{{ item.telPhone }}</div>
               <div class="van-address-list__address">{{ item.areaInfo }}{{item.address}}</div>
             </van-radio>
             <van-icon slot="right" name="edit" class="van-address-list__edit" v-bind:class="{'van-icon-check':indexTrue,'van-icon-checked':!indexTrue}" @click.stop="onEdit(item, index)" />
           </div>
-          <!-- <div class="van-cell-swipe__right"><span>删除</span></div> -->
-          <span slot="right" @click="onClose('right', index)">删除</span>
-        </van-cell-swipe>
         </van-cell>
       </van-cell-group>
     </van-radio-group>
@@ -49,10 +45,9 @@
     },
     data() {
       return {
-        chosenAddressId: '1',
         list: [],
         indexTrue: "false",
-        radio: '1',
+        radio: 0,
         counter: 0,
         address_str:'',
         tar:'tar'
@@ -61,8 +56,14 @@
     created () {
       let vm = this
       vm.getAddressList();
+      vm.selAddress()
     },
     methods: {
+      selAddress() {
+        if(localStorage.getItem('selectAddress')!==null){
+          this.radio = JSON.parse(localStorage.getItem('selectAddress')).addressId
+        }
+      },
       onAdd() {
         // Toast('新增收货地址');
         this.$router.push({path: '/addressEdit'});
@@ -75,10 +76,6 @@
         this.$router.push({path: '/addressEdit', query: {tart: '124'}});
       },
       onSelect(item, index) {
-        if(index+1){
-          $(".van-radio").find("i").attr("class","van-icon van-icon-check");
-          $(".van-radio").eq(index).find("i").attr("class","van-icon van-icon-checked");
-        }
         localStorage.setItem('selectAddress', JSON.stringify(item));
         this.$router.push({path: '/toPay'});
       },

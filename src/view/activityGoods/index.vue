@@ -89,23 +89,23 @@
 
     data() {
       return {
-        quota: 0,
-        goodsId: 123,
+        quota: 1,
+        goodsId: 1,
         quotaUsed: 0,
         imgShow: false,
         price: '',
         initialSku: {
         },
         goods: {
-          title: '美国伽力果（约680g/3个）',
+          title: '',
           price: '',
           express: '免运费',
-          remain: 19,
+          remain: 10,
           thumb: [
-            'https://img.yzcdn.cn/public_files/2017/10/24/1791ba14088f9c2be8c610d0a6cc0f93.jpeg'
+            ''
           ]
         },
-        goodsBody:'内容详情',
+        goodsBody:'',
         showCustomAction: false,
         sku: {
           // 所有sku规格类目与其值的从属关系，比如商品有颜色和尺码两大类规格，颜色下面又有红色和蓝色两个规格值。
@@ -190,7 +190,7 @@
         };
 
         console.log(data);
-        Ajax.post('target/cartapi/addCart', data)
+        Ajax.post('cartapi/addCart', data)
           .then(
             function (response) {
               console.log(vue);
@@ -204,9 +204,10 @@
 
       },
       send:function (e) {
-        Ajax.post('target/goods/api/goodsdetail', {
+        Ajax.post('goods/api/goodsdetail', {
         //Ajax.post('http://rap.taobao.org/mockjsdata/31603/get', {
-          goodsId: e.$route.params.id
+          goodsId: e.$route.params.id,
+          memberId:88
         })
           .then(function (response) {
             //console.log(response)
@@ -224,9 +225,9 @@
               e.price = nData.goodsStorePrice;
               e.sku.stock_num = nData.goodsTotalStorage;
               e.collection_id = nData.goodsId;
-              e.initialSku.price = nData.goodsStorePrice;
-              e.initialSku.collection_id = nData.goodsId;
-              e.initialSku.stock_num = nData.goodsTotalStorage;
+              //e.initialSku.price = nData.goodsStorePrice;
+              //e.initialSku.collection_id = nData.goodsId;
+              //e.initialSku.stock_num = nData.goodsTotalStorage;
               console.log(nData);
               for (let x in nData.specName){
                 let Data;
@@ -273,7 +274,7 @@
                   console.log(e +"===="+oData.tree[a].v[j].id);
                   if( e == oData.tree[a].v[j].id){
                     b = a;
-                    console.log("t");
+                    //console.log("t");
                     break;
                   }else if(j == len){
                     a++;

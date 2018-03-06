@@ -10,7 +10,7 @@
               <div class="van-address-list__name">{{ item.trueName }}，{{ item.telPhone }}</div>
               <div class="van-address-list__address">{{ item.areaInfo }}{{item.address}}</div>
             </van-radio>
-            <van-icon slot="right" name="edit" class="van-address-list__edit" v-bind:class="{'van-icon-check':indexTrue,'van-icon-checked':!indexTrue}" @click="onEdit(item, index)" />
+            <van-icon slot="right" name="edit" class="van-address-list__edit" v-bind:class="{'van-icon-check':indexTrue,'van-icon-checked':!indexTrue}" @click.stop="onEdit(item, index)" />
           </div>
           <!-- <div class="van-cell-swipe__right"><span>删除</span></div> -->
           <span slot="right" @click="onClose('right', index)">删除</span>
@@ -68,16 +68,19 @@
         this.$router.push({path: '/addressEdit'});
       },
       onEdit(item, index) {
-        address_id = index;
-        // Toast('编辑收货地址:' + index);
-        sessionStorage.setItem("addressId", address_id_str[index]);
-        this.$router.push({path: '/addressEdit', query: { tart:'124' }});
+         this.$store.dispatch('editAddress',item);
+          address_id = index;
+          console.log(address_id_str[index]);
+        // sessionStorage.setItem("addressId", address_id_str[index]);
+        this.$router.push({path: '/addressEdit', query: {tart: '124'}});
       },
       onSelect(item, index) {
         if(index+1){
           $(".van-radio").find("i").attr("class","van-icon van-icon-check");
           $(".van-radio").eq(index).find("i").attr("class","van-icon van-icon-checked");
         }
+        localStorage.setItem('selectAddress', JSON.stringify(item));
+        this.$router.push({path: '/toPay'});
       },
       onClose(clickPosition, instance) {
         switch (clickPosition) {
@@ -95,7 +98,7 @@
         // Ajax.get('/static/address.json')
         let url = 'target/address/api/addressList'
         let data = {
-          memberId: '5'
+          memberId: 88
         }
         // Ajax.get('/static/address.json')
         Ajax.post(url, data)

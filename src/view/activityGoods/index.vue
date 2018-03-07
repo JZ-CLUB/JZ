@@ -180,7 +180,7 @@
 
         console.log(datalist);
         localStorage.setItem("datalist", JSON.stringify(datalist));
-        localStorage.setItem("goodstype", "1");
+
 
         var data = {
           goodsId:this.$route.params.id,
@@ -228,6 +228,7 @@
               //e.initialSku.price = nData.goodsStorePrice;
               //e.initialSku.collection_id = nData.goodsId;
               //e.initialSku.stock_num = nData.goodsTotalStorage;
+              localStorage.setItem("goodstype", nData.goodsType);
               console.log(nData);
               for (let x in nData.specName){
                 let Data;

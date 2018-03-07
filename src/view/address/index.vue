@@ -2,18 +2,21 @@
   <div>
    <div class="van-address-list">
     <van-radio-group class="van-address-list__group" v-model="radio">
-      <van-cell-group>
+      <!-- <van-cell-group> -->
         <van-cell v-for="(item, index) in list" :key="index">
           <div class="add_info" @click="onSelect(item, index)">
             <van-radio :name="item.addressId">
               <div class="van-address-list__name">{{ item.trueName }}，{{ item.telPhone }}</div>
               <div class="van-address-list__address">{{ item.areaInfo }}，{{item.address}}</div>
             </van-radio>
-            <van-icon name="edit" class="van-address-list__edit" v-bind:class="{'van-icon-check':indexTrue,'van-icon-checked':!indexTrue}" @click.stop="onEdit(item, index)" />
+            
           </div>
+          <div class="nihaoa">
           <van-icon name="delete" @click="onDelete(item, index)" solt="right"/>
+          <van-icon name="edit" v-bind:class="{'van-icon-check':indexTrue,'van-icon-checked':!indexTrue}" @click.stop="onEdit(item, index)" />
+          </div>
         </van-cell>
-      </van-cell-group>
+      <!-- </van-cell-group> -->
     </van-radio-group>
     <div class="van-cell van-address-list__add van-hairline--top van-hairline van-cell--clickable">
       <div class="van-cell__title" @click="onAdd()">
@@ -136,6 +139,9 @@
 </script>
 
 <style lang="less" scoped>
+.nihaoa{
+  float: right;
+}
 .van-address-list{
   .van-cell{
     padding: 10px 0px 10px 15px !important;

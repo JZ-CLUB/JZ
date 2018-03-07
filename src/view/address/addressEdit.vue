@@ -24,7 +24,7 @@
         <van-row>
           <van-col span="8">
             <van-cell-group>
-              <van-cell :value="proSheng"/>
+              <van-cell :value="proSheng" class="no-wrap"/>
             </van-cell-group>
           </van-col>
           <van-col span="8">
@@ -370,5 +370,8 @@
 }
 .van-cell{
   padding: 10px 15px 10px 0px !important;
+}
+.no-wrap{
+  padding: 10px 0px 10px 0px !important;
 }
 </style>

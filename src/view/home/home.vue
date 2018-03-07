@@ -1,7 +1,7 @@
 <template>
   <div class="goodsList">
     <scroller :on-infinite="refresh" ref="my_scroller">
-      <van-search v-model='info' placeholder="请输入商品名称"/>
+      <van-search background="#000000" v-model='info' placeholder="请输入商品名称"/>
 
       <van-swipe v-show="showFlag">
         <div v-for="(image, index) in imageList" :key="index" @click="$router.push({ name: 'activityGoods', params: { id:image.goodsId }})">
@@ -76,8 +76,9 @@
       let vm = this
       Toast.loading({ mask: true,duration:0 });
       sig(true).then(function(message) {
-        vm.recommend()
+        // vm.recommend()
       }, function(error) {});
+      vm.recommend()
 
     },
     computed: {
@@ -160,13 +161,10 @@
 </script>
 
 <style lang="less" scoped>
-  .searchBox{
-    height: 1rem;
-    padding: 0.2rem 0.24rem;
-  }
   .van-search__input{
     height: 18px;
     line-height: 18px;
+    text-align: center;
   }
   .van-swipe-item{
     height: 4.18rem;

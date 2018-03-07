@@ -4,8 +4,12 @@
       <img src="../../images/info_card.png" alt="">
     </div>
     <div class="btnBox">
-      <van-button type="default">查看我的活动</van-button>
-      <van-button type="default">返回活动首页</van-button>
+      <router-link to="/myOrder">
+        <van-button type="default">查看我的活动</van-button>
+      </router-link>
+      <router-link to="/">
+        <van-button type="default">返回活动首页</van-button>
+      </router-link>
     </div>
   </div>
 </template>

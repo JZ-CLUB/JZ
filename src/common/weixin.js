@@ -13,14 +13,13 @@ const sig = () => {
           if(res.result === 1){
             localStorage.openId = res.data[0].openid
             console.log(res.msg)
-
             //window.open("http://localhost:3000/#/register")
-
           }else if(res.result === 2){
             localStorage.openId = res.data[0].openid
             localStorage.memberId = res.data[0].memberid
             console.log(res.msg)
           }else{
+            localStorage.memberId = 88
             console.log(res.msg)
             //window.open("http://localhost:3000/#/register")
           }

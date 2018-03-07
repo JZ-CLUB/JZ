@@ -1,6 +1,6 @@
 <template>
   <div class="van-address-list">
-    <van-cell-group v-if="goodsType!==1">
+    <van-cell-group v-if="goodsType==='2'">
       <router-link to="/address">
         <van-cell is-link>
           <div v-if="selectAddress!==''">
@@ -50,8 +50,8 @@
       return {
         chosenAddressId: '1',
         list:'',
-        goodsType:1,//1---二维码  2-----实体票
-        tickType:localStorage.getItem('goodstype'),
+        goodsType:localStorage.getItem('goodstype'),//1---二维码  2-----实体票
+        tickType:localStorage.getItem('goodstype')===1 ? '实体票' : '二维码',
         tickTime:'aaa',
         tickPosition:'sss',
         tickNum:1,
@@ -100,7 +100,7 @@
         let data={
           cartIds:localStorage.getItem('cartIds'),
           addressId:that.selectAddress.addressId,
-          memberid:88,
+          memberid:localStorage.getItem('memberId'),
           paytype:1
         }
         Ajax.post('target/orderapi/saveorder',data)
@@ -108,7 +108,11 @@
             let res=response.data;
             if(res.result===1){
               that.paySn = res.data[0].paySn
-              that.toPay()
+              if(that.totalPrice === 0){
+                that.$router.push({ name: 'buySuccessful'})
+              }else{
+                that.toPay()
+              }
             }else{
               Toast(res.msg)
             }
@@ -122,7 +126,7 @@
         let that=this
         let data={
           paySn:that.paySn,
-          memberId:88
+          memberId:localStorage.getItem('memberId')
         }
         Ajax.post('target/wxpay/api/payorder',data)
           .then(function (response) {
@@ -137,7 +141,7 @@
           })
           .catch(function (error) {
             console.log(error)
-            Toast('加载失败error')
+            Toast(error)
           });
       },
       onBridgeReady: function () {

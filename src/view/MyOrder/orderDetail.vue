@@ -4,7 +4,7 @@
       <div slot="title">订单号：{{orderInfo.orderSn}}</div>
     </van-cell>
 
-    <van-cell v-if="orderInfo.orderType===0">
+    <van-cell v-if="orderInfo.orderType==='2'">
       <div class="van-address-list__name">收货人：{{ addressInfo.trueName }}，电话：{{ addressInfo.telPhone }}</div>
       <div class="van-address-list__address">收货地址：{{ addressInfo.areaInfo }}{{addressInfo.address}}</div>
     </van-cell>
@@ -30,10 +30,10 @@
       <van-button size="small" type="danger" @click="toPay">付款</van-button>
     </div>
 
-    <div v-if="orderInfo.orderType===0&&orderInfo.orderStateNum===40" class="ewm">
-      <p>二维码号：222332444554</p>
+    <div v-if="orderInfo.orderType==='1'&&orderInfo.orderStateNum===40" class="ewm">
+      <!--<p>二维码号：222332444554</p>-->
       <div>
-        <img src="http://15.146.38.175:8000/upload/img/store/9/1519726538964.jpg" alt="">
+        <img :src="comPath.imgPath+codeImg" alt="">
       </div>
     </div>
 
@@ -61,7 +61,8 @@
         orderInfo:[],
         addressInfo:'',
         orderGoodsList:[],
-        signInfo:''
+        signInfo:'',
+        codeImg:''
       }
     },
     created() {
@@ -83,7 +84,7 @@
             let res=response.data;
             if(res.data!==[]){
               that.orderInfo = {
-                orderType:res.data[0].orderType,
+                orderType:res.data[0].goodsType,
                 orderSn:res.data[0].orderSn,
                 paySn:res.data[0].paySn,
                 orderTotalPrice:res.data[0].orderTotalPrice,
@@ -91,11 +92,27 @@
                 orderState:res.data[0].orderState === 10 ? '待付款' : (res.data[0].orderState === 20 ? '待发货' : (res.data[0].orderState === 30 ? '已发货' : (res.data[0].orderState === 40 ? '已出票' : (res.data[0].orderState === 50 ? '已提交' : (res.data[0].orderState === 60 ? '已确认' : '已取消')))))
               }
               that.addressInfo = res.data[0].address
-              that.orderGoodsList = res.data[0].orderGoodsList[0],
+              that.orderGoodsList = res.data[0].orderGoodsList[0]
+
+              if(res.data[0].goodsType !== '1'){
+                that.getCode(res.data[0].orderSn)
+              }
               Toast.clear()
             }else{
               Toast(res.msg)
             }
+          })
+          .catch(function (error) {
+            console.log(error)
+            Toast('加载失败error')
+          });
+      },
+      getCode:function (orderSn) {
+        let that = this
+        Ajax.post('target/qrCode/findQRCode',{orderSn:orderSn})
+          .then(function (response) {
+            let res=response.data;
+            that.codeImg = res.codePath
           })
           .catch(function (error) {
             console.log(error)
@@ -130,7 +147,7 @@
         let that=this
         let data={
           paySn:this.orderInfo.paySn,
-          memberId:88
+          memberId:localStorage.getItem('memberId')
         }
         Ajax.post('target/wxpay/api/payorder',data)
           .then(function (response) {

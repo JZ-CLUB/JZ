@@ -145,7 +145,7 @@
           })
           .catch(function (error) {
             console.log(error)
-            Toast('加载失败error')
+            Toast(error)
           });
       },
       onBridgeReady: function () {

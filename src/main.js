@@ -20,6 +20,7 @@ import storeObject from './store/index'
 var store = new Vuex.Store(storeObject)
 
 import './common/reset.css';
+import 'vant/lib/vant-css/icon-local.css'
 new Vue({
   router,
   store,

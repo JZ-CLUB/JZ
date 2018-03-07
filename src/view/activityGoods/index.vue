@@ -127,7 +127,7 @@
         },
         goods_con: {// 商品标题
           title: '测试商品',
-          Img: 'https://img.yzcdn.cn/1.jpg'
+          Img: ''
         },
 
 

@@ -26,7 +26,7 @@
     </div>
 
     <van-submit-bar
-      :price="3050"
+      :price="totalPrice"
       label="总金额："
       button-text="立即购买"
       @submit="onSubmit"
@@ -58,7 +58,8 @@
         carType:JSON.parse(localStorage.getItem('datalist')),
         paySn:{},
         signInfo:'',
-        selectAddress:''
+        selectAddress:'',
+        totalPrice:0
       }
     },
     created() {
@@ -68,10 +69,26 @@
     },
     methods: {
       cardDetail() {
-        this.goodsType = localStorage.getItem('goodstype')
-        if(localStorage.getItem('selectAddress')!==undefined){
+        let that = this
+        that.goodsType = localStorage.getItem('goodstype')
+        if(localStorage.getItem('selectAddress')!==null){
           this.selectAddress = JSON.parse(localStorage.getItem('selectAddress'))
         }
+        Ajax.post('target/cart/findCartInfoById',{cartId:localStorage.getItem('cartIds')})
+          .then(function (response) {
+            let res=response.data;
+            if(res.result==='1'){
+              that.totalPrice = Number(res.goodsPrice)*100
+              // that.carType = res
+              // console.log(res.specInfo.split(';'))
+            }else{
+              Toast(res.msg)
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+            Toast('加载失败error')
+          });
         Toast.clear()
       },
       onSubmit() {
@@ -81,7 +98,6 @@
           return
         }
         let data={
-          openId:'',
           cartIds:localStorage.getItem('cartIds'),
           addressId:that.selectAddress.addressId,
           memberid:88,

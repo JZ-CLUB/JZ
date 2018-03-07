@@ -2,17 +2,21 @@
   <div>
    <div class="van-address-list">
     <van-radio-group class="van-address-list__group" v-model="radio">
-      <van-cell-group>
+      <!-- <van-cell-group> -->
         <van-cell v-for="(item, index) in list" :key="index">
           <div class="add_info" @click="onSelect(item, index)">
             <van-radio :name="item.addressId">
               <div class="van-address-list__name">{{ item.trueName }}，{{ item.telPhone }}</div>
-              <div class="van-address-list__address">{{ item.areaInfo }}{{item.address}}</div>
+              <div class="van-address-list__address">{{ item.areaInfo }}，{{item.address}}</div>
             </van-radio>
-            <van-icon slot="right" name="edit" class="van-address-list__edit" v-bind:class="{'van-icon-check':indexTrue,'van-icon-checked':!indexTrue}" @click.stop="onEdit(item, index)" />
+            
+          </div>
+          <div class="nihaoa">
+          <van-icon name="delete" @click="onDelete(item, index)" solt="right"/>
+          <van-icon name="edit" v-bind:class="{'van-icon-check':indexTrue,'van-icon-checked':!indexTrue}" @click.stop="onEdit(item, index)" />
           </div>
         </van-cell>
-      </van-cell-group>
+      <!-- </van-cell-group> -->
     </van-radio-group>
     <div class="van-cell van-address-list__add van-hairline--top van-hairline van-cell--clickable">
       <div class="van-cell__title" @click="onAdd()">
@@ -50,7 +54,8 @@
         radio: 0,
         counter: 0,
         address_str:'',
-        tar:'tar'
+        tar:'tar',
+        AddressId:''
       }
     },
     created () {
@@ -71,25 +76,25 @@
       onEdit(item, index) {
          this.$store.dispatch('editAddress',item);
           address_id = index;
-          console.log(address_id_str[index]);
+          // console.log(address_id_str[index]);
         // sessionStorage.setItem("addressId", address_id_str[index]);
-        this.$router.push({path: '/addressEdit', query: {tart: '124'}});
+        this.$router.push({path: '/addressEdit', query: {tart: address_id_str[index]}});
       },
       onSelect(item, index) {
         localStorage.setItem('selectAddress', JSON.stringify(item));
         this.$router.push({path: '/toPay'});
       },
-      onClose(clickPosition, instance) {
-        switch (clickPosition) {
-          case 'right':
-            Dialog.confirm({
-              message: '确定删除吗？'
-            }).then(() => {
-              this.list.splice(instance, 1);
-            });
-          break;
-        }
-    },
+      // onClose(clickPosition, instance) {
+      //   switch (clickPosition) {
+      //     case 'right':
+      //       Dialog.confirm({
+      //         message: '确定删除吗？'
+      //       }).then(() => {
+      //         this.list.splice(instance, 1);
+      //       });
+      //     break;
+      //   }
+      // },
       getAddressList: function () {
         let that = this;
         // Ajax.get('/static/address.json')
@@ -108,12 +113,35 @@
         .catch(function (error) {
 
         });
-      }
+      },
+      onDelete(item, index) {
+        Dialog.confirm({
+          message: '确定删除吗？'
+        }).then(() => {
+          this.list.splice(index,1);
+          let url = 'target/address/api/delAddress'
+          let data = {
+            addressId: item.addressId
+          }
+          Ajax.post(url, data)
+          .then(function (res) { 
+            Toast("成功");
+          })
+          .catch(function (error) {
+
+          });
+        }).catch(() => {
+          Toast("取消");
+        });
+      },
     }
   }
 </script>
 
 <style lang="less" scoped>
+.nihaoa{
+  float: right;
+}
 .van-address-list{
   .van-cell{
     padding: 10px 0px 10px 15px !important;

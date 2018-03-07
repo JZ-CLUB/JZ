@@ -127,7 +127,7 @@
         },
         goods_con: {// 商品标题
           title: '测试商品',
-          Img: 'https://img.yzcdn.cn/1.jpg'
+          Img: ''
         },
 
 
@@ -190,7 +190,7 @@
         };
 
         console.log(data);
-        Ajax.post('cartapi/addCart', data)
+        Ajax.post('target/cartapi/addCart', data)
           .then(
             function (response) {
               console.log(vue);
@@ -204,7 +204,7 @@
 
       },
       send:function (e) {
-        Ajax.post('goods/api/goodsdetail', {
+        Ajax.post('target/goods/api/goodsdetail', {
         //Ajax.post('http://rap.taobao.org/mockjsdata/31603/get', {
           goodsId: e.$route.params.id,
           memberId:88

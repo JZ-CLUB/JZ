@@ -32,6 +32,7 @@
 <script>
   import Vue from 'vue';
   import VueLazyLoad from 'vue-lazyload'
+  import {sig} from '../../common/weixin'
   Vue.use(VueLazyLoad,{
     error:'',
     loading:''
@@ -56,7 +57,7 @@
         activityList: [],
         disabled: false,
         sendData:{
-          searchType:'gcIdSearch',
+          searchType:'allSearch',
           keyword:'',
           pageNo:0,
           brandId:'',
@@ -74,7 +75,10 @@
     created () {
       let vm = this
       Toast.loading({ mask: true,duration:0 });
-      vm.recommend()
+      sig(true).then(function(message) {
+        vm.recommend()
+      }, function(error) {});
+
     },
     computed: {
       showFlag:function () {
@@ -94,6 +98,7 @@
     },
     methods: {
       recommend() {
+        console.log(localStorage.openId)
         let that=this
         Ajax.post('target/recommendGoodsApi/api/Recommedgoodslist',{goodsflagsname:'recommend'})
           .then(function (response) {
@@ -179,7 +184,7 @@
     .van-col-12{
       margin: 15px 0px 0 0;
       .cardImg{
-        width: 3.4rem;
+        max-width: 100%;
         height: 1.9rem;
         margin: 0 auto;
       }

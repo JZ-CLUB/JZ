@@ -24,7 +24,7 @@
         <van-row>
           <van-col span="8">
             <van-cell-group>
-              <van-cell :value="proSheng"/>
+              <van-cell :value="proSheng" class="no-wrap"/>
             </van-cell-group>
           </van-col>
           <van-col span="8">
@@ -73,7 +73,6 @@
 
 
 <script>
-  // let addressId = sessionStorage.getItem("addressId");
   import { Field , Cell, CellGroup, Picker, Row, Col, Area, Popup, Button } from 'vant';
   import { Toast } from 'vant';
   import { Dialog } from 'vant';
@@ -111,30 +110,53 @@
         addressInfo:'',
         zipCode:'',
         mobPhone:'',
-        addressId:''
+        addressId:'',
+        bb:'',
+        addressNum:''
       }
     },
     created() {
       let vm = this;
       vm.sheng();
       vm.addressInfo = this.$store.state.address.addressInfo;
-      let mm = this.$route.query.tart;
-      if( mm == '124'){
+      // vm.addressNum = sessionStorage.getItem("addressId")
+      vm.addressNum = this.$route.query.tart;
+      if( vm.addressNum != null ){
         vm.addEdit();
       }
     },
     methods: {
       addEdit (){
-        let addressInfoStr = [];
-        addressInfoStr = this.addressInfo.address.split(" ");
-        this.username = this.addressInfo.trueName;
-        this.telpbone = this.addressInfo.telPhone;
-        this.proSheng = addressInfoStr[0];
-        this.proCity = addressInfoStr[1];
-        this.proArea = addressInfoStr[2];
-        this.zipCode = this.addressInfo.zipCode;
-        this.mobPhone = this.addressInfo.mobPhone;
-        this.memberId = this.addressInfo.memberId;
+        let that = this;
+        let url = 'target/address/api/addressList'
+        let data = {
+          memberId: 88
+        }
+        Ajax.post(url, data)
+        .then(function (res) {
+          console.log(that.addressNum);
+          for(let n = 0; n < res.data.data.length; n++){
+            if(res.data.data[n].addressId == that.addressNum){
+              that.bb = n;
+            }  
+          }
+          let addressInfoStr = res.data.data[that.bb].address.split(" ");
+          that.username = res.data.data[that.bb].trueName;
+          that.telpbone = res.data.data[that.bb].telPhone;
+          that.proSheng = addressInfoStr[0];
+          that.proCity = addressInfoStr[1];
+          that.proArea = addressInfoStr[2];
+          that.zipCode = res.data.data[that.bb].zipCode;
+          that.mobPhone = res.data.data[that.bb].mobPhone;
+          that.memberId = res.data.data[that.bb].memberId;
+          that.provinceId = res.data.data[that.bb].provinceId;
+          that.cityId = res.data.data[that.bb].cityId;
+          that.areaId = res.data.data[that.bb].areaId;
+          that.address_detail = res.data.data[that.bb].areaInfo;
+        })
+        .catch(function (error) {
+
+        });
       },
       onChange(picker, value, index) {
         let areaId = `${value.areaId}`;
@@ -162,7 +184,8 @@
               }
               nini[i+1] = bb;
             }
-              that.columns1 = nini;            
+              that.columns1 = nini;  
+              that.columns2 = [{"text":"请选择"}]          
           }).catch(function (error) {
             
           });
@@ -223,7 +246,7 @@
         Ajax.post('target/area/api/arealist')
         .then(function (res) {
         // Ajax.get("/static/sheng.json").then(function(res) {
-          console.log(nini)
+          // console.log(nini)
           for(let i = 0; i < res.data.data.length; i++){
             let bb = {
               "text": res.data.data[i].areaName,
@@ -232,6 +255,8 @@
             nini[i+1] = bb;
           }  
           that.columns = nini;
+          that.columns1 = [{"text":"请选择"}]
+          that.columns2 = [{"text":"请选择"}]
         }).catch(function (error) {
           
         });
@@ -260,13 +285,13 @@
               trueName:_this.username,
               mobPhone:_this.mobPhone,
               telPhone:_this.telpbone,
-              areaId:_this.addressInfo.areaId,
-              cityId:_this.addressInfo.cityId,
+              areaId:_this.areaId,
+              cityId:_this.cityId,
               areaInfo:_this.address_detail,
               address:_this.proSheng +" "+ _this.proCity +" "+ _this.proArea,
-              provinceId:_this.addressInfo.provinceId,
+              provinceId:_this.provinceId,
               zipCode:_this.zipCode,
-              addressId:_this.addressInfo.addressId
+              addressId:_this.addressNum
             }
             Ajax.post('target/address/api/saveAddress', data)
             .then(function (res) {
@@ -345,5 +370,8 @@
 }
 .van-cell{
   padding: 10px 15px 10px 0px !important;
+}
+.no-wrap{
+  padding: 10px 0px 10px 0px !important;
 }
 </style>

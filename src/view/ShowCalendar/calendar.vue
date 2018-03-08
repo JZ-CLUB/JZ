@@ -1,10 +1,9 @@
 <template>
-
-  <div id="calendar" class="calendar"></div>
-
-
-
-
+  <div id="calendar" class="calendar">
+    <div class="calendar__showcalender">
+      <img src="./mod/img/ShowCalendar.jpg">
+    </div>
+  </div>
 </template>
 <script>
   import './mod/css/calendar.css';
@@ -12,8 +11,8 @@
 
     $('#calendar').calendar({
       ifSwitch: true, // 是否切换月份
-      hoverDate: true, // hover是否显示当天信息
-      backToday: true // 是否返回当天
+      hoverDate: false, // hover是否显示当天信息
+      backToday: false // 是否返回当天
     });
 
   });
@@ -43,7 +42,7 @@
         var _week = changingStr(changeStr).getDay();
         var _weekStr = '';
 
-        this.$calendar_today.show();
+        //this.$calendar_today.show();
 
         this.$calendar_today
           .css({left: offset_l + 30, top: offset_t})
@@ -85,7 +84,7 @@
         var dateStr = returnDateStr(dateObj.getDate());
         var firstDay = new Date(year, month - 1, 1); // 当前月的第一天
 
-        this.$calendarTitle_text.text(year + '/' + dateStr.substr(4, 2));
+        this.$calendarTitle_text.text(year + '年' + dateStr.substr(4, 2)+'月');
 
         this.$calendarDate_item.each(function (i) {
           // allDay: 得到当前列表显示的所有天数
@@ -124,13 +123,13 @@
           '<span class="arrow-prev"><</span>'+
           '<span class="arrow-next">></span>'+
           '</div>';
-        var _weekStr = '<li class="item">日</li>'+
-          '<li class="item">一</li>'+
-          '<li class="item">二</li>'+
-          '<li class="item">三</li>'+
-          '<li class="item">四</li>'+
-          '<li class="item">五</li>'+
-          '<li class="item">六</li>';
+        var _weekStr = '<li class="item">SUN</li>'+
+          '<li class="item">MON</li>'+
+          '<li class="item">TUE</li>'+
+          '<li class="item">WED</li>'+
+          '<li class="item">THU</li>'+
+          '<li class="item">FIR</li>'+
+          '<li class="item">SAT</li>';
         var _dateStr = '';
         var _dayStr = '<i class="triangle"></i>'+
           '<p class="date"></p>'+
@@ -205,11 +204,11 @@
           });
         }
 
-        this.$calendarDate_item.hover(function () {
+        /*this.$calendarDate_item.hover(function () {
           self.showHoverInfo($(this));
         }, function () {
           self.$calendar_today.css({left: 0, top: 0}).hide();
-        });
+        });*/
 
         this.$calendarDate_item.click(function () {
           var _dateStr = $(this).attr('data');
@@ -293,7 +292,70 @@
         name: "calendar"
     }
 </script>
+<style lang="less">
+  body{
+    background-color: #000;
+  }
+  .calendar{
+    background-color: #000;
+    padding: 0;
+    margin: 0;
+    #backToday{
+      display: none;
+    }
+    &__showcalender{
+    }
+    .calendar-week{
+      border: none;
+      padding: 0;
+      background-color: #1a1a1a;
+      & .item{
+        width: 14%;
+      }
+    }
+    .calendar-date{
+      & .item.item-curDay{
+        background-color: transparent;
+        color: #f0c37a;
+        font-weight: bold;
+      }
+    }
+    .calendar-title{
+      height: 50px;
+      & .arrow{
+        //display: none;
+        width: 100%;
+      }
+      & .arrow-prev{
+        margin-left: 10px
+      }
+      & .arrow-next{
+        margin-right: 10px
+      }
+      & a.title{
+        font-size: 18px;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        color: #ebb975;
+        font-weight: bold;
+      }
+    }
+    .calendar-date{
+      & .item.item-curMonth{
+        color: #f0c37a;
+      }
+      & .item{
+        width: 14%;
+        height: 70px;
+        line-height: 70px;
+        color: #fff;
+      }
+    }
 
-<style scoped>
-
+  }
+  .calendar-date .item-selected, .calendar-date .item-selected:hover{
+    background-color: transparent;
+  }
 </style>

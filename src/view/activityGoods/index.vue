@@ -31,8 +31,8 @@
           </div>
           <div class="van-sku-header__goods-info">
             <div class="van-sku__goods-name">{{ goods.title }}</div>
-            <div class="van-sku__goods-price"><span class="van-sku__price-symbol">￥</span><span class="van-sku__price-num">{{ price }}</span></div>
-            <span class="van-sku__close-icon" @click="props.skuEventBus.$emit('sku:close')" />
+            <div class="van-sku__goods-price" style="display: none"><span class="van-sku__price-symbol">￥</span><span class="van-sku__price-num">{{ price }}</span></div>
+            <span class="van-sku__close-icon" style="display: none" @click="props.skuEventBus.$emit('sku:close')" />
           </div>
         </div>
       </template>
@@ -369,9 +369,29 @@
 
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
+  body{
+    background-color: #1a1a1a;
+  }
+
   .goods {
-    padding-bottom: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: "Microsoft YaHei";
+    font-size: 14px;
+
+    img{
+      width: 100%
+    }
+
+    h1,h2,h3,h4,h5,h6{
+      color: #d25454;
+      font-weight: bold;
+      line-height: 30px;
+    }
+    p{
+      line-height: 24px;
+    }
 
     &-swipe {
       img {
@@ -402,10 +422,70 @@
         color: #999;
       }
     }
-  }
-  .van-sku-row{
-    &__title {
-      font-size: 12px;
+
+
+
+    .van-hairline--bottom::after{
+      border-bottom: 1px solid #070d1a;
     }
+    .van-sku-row{
+      &__title {
+        font-size: 12px;
+      }
+    }
+    .van-sku{
+      &-header__goods-info{
+        min-height: 24px;
+      }
+      &__goods-name{
+        font-size: 14px;
+        text-align: center;
+      }
+      &-row__item{
+        min-width: 45%;
+        color: #c7a070;
+        text-align: center;
+        border: 1px solid #c7a070;
+      }
+      &-row__item.van-sku-row__item--active{
+        color: #d52d33;
+        border: 1px solid #d52d33;
+        background: transparent;
+      }
+      &__quota{
+        color: #be2c36;
+      }
+
+    }
+    .van-button--bottom-action.van-button--primary{
+      background-color: #be2c36;
+    }
+    .van-popup--bottom{
+      .van-sku-layout{
+        background: #262626;
+      }
+    }
+    .van-stepper{
+      &__stepper{
+        background-color: #f0c37a;
+        border-color: #282828;
+        color: #000;
+      }
+      &__minus--disabled,&__plus--disabled{
+        background-color: #8b7550;
+        border-color: #282828;
+        color: #453a28;
+      }
+      &__input{
+        background-color: #666666;
+        border-color: #282828;
+        color: #fff;
+        font-size: 12px;
+        font-weight: bold;
+      }
+    }
+
   }
+
+
 </style>

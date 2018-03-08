@@ -7,7 +7,8 @@
 <style>
 body {
   font-size: 16px;
-  background-color: #f8f8f8;
+  color:#f0c37a;
+  /*background-color: #000000;*/
   -webkit-font-smoothing: antialiased;
 }
 </style>

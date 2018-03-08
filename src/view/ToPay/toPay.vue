@@ -15,7 +15,7 @@
 
     </van-cell-group>
     <div class="itemInfo">
-      <h1 class="">cell三重奏</h1>
+      <h1 class="">{{goodsTitle}}</h1>
       <van-cell-group>
         <van-cell title="门票类型" :value="tickType" />
         <van-cell v-for="(val, key, index) in carType" :key="index" :title="key" :value="val" />
@@ -59,7 +59,8 @@
         paySn:{},
         signInfo:'',
         selectAddress:'',
-        totalPrice:0
+        totalPrice:0,
+        goodsTitle:localStorage.getItem('goodsTitle')
       }
     },
     created() {

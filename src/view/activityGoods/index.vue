@@ -149,6 +149,7 @@
         return this.showCustomAction= true;
       },
       handleBuyClicked(e){
+        let that = this
         console.log(e);
         let oData = this.sku;
         let goodsId = e.goodsId;
@@ -193,15 +194,13 @@
         Ajax.post('target/cartapi/addCart', data)
           .then(
             function (response) {
-              console.log(vue);
               if(response.data.result==1){
                 localStorage.setItem('cartIds',response.data.data[0].cartIds)
+                localStorage.setItem('goodsTitle',that.goods.title)
                 vue.$router.push({ name: 'toPay'})
               }
             }
           );
-
-
       },
       send:function (e) {
         Ajax.post('target/goods/api/goodsdetail', {

@@ -94,7 +94,7 @@
               that.addressInfo = res.data[0].address
               that.orderGoodsList = res.data[0].orderGoodsList[0]
 
-              if(res.data[0].goodsType !== '1'){
+              if(res.data[0].goodsType === '1'){
                 that.getCode(res.data[0].orderSn)
               }
               Toast.clear()

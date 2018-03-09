@@ -1,28 +1,27 @@
 <template>
-  <div class="van-address-list">
-    <van-cell-group v-if="goodsType==='2'">
+  <div class="toPayBox">
+    <van-cell-group class="payAddress" v-if="goodsType==='2'">
       <router-link to="/address">
         <van-cell is-link>
           <div v-if="selectAddress!==''">
-            <div class="van-address-list__name">收货人：{{ selectAddress.trueName }}，{{ selectAddress.telPhone }}</div>
-            <div class="van-address-list__address">{{ selectAddress.address }}{{ selectAddress.areaInfo }}</div>
+            <div class="van-address-list__name">收货人：{{ selectAddress.trueName }} <span class="telPhone">{{ selectAddress.telPhone }}</span></div>
+            <div class="van-address-list__address">收货地址：{{ selectAddress.address }}{{ selectAddress.areaInfo }}</div>
           </div>
 
           <div v-if="selectAddress===''" class="van-address-list__address">请选择收货地址</div>
         </van-cell>
       </router-link>
-      <div class="aa"></div>
-
     </van-cell-group>
     <div class="itemInfo">
       <h1 class="">{{goodsTitle}}</h1>
       <van-cell-group>
         <van-cell title="门票类型" :value="tickType" />
         <van-cell v-for="(val, key, index) in carType" :key="index" :title="key" :value="val" />
-        <!--<van-cell title="演出时间" :value="tickTime" />
-        <van-cell title="区域位置" :value="tickPosition" />
-        <van-cell title="数量" :value="tickNum" />-->
       </van-cell-group>
+    </div>
+
+    <div class="tips">
+      <p>点击阅读【购票须知】</p>
     </div>
 
     <van-submit-bar
@@ -51,7 +50,7 @@
         chosenAddressId: '1',
         list:'',
         goodsType:localStorage.getItem('goodstype'),//1---二维码  2-----实体票
-        tickType:localStorage.getItem('goodstype')===1 ? '实体票' : '二维码',
+        tickType:localStorage.getItem('goodstype')===1 ? '二维码' : '实体票',
         tickTime:'aaa',
         tickPosition:'sss',
         tickNum:1,
@@ -72,7 +71,7 @@
       cardDetail() {
         let that = this
         that.goodsType = localStorage.getItem('goodstype')
-        if(localStorage.getItem('selectAddress')!==null){
+        if(localStorage.getItem('selectAddress')!==null&&localStorage.getItem('goodstype') === '2'){
           this.selectAddress = JSON.parse(localStorage.getItem('selectAddress'))
         }
         Ajax.post('target/cart/findCartInfoById',{cartId:localStorage.getItem('cartIds')})
@@ -94,7 +93,8 @@
       },
       onSubmit() {
         let that = this
-        if(localStorage.getItem('selectAddress')===undefined){
+        console.log(localStorage.getItem('selectAddress')===null)
+        if(localStorage.getItem('selectAddress')===undefined || localStorage.getItem('selectAddress')===null || localStorage.getItem('selectAddress')===''){
           Toast('请选择地址')
           return
         }
@@ -189,34 +189,81 @@
 
 </script>
 
-<style lang="less" scoped>
-
-  .van-address-list__add.van-cell{
-    background-color: #f44;
-    font-size: 16px;
-    color: #fff;
-    height: 50px;
-    line-height: 50px;
-    padding: 0;
-    text-align: center;
-
-    &__right-icon{
-      display: none;
+<style lang="less">
+  .toPayBox{
+    .payAddress{
+      margin-top:0.2rem;
+      &:after{
+        border: none;
+      }
+      .van-cell{
+        background: #1a1a1a;
+        color: #f0c37a;
+        padding: 0.15rem 0.4rem;
+        .van-address-list__name{
+          height: 0.45rem;
+          line-height: 0.45rem;
+          font-size: 0.28rem;
+          .telPhone{
+            float: right;
+          }
+        }
+        .van-address-list__address{
+          color: #f0c37a;
+          font-size: 0.28rem;
+          line-height: 0.4rem;
+        }
+        .van-cell__value--link{
+          padding-right: 0.5rem;
+        }
+      }
     }
-    .van-icon{
-      display: none;
+    .itemInfo{
+      margin: 0.2rem 0;
+      background: #1a1a1a;
+      padding: 0 0.4rem 0.15rem;
+      h1{
+        height: 0.9rem;
+        line-height: 0.9rem;
+        font-size: 0.32rem;
+      }
+      .van-cell-group{
+        background: none;
+      }
+      .van-hairline--bottom::after,
+      .van-hairline--top-bottom::after,
+      .van-hairline::after{
+        border: none;
+      }
+      .van-cell{
+        padding:0;
+        line-height: 0.6rem;
+        background: none;
+        color: #666666;
+        &:not(:last-child)::after{
+          border: 0;
+        }
+
+      }
+      .van-cell__value{
+        padding-right: 0;
+      }
+    }
+    .tips{
+      padding: 0 0.4rem;
+      color: #736047;
+      font-size: 0.24rem;
+    }
+    .van-submit-bar__bar{
+      background: #1a1a1a;
+      line-height: 1rem;
+      .van-button--danger{
+        background: #d52d33;
+      }
+      .van-submit-bar__price-interger,.van-submit-bar__price-decimal{
+        font-size: 0.28rem;
+        color: #bf2b39;
+      }
     }
   }
-  .aa{
-    width: 100%;
-    height: 2px;
-    background-image:url("../../images/lineBg.png");
-    background-size: cover;
-  }
-  .itemInfo .van-cell__value{
-    padding-right: 0;
-  }
-
-
-
 </style>

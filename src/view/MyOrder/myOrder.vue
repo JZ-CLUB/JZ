@@ -1,9 +1,9 @@
 <template>
-  <div class="user">
-    <van-row class="user-links">
-      <van-col span="8" v-for="(item,index) in tabList" :key="index">
+  <div class="myOrder">
+    <van-row class="myOrder-links">
+      <van-col class="tabItem" span="8" v-for="(item,index) in tabList" :key="index">
         <div @click="tabFun(index,item.comp)" :class="{cur:activity===index}">
-          <van-icon :name="item.icon" />
+          <!--<van-icon :name="item.icon" />-->
           {{item.name}}
         </div>
       </van-col>
@@ -61,72 +61,31 @@
     }
   }
 </script>
-<style lang="less" scoped>
-  .plugin-name {
-    margin: 0;
-    padding-top: 60px;
-    text-align: center;
-    color: #666;
-    font-style: normal;
-    font-variant-ligatures: normal;
-    font-variant-caps: normal;
-    font-variant-numeric: normal;
-    font-weight: normal;
-    font-stretch: normal;
-    font-size: 48px;
-    line-height: 48px;
-    margin-bottom: 10px;
-  }
-
-  .for-vue-js {
-    text-align: center;
-    color: #666;
-    margin-bottom: 40px;
-  }
-
-  .plugin-name, .for-vue-js {
-    font-family: Candara, Calibri, Segoe, Segoe UI, Optima, Arial, sans-serif;
-  }
-
-  .row {
-    display: block;
-    width: 100%;
-    height: 50px;
-    padding: 10px 0 10px 15px;
-    font-size: 16px;
-    line-height: 30px;
-    color: #444;
-    background-color: #fff;
-  }
-
-  .grey-bg {
-    background-color: #eee;
-  }
-
-  .arrow-right {
-    width: 8px;
-    height: 16px;
-    float: right;
-    margin-top: 7px;
-    margin-right: 15px;
-  }
-  .github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}
-
-  .user {
+<style lang="less">
+  .myOrder {
     &-links {
       position: relative;
       z-index: 22222;
-      padding: 5px 0;
       font-size: 12px;
       text-align: center;
-      background-color: #fff;
+      background: url("../../images/titleBg.jpg");
+      background-size: cover;
+      height: 0.9rem;
+      padding: 0 0.4rem;
 
       .van-icon {
         display: block;
         font-size: 24px;
       }
-      .cur{
-        color: #f40;
+      .tabItem{
+        line-height: 0.9rem;
+        color: #666666;
+        font-size: 0.32rem;
+        .cur{
+          color: #f0c37a;
+          border-bottom: 0.04rem solid #be2c36;
+
+        }
       }
     }
   }

@@ -386,6 +386,34 @@
     padding-left: 15px !important;
     background: #1a1a1a;
   }
+  .van-popup--bottom{
+    background: #1A1A1A;
+    color:#EDC080;
+    .van-hairline--top-bottom{
+      .van-picker__cancel{
+        color:#E2B979;
+        font-size: 0.28rem;
+      }
+      .van-picker__confirm{
+        color:#E2B979;
+        font-size: 0.28rem;
+      }
+    }
+    .van-row{
+      .van-col-8{
+        .van-picker{
+           background: #1A1A1A;
+           li{
+             color:#6E6C6D !important;
+             font-size: 0.28rem !important;
+           }
+           .van-picker-column--selected{
+            color:white !important;
+          }
+        }
+      }
+    }
+  }
   .van-cell{
     padding: 0 !important;
     background: #1a1a1a;

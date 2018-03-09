@@ -1,33 +1,40 @@
 <template>
-  <van-cell-group>
+  <van-cell-group class="orderDetail">
     <van-cell :value="orderInfo.orderState">
       <div slot="title">订单号：{{orderInfo.orderSn}}</div>
     </van-cell>
 
-    <van-cell v-if="orderInfo.orderType==='2'">
-      <div class="van-address-list__name">收货人：{{ addressInfo.trueName }}，电话：{{ addressInfo.telPhone }}</div>
+    <van-cell class="orderAddress" v-if="orderInfo.orderType==='2'">
+      <div class="van-address-list__name">收货人：{{ addressInfo.trueName }}<span class="telPhone">{{ addressInfo.telPhone }}</span></div>
       <div class="van-address-list__address">收货地址：{{ addressInfo.areaInfo }}{{addressInfo.address}}</div>
     </van-cell>
 
-    <div @click="$router.push({ name: 'activityGoods', params: { id:orderGoodsList.goodsId }})">
+    <!--<div @click="$router.push({ name: 'activityGoods', params: { id:orderGoodsList.goodsId }})">
       <van-card
         :title="orderGoodsList.goodsName"
         :desc="orderGoodsList.specInfo"
         :thumb="comPath.imgPath+orderGoodsList.goodsImage"
       />
+    </div>-->
+    <div class="orderTitle">
+      <h3>活动信息</h3>
     </div>
+    <div class="orderInfoBox" @click="$router.push({ name: 'activityGoods', params: { id:orderGoodsList.goodsId }})">
+      <p class="title">{{orderGoodsList.goodsName}}</p>
+      <p class="subTitle">{{orderGoodsList.specInfo}}</p>
+    </div>
+
 
     <div class="tips">
       【注】如有任何票务疑问，请联系JZ票务负责人 XXX ，电话：13011111111
     </div>
 
-    <van-cell :value="'¥'+orderInfo.orderTotalPrice">
+    <van-cell class="totalPrice" :value="'¥'+orderInfo.orderTotalPrice">
       <div slot="title">订单总价：</div>
     </van-cell>
 
     <div v-if="orderInfo.orderStateNum===10" class="textR van-panel__footer van-hairline--top">
-      <van-button size="small" @click="checkOpr(orderInfo.orderSn)">取消订单</van-button>
-      <van-button size="small" type="danger" @click="toPay">付款</van-button>
+      <van-button @click="checkOpr(orderInfo.orderSn)">取消订单</van-button><van-button @click="toPay">付款</van-button>
     </div>
 
     <div v-if="orderInfo.orderType==='1'&&orderInfo.orderStateNum===40" class="ewm">
@@ -42,7 +49,7 @@
 </template>
 <script>
   import {
-    Cell, CellGroup, Toast, Card, Panel, Button,Dialog
+    Cell, CellGroup, Toast, Card, Panel, Button, Dialog
   } from 'vant';
 
   export default {
@@ -53,16 +60,16 @@
       [Card.name]: Card,
       [Panel.name]: Panel,
       [Button.name]: Button,
-      [Dialog.name]:Dialog
+      [Dialog.name]: Dialog
     },
     data() {
       return {
-        comPath:PublicPath,
-        orderInfo:[],
-        addressInfo:'',
-        orderGoodsList:[],
-        signInfo:'',
-        codeImg:''
+        comPath: PublicPath,
+        orderInfo: [],
+        addressInfo: '',
+        orderGoodsList: [],
+        signInfo: '',
+        codeImg: ''
       }
     },
     created() {
@@ -70,35 +77,33 @@
       let vm = this
       this.orderDetail();
     },
-    computed: {
-
-    },
+    computed: {},
     mounted() {
       Toast.clear()
     },
     methods: {
-      orderDetail:function () {
-        let that=this
-        Ajax.post('target/orderapi/orderdetail',{orderid:that.$route.params.orderId})
+      orderDetail: function () {
+        let that = this
+        Ajax.post('target/orderapi/orderdetail', {orderid: that.$route.params.orderId})
           .then(function (response) {
-            let res=response.data;
-            if(res.data!==[]){
+            let res = response.data;
+            if (res.data !== []) {
               that.orderInfo = {
-                orderType:res.data[0].goodsType,
-                orderSn:res.data[0].orderSn,
-                paySn:res.data[0].paySn,
-                orderTotalPrice:res.data[0].orderTotalPrice,
-                orderStateNum:res.data[0].orderState,
-                orderState:res.data[0].orderState === 10 ? '待付款' : (res.data[0].orderState === 20 ? '待发货' : (res.data[0].orderState === 30 ? '已发货' : (res.data[0].orderState === 40 ? '已出票' : (res.data[0].orderState === 50 ? '已提交' : (res.data[0].orderState === 60 ? '已确认' : '已取消')))))
+                orderType: res.data[0].goodsType,
+                orderSn: res.data[0].orderSn,
+                paySn: res.data[0].paySn,
+                orderTotalPrice: res.data[0].orderTotalPrice,
+                orderStateNum: res.data[0].orderState,
+                orderState: res.data[0].orderState === 10 ? '待付款' : (res.data[0].orderState === 20 ? '待发货' : (res.data[0].orderState === 30 ? '已发货' : (res.data[0].orderState === 40 ? '已出票' : (res.data[0].orderState === 50 ? '已提交' : (res.data[0].orderState === 60 ? '已确认' : '已取消')))))
               }
               that.addressInfo = res.data[0].address
               that.orderGoodsList = res.data[0].orderGoodsList[0]
 
-              if(res.data[0].goodsType === '1'){
+              if (res.data[0].goodsType === '1') {
                 that.getCode(res.data[0].orderSn)
               }
               Toast.clear()
-            }else{
+            } else {
               Toast(res.msg)
             }
           })
@@ -107,11 +112,11 @@
             Toast('加载失败error')
           });
       },
-      getCode:function (orderSn) {
+      getCode: function (orderSn) {
         let that = this
-        Ajax.post('target/qrCode/findQRCode',{orderSn:orderSn})
+        Ajax.post('target/qrCode/findQRCode', {orderSn: orderSn})
           .then(function (response) {
-            let res=response.data;
+            let res = response.data;
             that.codeImg = res.codePath
           })
           .catch(function (error) {
@@ -119,7 +124,7 @@
             Toast('加载失败error')
           });
       },
-      checkOpr:function (id) {
+      checkOpr: function (id) {
         Dialog.confirm({
           message: '确定取消订单？'
         }).then(() => {
@@ -128,13 +133,13 @@
           Toast('取消')
         });
       },
-      orderCancel:function (id) {
+      orderCancel: function (id) {
         let that = this
-        Ajax.post('target/orderapi/cancleorder',{ordersn:id})
+        Ajax.post('target/orderapi/cancleorder', {ordersn: id})
           .then(function (response) {
-            let res=response.data;
-            if(res.result === 1){
-              that.$router.push({ name: 'myOrder'})
+            let res = response.data;
+            if (res.result === 1) {
+              that.$router.push({name: 'myOrder'})
             }
             Toast(res.msg)
           })
@@ -143,20 +148,20 @@
             Toast('加载失败error')
           });
       },
-      toPay:function () {
-        let that=this
-        let data={
-          paySn:this.orderInfo.paySn,
-          memberId:localStorage.getItem('memberId')
+      toPay: function () {
+        let that = this
+        let data = {
+          paySn: this.orderInfo.paySn,
+          memberId: localStorage.getItem('memberId')
         }
-        Ajax.post('target/wxpay/api/payorder',data)
+        Ajax.post('target/wxpay/api/payorder', data)
           .then(function (response) {
-            let res=response.data;
-            if(res.result===1){
+            let res = response.data;
+            if (res.result === 1) {
               that.signInfo = res.data
               that.callpay()
               Toast.clear()
-            }else{
+            } else {
               Toast(res.msg)
             }
           })
@@ -166,7 +171,7 @@
           });
       },
       onBridgeReady: function () {
-        let that=this
+        let that = this
         WeixinJSBridge.invoke(
           'getBrandWCPayRequest', {
             'appId': that.signInfo.appid,
@@ -203,18 +208,112 @@
     }
   }
 </script>
-<style lang="less" scoped>
-  .textR {
-    text-align: right;
-  }
-  .van-dialog__content{
-    text-align: center;
-  }
-  .ewm{
-    p,div{
+<style lang="less">
+  .orderDetail {
+    &::after {
+      border: 0 solid #000000;
+    }
+    background: none;
+    .van-cell {
+      background: #1a1a1a;
+      color: #f0c37a;
+      margin-top: 0.2rem;
+      &:not(:last-child)::after {
+        border-bottom-width: 0;
+      }
+      &__value {
+        color: #be2c36;
+      }
+    }
+    .orderAddress {
+      background: #1a1a1a;
+      padding: 0.15rem 0.4rem;
+      .van-address-list__name {
+        color: #f0c37a;
+        height: 0.45rem;
+        line-height: 0.45rem;
+        font-size: 0.28rem;
+        .telPhone {
+          float: right;
+        }
+      }
+      .van-address-list__address {
+        color: #f0c37a;
+        font-size: 0.28rem;
+        line-height: 0.4rem;
+      }
+      .van-cell__value--link {
+        padding-right: 0.5rem;
+      }
+    }
+    .orderTitle{
+      padding: 0 0.4rem;
+      h3{
+        line-height: 0.7rem;
+        color: #666666;
+      }
+    }
+    .orderInfoBox {
+      background: #1a1a1a;
+      padding: 0.15rem 0.4rem;
+      line-height: 0.6rem;
+      border-bottom: 0.01rem solid #000;
+      position: relative;
+      p {
+        height: 0.6rem;
+        word-break: break-all;
+        text-overflow: ellipsis;
+        display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+        -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+        -webkit-line-clamp: 1; /** 显示的行数 **/
+        overflow: hidden; /** 隐藏超出的内容 **/
+      }
+      p.title {
+        font-size: 0.28rem;
+      }
+      p.subTitle {
+        color: #666666;
+        font-size: 0.24rem;
+      }
+
+    }
+    .tips{
+      color: #736047;
+      padding: 0.15rem 0.4rem;
+      font-size: 0.24rem;
+    }
+    .totalPrice{
+      background: none;
+      font-size: 0.28rem;
+      .van-cell__value{
+        font-size: 0.4rem;
+      }
+    }
+    .textR {
+      text-align: right;
+      &::after{
+        border: 0 solid #000000;
+      }
+      .van-button{
+        margin-left: 0.2rem;
+        padding: 0 0.3rem;
+        border: 0.02rem solid #eec27f;
+        color: #eec27f;
+        background: none;
+        height: 0.6rem;
+        line-height: 0.6rem;
+        border-radius: 0;
+      }
+    }
+    .van-dialog__content {
       text-align: center;
-      img{
-        margin: 0 auto;
+    }
+    .ewm {
+      p, div {
+        text-align: center;
+        img {
+          margin: 0 auto;
+        }
       }
     }
   }

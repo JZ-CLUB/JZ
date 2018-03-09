@@ -171,6 +171,7 @@
 
 <style lang="less">
   .goodsList {
+    color: #f0c37a;
     .search {
       input {
         height: 18px;
@@ -198,7 +199,7 @@
 
     .line {
       width: 100%;
-      height: 0.08rem;
+      height: 0.04rem;
       background: #4c0013;
     }
 

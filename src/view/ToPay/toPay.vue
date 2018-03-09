@@ -61,7 +61,7 @@
         chosenAddressId: '1',
         list:'',
         goodsType:localStorage.getItem('goodstype'),//1---二维码  2-----实体票
-        tickType:localStorage.getItem('goodstype')===1 ? '二维码' : '实体票',
+        tickType:localStorage.getItem('goodstype')==='1' ? '二维码' : '实体票',
         tickTime:'aaa',
         tickPosition:'sss',
         tickNum:1,
@@ -93,6 +93,7 @@
               that.totalPrice = Number(res.goodsPrice)*100
               // that.carType = res
               // console.log(res.specInfo.split(';'))
+
             }else{
               Toast(res.msg)
             }
@@ -106,9 +107,11 @@
       onSubmit() {
         let that = this
         console.log(localStorage.getItem('selectAddress')===null)
-        if(localStorage.getItem('selectAddress')===undefined || localStorage.getItem('selectAddress')===null || localStorage.getItem('selectAddress')===''){
-          Toast('请选择地址')
-          return
+        if(localStorage.getItem('goodstype')!=='1'){
+          if(localStorage.getItem('selectAddress')===undefined || localStorage.getItem('selectAddress')===null || localStorage.getItem('selectAddress')===''){
+            Toast('请选择地址')
+            return
+          }
         }
         let data={
           cartIds:localStorage.getItem('cartIds'),
@@ -288,7 +291,7 @@
         background: #d52d33;
       }
       .van-submit-bar__price-interger,.van-submit-bar__price-decimal{
-        font-size: 0.28rem;
+        font-size: 0.4rem;
         color: #bf2b39;
       }
     }

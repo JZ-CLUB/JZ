@@ -370,11 +370,8 @@
 </script>
 
 <style lang="less">
-  body{
-    background-color: #1a1a1a;
-  }
-
   .goods {
+    background-color: #1a1a1a;
     padding-left: 20px;
     padding-right: 20px;
     font-family: "Microsoft YaHei";

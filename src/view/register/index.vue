@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="register_body">
     <div class="register_con">
      <van-cell-group class="con_container">
         <van-field
@@ -96,7 +96,7 @@ export default {
 </script>
 
 <style lang="less">
-body{
+#register_body{
   width: 100%;
   height: 100%;
   background: url("../../images/register_bg.jpg");

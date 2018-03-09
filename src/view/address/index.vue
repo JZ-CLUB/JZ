@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="address_body">
    <div class="van-address-list">
     <van-radio-group class="van-address-list__group" v-model="radio">
       <!-- <van-cell-group> -->
@@ -145,9 +145,9 @@
 </script>
 
 <style lang="less">
-body{
-  background: #1a1a1a;
-  font-family: 微软雅黑;
+#address_body{
+  // background: #1a1a1a;
+  // font-family: 微软雅黑;
   .van-address-list{
     // width: 88.26%;
     // margin:0 auto;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="addressEdit_body">
     <!-- <van-cell-group> -->
       <van-field
         v-model="username"
@@ -312,8 +312,8 @@
 </script>
 
 <style lang="less">
-body{
-  background: #000;
+#addressEdit_body{
+  // background: #000;
   input{
     background: #1a1a1a;
     color:white;

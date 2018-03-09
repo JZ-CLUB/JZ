@@ -11,12 +11,14 @@ const sig = () => {
         .then(function (response) {
           let res=response.data;
           if(res.result === 1){
-            localStorage.openId = res.data[0].openid
-            console.log(res.msg)
+            localStorage.memberId = 88
+            //localStorage.openId = res.data[0].openid
             //window.open("http://localhost:3000/#/register")
+            console.log(res.msg)
           }else if(res.result === 2){
-            localStorage.openId = res.data[0].openid
-            localStorage.memberId = res.data[0].memberid
+            localStorage.memberId = 88
+            //localStorage.openId = res.data[0].openid
+            // localStorage.memberId = res.data[0].memberid
             console.log(res.msg)
           }else{
             localStorage.memberId = 88

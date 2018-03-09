@@ -211,6 +211,8 @@
         .cardImg {
           max-width: 100%;
           margin: 0 auto;
+          width: 3.3rem;
+          height: 3.3rem;
         }
         .cardText {
           text-align: center;

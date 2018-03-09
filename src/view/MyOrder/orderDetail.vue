@@ -99,7 +99,7 @@
               that.addressInfo = res.data[0].address
               that.orderGoodsList = res.data[0].orderGoodsList[0]
 
-              if (res.data[0].goodsType === '1') {
+              if (res.data[0].goodsType === '1' && res.data[0].orderState === 40) {
                 that.getCode(res.data[0].orderSn)
               }
               Toast.clear()
@@ -126,7 +126,8 @@
       },
       checkOpr: function (id) {
         Dialog.confirm({
-          message: '确定取消订单？'
+          message: '确定取消订单？',
+          title:'提示'
         }).then(() => {
           this.orderCancel(id)
         }).catch(() => {

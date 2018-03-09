@@ -21,8 +21,18 @@
     </div>
 
     <div class="tips">
-      <p>点击阅读【购票须知】</p>
+      <p @click="show=true">点击阅读【购票须知】</p>
     </div>
+    <van-popup class="showDiv" v-model="show" position="top" :overlay="true">
+      <h2 class="showDiv__tit">购票须知</h2>
+      <p>【购票须知】</p>
+      <p class="showDiv__con">一、售出门票当日有效，一张门票只可入园一次，副劵自行撕
+        毁即视无效。</p>
+      <p class="showDiv__con">二、售出门票概不退换，门票遗失，自行负责。</p>
+      <p class="showDiv__con">三、门票对园区内需另行付费的项目无效，门票可作为商业发
+        票及报销凭证使用。</p>
+      <p class="showDiv__con">四、本门票最终解释权······</p>
+    </van-popup>
 
     <van-submit-bar
       :price="totalPrice"
@@ -34,7 +44,7 @@
 </template>
 
 <script>
-  import {AddressList,Toast,Cell,CellGroup,Icon,SubmitBar} from 'vant';
+  import {AddressList,Toast,Cell,CellGroup,Icon,SubmitBar,Popup} from 'vant';
 
   export default {
     components: {
@@ -43,7 +53,8 @@
       [Cell.name]: Cell,
       [CellGroup.name]: CellGroup,
       [Icon.name]: Icon,
-      [SubmitBar.name]: SubmitBar
+      [SubmitBar.name]: SubmitBar,
+      [Popup.name]: Popup
     },
     data() {
       return {
@@ -59,7 +70,8 @@
         signInfo:'',
         selectAddress:'',
         totalPrice:0,
-        goodsTitle:localStorage.getItem('goodsTitle')
+        goodsTitle:localStorage.getItem('goodsTitle'),
+        show: false
       }
     },
     created() {
@@ -216,6 +228,21 @@
         .van-cell__value--link{
           padding-right: 0.5rem;
         }
+      }
+    }
+    .showDiv{
+      width: 100%;
+      background-color: #000000;
+      font-size: 12px;
+      padding: 10px;
+      &__con{
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+      &__tit{
+        font-size: 18px;
+        color: #fff;
+        text-align: center;
       }
     }
     .itemInfo{

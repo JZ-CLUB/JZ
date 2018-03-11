@@ -83,8 +83,9 @@ export default {
             openid: openid
          }
           Ajax.post('target/memberapi/smscode',data)
-          .then(function () {
-              console.log('成功');
+          .then(function (res) {
+            console.log("nihao");
+              Toast(res.data.msg);
           })
           .catch(function (error) {
             Toast('加载失败error')
@@ -108,7 +109,12 @@ export default {
             }
             Ajax.post('target/memberapi/wxregister',data)
             .then(function (res) {
-                console.log('成功');
+              if(res.data.result=="1"){
+                this.$router.push({path: '/home'});    
+                // Toast(res.data.msg);
+              }else if(res.data.result=="2"){
+                Toast(res.data.msg);
+              }  
             })
             .catch(function (error) {
               Toast('加载失败error')

@@ -30,6 +30,7 @@
 </template>
 
 <script>
+let openid = localStorage.getItem("openId");
 import { Row, Col, Icon, Cell, CellGroup, Field, Button, Toast } from 'vant';
 const TIME_COUNT = 60;
 export default {
@@ -77,6 +78,17 @@ export default {
               }
             }, 1000)
           }
+          let data = {
+            mobile: this.phoneNum,
+            openid: openid
+         }
+          Ajax.post('target/memberapi/smscode',data)
+          .then(function () {
+              console.log('成功');
+          })
+          .catch(function (error) {
+            Toast('加载失败error')
+          });
         }
       },
       registerClick(){
@@ -88,6 +100,19 @@ export default {
         }else{
           if(this.yzCode.length != 6){
               Toast("请输入验证码！");
+          }else{
+            let data = {
+              openid: openid,
+              mobile: this.phoneNum,
+              smscode: this.yzCode
+            }
+            Ajax.post('target/memberapi/wxregister',data)
+            .then(function (res) {
+                console.log('成功');
+            })
+            .catch(function (error) {
+              Toast('加载失败error')
+            });
           }
         }
       }

@@ -6,6 +6,7 @@ import Cart from '@/view/cart/index';//demo
 import Goods from '@/view/goods/index';//demo
 import Register from '@/view/register/index';//demo
 import MyInfo from '@/view/myInfo/index';//demo
+import SuccessRegister from '@/view/register/successRegister';//注册成功
 
 import Home from '@/view/home/home';//活动列表
 import ActivityGoods from '@/view/activityGoods/index';//活动详情
@@ -19,6 +20,7 @@ import MyOrder  from '@/view/MyOrder/myOrder';//我的订单列表
 import OrderDetail  from '@/view/MyOrder/orderDetail';//订单详情
 import Calendar  from '@/view/ShowCalendar/calendar';//演出日历
 import h5backurl from '@/view/backUrl/index'
+
 
 Vue.use(Router);
 
@@ -53,6 +55,14 @@ const routes = [
     component: Register,
     meta: {
       title: '注册'
+    }
+  },
+  {
+    path: '',
+    name: 'successRegister',
+    component: SuccessRegister,
+    meta: {
+      title: '注册成功'
     }
   },
   {

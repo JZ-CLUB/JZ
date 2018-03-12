@@ -58,7 +58,6 @@
       }
     },
     beforeCreate() {
-      console.log(localStorage.getItem('openId'))
       if(!localStorage.getItem('openId')){
         let callback = 'http://www.jzmember.com/h5/#/h5backurl'
         window.location.href = 'http://www.jzmember.com/h5/target/loginapi/wxlogin_userinfo?back_url=' + callback;
@@ -117,10 +116,10 @@
             }
             Ajax.post('target/memberapi/wxregister', data)
               .then(function (res) {
-                if (res.data.result == "1") {
+                if (res.data.result == 1) {
                   localStorage.memberId = res.data.memberId
                   that.$router.push({path: '/successRegister'});
-                } else if (res.data.result == "2") {
+                } else if (res.data.result == 2) {
                   Dialog.alert({
                     message: '您已经是JZ会员'
                   }).then(() => {

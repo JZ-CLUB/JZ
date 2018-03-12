@@ -131,7 +131,7 @@
         }).then(() => {
           this.orderCancel(id)
         }).catch(() => {
-          Toast('取消')
+          // Toast('取消')
         });
       },
       orderCancel: function (id) {

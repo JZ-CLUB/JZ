@@ -110,7 +110,7 @@
           maxDate: new Date(2019, 10, 1),
           currentDate: new Date(2018, 0, 1),
           dataShow:false,
-          telNum:'',
+          telNum:'13378836285',
           codeShow:true,
           formData: {
             phoneNum: this.phoneNum,
@@ -123,12 +123,32 @@
         };
       },
       created () {
-
+        let vm = this
+        this.memberInfo();
       },
       computed: {
 
       },
       methods: {
+        memberInfo(){
+          let that = this;
+          let data ={
+            memberId: 88
+          }
+          Ajax.post('target/memberapi/memberDetail', data)
+          .then(function (res) {
+            that.defaultName = res.data.data[0].memberName;
+            if(res.data.data[0].memberSex == "1"){
+              that.itemVal = "女";
+            }else{
+              that.itemVal = "男";
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+            Toast('加载失败error')
+          });
+        },
         onClick(item) {
           this.show=false;
           this.itemVal=item.name
@@ -202,15 +222,65 @@
     }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
+  .van-cell-group{
+    background: #000;
+  }
   .van-popup {
-    padding: 20px;
+    // padding: 20px;
     border-radius: 5px;
     box-sizing: border-box;
+    background: #000;
     &--right {
       width: 100%;
       height: 100%;
     }
+  }
+  .van-cell{
+    height: 0.75rem;
+    line-height: 0.75rem;
+    background: #1a1a1a !important;
+  }
+  .van-cell:not(:last-child)::after{
+    border-bottom:1px solid #000 !important;
+  }
+  .van-hairline--top-bottom::after{
+    border:0 !important;
+  }
+  .van-actionsheet{
+    background: #000;
+    .van-actionsheet__item{
+      background: #1a1a1a;
+      span{
+        font-size: 0.28rem;
+        color:#d2a870;
+      }
+    }
+  }
+  .van-picker{
+    background: #1a1a1a !important;
+  }
+  .van-picker__cancel{
+    font-size: 0.28rem;
+    color:#e7bd7b;
+  }
+  .van-picker__confirm{
+    font-size: 0.28rem;
+    color:#e7bd7b;
+  }
+  .van-picker-column--selected{
+    color:white !important;
+    border-top:1px solid white;
+    border-bottom:1px solid white;
+    margin:20px;
+  }
+  .van-hairline--top::after{
+    border-top:1px solid #000 !important;
+  }
+  .van-actionsheet__cancel{
+    margin-top: 0 !important;
+    background: #c20007 !important;
+    color:white;
   }
   .van-cell--required::before{
     color:white !important;
@@ -218,16 +288,45 @@
   .van-cell__value{
     padding-left: 60px !important;
     position: relative;
+    .van-field__control{
+      background: #1a1a1a;
+    }
   }
-  .van-cell__text{
-    display: inline-block;
-    .van-cell__text::before{
-      width: 20px;
-      height: 20px;
-      background: red;
+  .van-cell__title{
+    color:#eec27f !important;
+    font-size: 0.28rem;
+    top:0 !important;
+    .van-cell__text{
       display: inline-block;
-      z-index: 99;
-      border-radius: 5px;
+      color:#eec27f !important;
+      font-size: 0.28rem;
+      margin-top: -0.04rem;
+      .van-cell__text::before{
+        width: 20px;
+        height: 20px;
+        background: red;
+        display: inline-block;
+        z-index: 99;
+        border-radius: 5px;
+      }
+    }
+  }
+  .van-cell__value--link{
+    span{
+      color:#b4b0a7;
+      font-size: 0.28rem;
+    }
+  }
+  .van-button--primary{
+    background: #c20007 !important;
+    margin-left: 5.87%;
+    width: 88.26%;    
+    margin-top: 1rem;
+  }
+  .van-button--bottom-action{
+    .van-button--primary{
+      background: #c20007 !important;
+
     }
   }
   .dj_yzCode{

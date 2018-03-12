@@ -248,11 +248,12 @@
       padding: 0 !important;
       height: 1rem;
       line-height: 1rem;
-      background: #be2c36 !important;
+      // background: #be2c36 !important;
       border:0;
       .van-button--bottom-action{
         height: 1rem !important;
         line-height: 1rem !important;
+        background: #be2c36;
       }
       .van-button--normal{
         padding: 0 !important;

@@ -119,8 +119,14 @@
               .then(function (res) {
                 if (res.data.result == "1") {
                   localStorage.memberId = res.data.memberId
-                  that.$router.push({name: 'home'})
-                } else if (res.data.result !== "1") {
+                  that.$router.push({path: '/successRegister'});
+                } else if (res.data.result == "2") {
+                  Dialog.alert({
+                    message: '您已经是JZ会员'
+                  }).then(() => {
+                    that.$router.push({name: 'home'})
+                  });
+                }else{
                   Toast(res.data.msg);
                 }
               })

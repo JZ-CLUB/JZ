@@ -21,8 +21,8 @@
           </van-col>
           <van-col span="2">
             <div class="title_right">
-                <img src="../../images/myInfo_03.png">
-              </div>
+              <img src="../../images/myInfo_03.png">
+            </div>
           </van-col>
         </van-row>
         <van-row class="card_con">
@@ -54,233 +54,228 @@
         <span class="icon_bean_second">
           <img src="../../images/myInfo_14.png">
         </span>
-        <van-cell :border='false' title="我的优惠券" is-link />
+        <van-cell :border='false' title="我的优惠券" is-link/>
       </van-cell-group>
     </div>
   </div>
 </template>
 
 <script>
-import { Row, Col, Icon, Cell, CellGroup } from 'vant';
-export default {
-  components: {
-    [Row.name]: Row,
-    [Col.name]: Col,
-    [Icon.name]: Icon,
-    [Cell.name]: Cell,
-    [CellGroup.name]: CellGroup
-  },
-  beforeCreate() {
-    localStorage.curUrl = window.location.href
-    if(!localStorage.getItem('openId')){
-      window.location.href = "http://www.jzmember.com/h5/#/h5backurl"
-    }else{
-      if(!localStorage.getItem('memberId')){
-        window.location.href = "http://www.jzmember.com/h5/#/register"
+  import {sig} from '../../common/weixin'
+  import {Row, Col, Icon, Cell, CellGroup} from 'vant';
+
+  export default {
+    components: {
+      [Row.name]: Row,
+      [Col.name]: Col,
+      [Icon.name]: Icon,
+      [Cell.name]: Cell,
+      [CellGroup.name]: CellGroup
+    },
+    beforeCreate() {
+      sig()
+    },
+    created() {
+      let vm = this
+      vm.getMyInfo()
+    },
+    methods: {
+      getMyInfo: function () {
+        let data = {
+          memberId: localStorage.getItem('openId')
+        }
+        Ajax.post('target/memberapi/memberDetail', data)
+          .then(function (response) {
+            // console.log(response);
+          })
+          .catch(function (error) {
+            // console.log(error);
+          });
       }
     }
-  },
-  created () {
-    let vm = this
-    vm.getMyInfo()
-  },
-  methods: {
-    getMyInfo: function () {
-      let data={
-        memberId:localStorage.getItem('openId')
-      }
-      Ajax.post('target/memberapi/memberDetail',data)
-      .then(function (response) {
-        // console.log(response);
-      })
-      .catch(function (error) {
-        // console.log(error);
-      });
-    }
-  }
-};
+  };
 </script>
 
 <style lang="less">
-#myInfo_body{
-  width: 100%;
-  height: 100%;
-  background: url("../../images/myInfo_bg.jpg") no-repeat center;
-  background-size: cover;
-  background-color: #000;
-  .myInfo_con_first{
+  #myInfo_body {
     width: 100%;
-    background: #191919;
-    .myInfo_con_first_con{
-      width: 88.26%;
-      margin: 0 auto;
-    }
-    .van-row{
+    height: 100%;
+    background: url("../../images/myInfo_bg.jpg") no-repeat center;
+    background-size: cover;
+    background-color: #000;
+    .myInfo_con_first {
       width: 100%;
-      margin-top: 0.7rem;
-      position: relative;
-      .title_left{
-        width:100%;;
-        float: left;
-        .title_left_left{
-          width: 26.06%;
-          height: 1.7rem;
-          float: left;
-          margin-right: 7.4%
-        }
-        .title_left_right{
-          color:white;
-          margin-left: 7.4%;
-          .myInfo_title{
-            font-family: 微软雅黑;
-            color:#f0c37a;
-            font-size: 0.36rem;
-            padding-top: 0.09rem;
-            padding-bottom: 0.25rem;
-          }
-          .card_type{
-            i{
-              width:0.39rem;
-              height: 0.3rem;
-              background: url("../../images/myInfo_07.png") no-repeat center;
-              background-size: 100%;
-              display: inline-block;
-            }
-            span{
-              font-size: 0.24rem;
-              margin-left: 1%;
-              color:#666666;
-            }
-          }
-        }
+      background: #191919;
+      .myInfo_con_first_con {
+        width: 88.26%;
+        margin: 0 auto;
       }
-      .title_right{
+      .van-row {
         width: 100%;
-        right: 0;
-        // float: right;
-        // text-align: -webkit-right;
+        margin-top: 0.7rem;
+        position: relative;
+        .title_left {
+          width: 100%;;
+          float: left;
+          .title_left_left {
+            width: 26.06%;
+            height: 1.7rem;
+            float: left;
+            margin-right: 7.4%
+          }
+          .title_left_right {
+            color: white;
+            margin-left: 7.4%;
+            .myInfo_title {
+              font-family: 微软雅黑;
+              color: #f0c37a;
+              font-size: 0.36rem;
+              padding-top: 0.09rem;
+              padding-bottom: 0.25rem;
+            }
+            .card_type {
+              i {
+                width: 0.39rem;
+                height: 0.3rem;
+                background: url("../../images/myInfo_07.png") no-repeat center;
+                background-size: 100%;
+                display: inline-block;
+              }
+              span {
+                font-size: 0.24rem;
+                margin-left: 1%;
+                color: #666666;
+              }
+            }
+          }
+        }
+        .title_right {
+          width: 100%;
+          right: 0;
+          // float: right;
+          // text-align: -webkit-right;
+        }
+        .cardNum {
+          color: white;
+          position: absolute;
+          margin-top: 2.91rem;
+          margin-left: 28.6%;
+        }
       }
-      .cardNum{
-        color: white;
-        position: absolute;
-        margin-top: 2.91rem;
-        margin-left: 28.6%;
+      .myInfo_num {
+        text-align: center;
+        margin-top: 0 !important;
+        ul {
+          width: 50%;
+          font-size: 0.28rem;
+          color: #666666;
+          font-family: 微软雅黑;
+        }
+        .myInfo_num_border {
+          border-right: 1px solid #333333;
+          margin-bottom: 0.7rem;
+          display: inline-block;
+          box-sizing: border-box;
+          width: 49%;
+          li:nth-child(1) {
+            color: #666;
+            font-size: 0.28rem;
+          }
+          li:nth-child(2) {
+            color: #f0c37a;
+            font-size: 0.58rem;
+            margin-top: 0.1rem;
+          }
+        }
+        .myInfo_num_ul {
+          width: 49%;
+          font-size: 0.28rem;
+          color: #666666;
+          font-family: 微软雅黑;
+          display: inline-block;
+          box-sizing: border-box;
+          li:nth-child(1) {
+            color: #666;
+            font-size: 0.28rem;
+          }
+          li:nth-child(2) {
+            margin-top: 0.1rem;
+            color: #f0c37a;
+            font-size: 0.58rem;
+          }
+        }
+      }
+      .card_con {
+        margin-top: 0.65rem !important;
       }
     }
-    .myInfo_num{
-      text-align: center;
-      margin-top: 0 !important;
-      ul{
-        width: 50%;
-        font-size: 0.28rem;
-        color:#666666;
-        font-family: 微软雅黑;
-      }
-      .myInfo_num_border{
-        border-right: 1px solid #333333;
-        margin-bottom: 0.7rem;
-        display: inline-block;
-        box-sizing: border-box;
-        width: 49%;
-        li:nth-child(1){
-          color: #666;
-          font-size:0.28rem;
-        }
-        li:nth-child(2){
-          color:#f0c37a;
-          font-size:0.58rem;
-          margin-top: 0.1rem;
-        }
-      }
-      .myInfo_num_ul{
-        width: 49%;
-        font-size: 0.28rem;
-        color: #666666;
-        font-family: 微软雅黑;
-        display: inline-block;
-        box-sizing: border-box;
-        li:nth-child(1){
-          color: #666;
-          font-size:0.28rem;
-        }
-        li:nth-child(2){
-          margin-top: 0.1rem;
-          color:#f0c37a;
-          font-size:0.58rem;
-        }
-      }
-    }
-    .card_con{
-      margin-top: 0.65rem !important;
-    }
-  }
-  .myInfo_con_second{
-    width: 100%;
-    margin: 0 auto;
-    margin-top: 0.1rem;
-    float: left;
-    background: #191919;
-    .van-cell-group{
-      // width: 88.26%;
-      // margin: 0 auto;
-      background: #1a1a1a;
-      .van-cell{
-        width: 81.25% !important;
-        height: 1rem;
-        line-height: 0.6rem;
+    .myInfo_con_second {
+      width: 100%;
+      margin: 0 auto;
+      margin-top: 0.1rem;
+      float: left;
+      background: #191919;
+      .van-cell-group {
+        // width: 88.26%;
+        // margin: 0 auto;
         background: #1a1a1a;
-        font-size: 0.28rem;
-        color: #f0c37a;
-        font-weight: 600;
-        font-family: 微软雅黑;
-        float: left;
-      }
-      .icon_bean{
-        width: 18.15%;
-        height: 1rem;
-        line-height: 1rem;
-        display: inline-block;
-        box-sizing: border-box;
-        text-align: center;
-        float: left;
-        img{
-          width: 36.03%;
-          height: 0.44rem;
-          display: inline-block;
-          vertical-align: middle;
+        .van-cell {
+          width: 81.25% !important;
+          height: 1rem;
+          line-height: 0.6rem;
+          background: #1a1a1a;
+          font-size: 0.28rem;
+          color: #f0c37a;
+          font-weight: 600;
+          font-family: 微软雅黑;
+          float: left;
         }
-      }
-      .icon_bean_second{
-        width: 18.15%;
-        height: 1rem;
-        line-height: 1rem;
-        display: inline-block;
-        box-sizing: border-box;
-        text-align: center;
-        float: left;
-        img{
-          width: 39.7%;
+        .icon_bean {
+          width: 18.15%;
+          height: 1rem;
+          line-height: 1rem;
+          display: inline-block;
+          box-sizing: border-box;
+          text-align: center;
+          float: left;
+          img {
+            width: 36.03%;
+            height: 0.44rem;
+            display: inline-block;
+            vertical-align: middle;
+          }
+        }
+        .icon_bean_second {
+          width: 18.15%;
+          height: 1rem;
+          line-height: 1rem;
+          display: inline-block;
+          box-sizing: border-box;
+          text-align: center;
+          float: left;
+          img {
+            width: 39.7%;
+            height: 0.4rem;
+            display: inline-block;
+            vertical-align: middle;
+          }
+        }
+        .icon_first_border {
+          border-bottom: 1px solid #000000;
+        }
+        .icon_coupon {
+          width: 8.156%;
           height: 0.4rem;
+          padding-left: 5px;
           display: inline-block;
-          vertical-align: middle;
+          vertical-align: super;
+          background: url("../../images/myInfo_14.png") no-repeat center;
+          background-size: contain;
         }
       }
-      .icon_first_border{
-        border-bottom:1px solid #000000;
+      .van-hairline--top-bottom::after {
+        border: 0 !important;
       }
-      .icon_coupon{
-        width: 8.156%;
-        height: 0.4rem;
-        padding-left: 5px;
-        display: inline-block;
-        vertical-align: super;
-        background: url("../../images/myInfo_14.png") no-repeat center;
-        background-size: contain;
-      }
-    }
-    .van-hairline--top-bottom::after{
-      border:0 !important;
     }
   }
-}
 </style>

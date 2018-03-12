@@ -1,36 +1,34 @@
 <template>
-  <div id="calendar" class="calendar">
-    <div class="calendar__showcalender">
-      <img src="./mod/img/ShowCalendar.jpg">
+  <div>
+    <div id="calendar" class="calendar">
+      <div class="calendar__showcalender">
+        <img src="./mod/img/ShowCalendar.jpg">
+      </div>
     </div>
+    <div id="calendar2" class="calendar"></div>
   </div>
 </template>
 <script>
   import './mod/css/calendar.css';
-  $(function () {
 
-    $('#calendar').calendar({
-      ifSwitch: true, // 是否切换月份
-      hoverDate: false, // hover是否显示当天信息
-      backToday: false // 是否返回当天
-    });
 
-  });
 
-  ;(function ($, window, document, undefined) {
+
+
+  (function ($, window, document, undefined) {
 
     var Calendar = function (elem, options) {
       this.$calendar = elem;
 
       this.defaults = {
-        ifSwitch: true,
+        ifSwitch: false,
         hoverDate: false,
         backToday: false
       };
 
       this.opts = $.extend({}, this.defaults, options);
 
-      // console.log(this.opts);
+      console.log(this.opts);
     };
 
     Calendar.prototype = {
@@ -78,12 +76,14 @@
       },
 
       showCalendar: function () { // 输入数据并显示
-        var self = this;
-        var year = dateObj.getDate().getFullYear();
-        var month = dateObj.getDate().getMonth() + 1;
-        var dateStr = returnDateStr(dateObj.getDate());
-        var firstDay = new Date(year, month - 1, 1); // 当前月的第一天
 
+        var self = this;
+        var year = this.opts.eyear;
+        var month = this.opts.emonth;
+        var dateStr = this.opts.eyear.toString()+this.opts.emonth.toString()+"01";
+        var firstDay = new Date(year, month - 1, 1); // 当前月的第一天
+        console.log(dateObj.getDate());
+        console.log(this.opts.eyear.toString()+this.opts.emonth.toString()+"01")
         this.$calendarTitle_text.text(year + '年' + dateStr.substr(4, 2)+'月');
 
         this.$calendarDate_item.each(function (i) {
@@ -94,9 +94,9 @@
           $(this).text(allDay.getDate()).attr('data', allDay_str);
 
           if (returnDateStr(new Date()) === allDay_str) {
-            $(this).attr('class', 'item item-curDay');
+            $(this).attr('class', 'item');
           } else if (returnDateStr(firstDay).substr(0, 6) === allDay_str.substr(0, 6)) {
-            $(this).attr('class', 'item item-curMonth');
+            $(this).attr('class', 'item');
           } else {
             $(this).attr('class', 'item');
           }
@@ -136,13 +136,14 @@
           '<p class="week"></p>';
 
         for (var i = 0; i < 6; i++) {
-          _dateStr += '<li class="item">26</li>'+
-            '<li class="item">26</li>'+
-            '<li class="item">26</li>'+
-            '<li class="item">26</li>'+
-            '<li class="item">26</li>'+
-            '<li class="item">26</li>'+
-            '<li class="item">26</li>';
+          _dateStr +=
+            '<a><li class="item" >26</li></a>'+
+            '<a><li class="item" >26</li></a>'+
+            '<a><li class="item" >26</li></a>'+
+            '<a><li class="item" >26</li></a>'+
+            '<a><li class="item" >26</li></a>'+
+            '<a><li class="item" >26</li></a>'+
+            '<a><li class="item" >26</li></a>';
         }
 
         this.$calendar_title.html(_titleStr);
@@ -224,6 +225,7 @@
           }
 
           $curClick = self.$calendar_date.find('[data='+_dateStr+']');
+          console.log(_dateStr)
           //$curDay = self.$calendar_date.find('.item-curDay');
           if (!$curClick.hasClass('item-selected')) {
             self.$calendarDate_item.removeClass('item-selected');
@@ -287,10 +289,105 @@
       return (year % 4 == 0) && (year % 100 != 0 || year % 400 == 0);
     }
 
+
   })(jQuery, window, document);
     export default {
-        name: "calendar"
+      name: "calendar",
+      created: function() {
+        this.send(this);
+
+      },
+      methods:{
+        send:function (e) {
+          let date=new Date;
+          let year=date.getFullYear()  ;
+          let month=date.getMonth()+1;
+          let day=date.getDate();
+          let monthn = month + 1;
+          let yearn;
+
+
+
+
+          if(monthn>12){
+            monthn = 1;
+            yearn = year + 1;
+          }else{
+            yearn = year;
+          }
+          month =(month<10 ? "0"+month:month);
+          monthn =(monthn<10 ? "0"+monthn:monthn);
+
+
+          day = year.toString()+month.toString()+day.toString();
+          let ym = year+"-"+month;
+          //console.log(day);
+          function add0(m){return m<10?'0'+m:m }
+          function format(shijianchuo)
+          {
+            let time = new Date(shijianchuo);
+            let y = time.getFullYear();
+            let m = time.getMonth()+1;
+            let d = time.getDate();
+            /*var h = time.getHours();
+            var mm = time.getMinutes();
+            var s = time.getSeconds();*/
+            return y+add0(m)+add0(d);
+          }
+
+          Ajax.post('target/product/goodsActivityTime', {
+            //Ajax.post('http://rap.taobao.org/mockjsdata/31603/get', {
+            goodsClass:"31",
+            activityMonth:ym,
+          }).then(function (response) {
+            console.log(response.data.data);
+            let days = response.data.data;
+            $('#calendar').calendar({
+              ifSwitch: true, // 是否切换月份
+              hoverDate: false, // hover是否显示当天信息
+              backToday: false, // 是否返回当天
+              emonth:month,
+              eyear:year
+            });
+            $('#calendar2').calendar({
+              ifSwitch: true, // 是否切换月份
+              hoverDate: false, // hover是否显示当天信息
+              backToday: false, // 是否返回当天
+              emonth:monthn,
+              eyear:yearn
+            });
+            let a ={};
+            for(let d in days){
+              let ad =  format(days[d].startTime);
+              let goodsId =  days[d].goodsId;
+              if(parseInt(ad)>=parseInt(day)){
+                a[ad]= goodsId;
+
+              }else{
+
+              }
+
+            }
+            //console.log(a);
+            var test = window.location.host;
+            for (let b in a){
+              $(".item[data="+b+"]").addClass("item-curMonth");
+              //console.log(test+"/#/activityGoods/155")
+              let url = "http://"+test+"/#/activityGoods/"+a[b];
+              $(".item[data="+b+"]").parent(a).attr("href",url)
+              //console.log($(".item[data="+b+"]").parent(a))
+            }
+            //$("li[tid='"+d+"']")
+            //$(".item-curMonth").each(function (index,e) {
+              //console.log($(e).attr('data'))
+            //});
+            //let v = this.$el;
+          })
+        }
+      }
+
     }
+
 </script>
 <style lang="less">
   body{
@@ -323,7 +420,7 @@
     .calendar-title{
       height: 50px;
       & .arrow{
-        //display: none;
+        display: none;
         width: 100%;
       }
       & .arrow-prev{
@@ -356,6 +453,9 @@
 
   }
   .calendar-date .item-selected, .calendar-date .item-selected:hover{
+    background-color: transparent;
+  }
+  .calendar-date .item:hover, .calendar-date .item-curMonth:hover {
     background-color: transparent;
   }
 </style>

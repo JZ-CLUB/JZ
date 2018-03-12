@@ -67,12 +67,15 @@
         items: [],
         flag: true,
         param: {
-          memberId: 88,
+          memberId: localStorage.getItem('memberId'),
           status: '',
           pageNo: 0,
           pageSize: 10
         }
       }
+    },
+    beforeCreate() {
+      // sig()
     },
     created() {
       let vm = this

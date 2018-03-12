@@ -43,7 +43,7 @@
     </van-row>
     <van-popup v-model="show" position="bottom" :overlay="true">
       <div class="van-picker__toolbar van-hairline--top-bottom">
-        <div class="van-picker__cancel" v-on:click="onCancel">取消</div> 
+        <div class="van-picker__cancel" v-on:click="onCancel">取消</div>
         <div class="van-picker__confirm" v-on:click="onConfirm">完成</div>
       </div>
       <van-row>
@@ -106,7 +106,7 @@
         provinceId:'',        //选中的省的ID
         cityId:'',        //选中的市的ID
         areaId:'',         //选中的区的ID
-        memberId:"",
+        memberId:localStorage.getItem('memberId'),
         addressInfo:'',
         zipCode:'',
         mobPhone:'',
@@ -130,7 +130,7 @@
         let that = this;
         let url = 'target/address/api/addressList'
         let data = {
-          memberId: 88
+          memberId: localStorage.getItem('memberId')
         }
         Ajax.post(url, data)
         .then(function (res) {
@@ -138,7 +138,7 @@
           for(let n = 0; n < res.data.data.length; n++){
             if(res.data.data[n].addressId == that.addressNum){
               that.bb = n;
-            }  
+            }
           }
           let addressInfoStr = res.data.data[that.bb].address.split(" ");
           that.username = res.data.data[that.bb].trueName;
@@ -184,13 +184,13 @@
               }
               nini[i+1] = bb;
             }
-              that.columns1 = nini;  
-              that.columns2 = [{"text":"请选择"}]          
+              that.columns1 = nini;
+              that.columns2 = [{"text":"请选择"}]
           }).catch(function (error) {
-            
+
           });
           }
-          
+
         }
       },
       onChange1(picker, value, index) {
@@ -218,13 +218,13 @@
                 "areaId": res.data.data[i].areaId
               }
               nini[i+1] = bb;
-            } 
+            }
               that.columns2 = nini;
-            
+
           }).catch(function (error) {
-            
+
           });
-        }  
+        }
       },
       onChange2(picker, value, index) {
         this.areaActive = `${value.text}`;
@@ -253,12 +253,12 @@
               "areaId": res.data.data[i].areaId
             }
             nini[i+1] = bb;
-          }  
+          }
           that.columns = nini;
           that.columns1 = [{"text":"请选择"}]
           that.columns2 = [{"text":"请选择"}]
         }).catch(function (error) {
-          
+
         });
       },
       onConfirm() {
@@ -281,7 +281,7 @@
             Toast("手机格式不正确");
           }else{
             let data = {
-              memberId:88,
+              memberId:localStorage.getItem('memberId'),
               trueName:_this.username,
               mobPhone:_this.mobPhone,
               telPhone:_this.telpbone,
@@ -296,13 +296,13 @@
             Ajax.post('target/address/api/saveAddress', data)
             .then(function (res) {
               if(res.data.result === 1){
-                _this.$router.push({path: '/address'});    
+                _this.$router.push({path: '/address'});
               }else{
                 Toast(res.msg)
               }
-              
+
             }).catch(function (error) {
-                
+
             });
           }
         }

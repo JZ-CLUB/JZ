@@ -40,7 +40,7 @@
         items: [],
         flag:true,
         param:{
-          memberId:88,
+          memberId:localStorage.getItem('memberId'),
           status:'10',
           pageNo:0,
           pageSize:10

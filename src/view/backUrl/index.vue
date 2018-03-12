@@ -5,7 +5,6 @@
 </template>
 
 <script>
-  import {sig} from '../../common/weixin'
   import {
      Toast
   } from 'vant';

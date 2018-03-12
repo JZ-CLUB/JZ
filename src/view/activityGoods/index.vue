@@ -185,7 +185,7 @@
 
         var data = {
           goodsId:this.$route.params.id,
-          memberId:88,
+          memberId:localStorage.getItem('memberId'),
           specId:specId,
           selectedNum:e.selectedNum
         };
@@ -206,7 +206,7 @@
         Ajax.post('target/goods/api/goodsdetail', {
         //Ajax.post('http://rap.taobao.org/mockjsdata/31603/get', {
           goodsId: e.$route.params.id,
-          memberId:88
+          memberId:localStorage.getItem('memberId')
         })
           .then(function (response) {
             //console.log(response)

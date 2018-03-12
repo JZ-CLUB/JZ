@@ -30,7 +30,7 @@
           <i class="van-icon van-cell__right-icon van-icon-arrow"></i>
       </div> -->
     </div>
-    
+
   </div>
 </template>
 
@@ -106,7 +106,7 @@
         // Ajax.get('/static/address.json')
         let url = 'target/address/api/addressList'
         let data = {
-          memberId: 88
+          memberId: localStorage.getItem('memberId')
         }
         // Ajax.get('/static/address.json')
         Ajax.post(url, data)
@@ -130,7 +130,7 @@
             addressId: item.addressId
           }
           Ajax.post(url, data)
-          .then(function (res) { 
+          .then(function (res) {
             // Toast("成功");
           })
           .catch(function (error) {

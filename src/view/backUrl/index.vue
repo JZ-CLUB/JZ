@@ -22,7 +22,7 @@
         let that = this
         global.openid = that.UrlSearch('openid');
         if (!openid) {
-          // let callback = encodeURIComponent(window.location.href)
+          // let callback = encodeURIComponent('http://www.jzmember.com/h5/#/h5backurl)
           let callback = 'http://www.jzmember.com/h5/#/h5backurl'
           window.location.href = 'http://www.jzmember.com/h5/target/loginapi/wxlogin_userinfo?back_url=' + callback;
         }

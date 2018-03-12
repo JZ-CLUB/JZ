@@ -59,7 +59,6 @@ export default {
   beforeCreate() {
     localStorage.curUrl = window.location.href
     if(!localStorage.getItem('openId')){
-      console.log(window.location.href)
       window.location.href = "http://www.jzmember.com/h5/#/h5backurl"
     }
   },

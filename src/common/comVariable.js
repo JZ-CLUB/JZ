@@ -1,4 +1,4 @@
-const imgPath ="http://15.146.38.175:8000"
+const imgPath ="http://www.jzmember.com"
 
 export default {
   imgPath

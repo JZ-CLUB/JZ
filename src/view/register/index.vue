@@ -79,13 +79,17 @@ export default {
             }, 1000)
           }
           let data = {
-            mobile: this.phoneNum,
-            openid: openid
+            mobile: this.phoneNum
          }
-          Ajax.post('target/memberapi/smscode',data)
-          .then(function (res) {
-            console.log("nihao");
-              Toast(res.data.msg);
+          Ajax.post('target/loginapi/sendMsgCode',data)
+          .then(function (response) {
+            let res=response.data
+            if(res.result===1){
+
+            }else{
+
+            }
+            console.log(res.msg);
           })
           .catch(function (error) {
             Toast('加载失败error')
@@ -110,12 +114,11 @@ export default {
             Ajax.post('target/memberapi/wxregister',data)
             .then(function (res) {
               if(res.data.result=="1"){
-                this.$router.push({path: '/home'});    
-              }else if(res.data.result=="2"){
+                this.$router.push({path: '/home'});
+                // Toast(res.data.msg);
+              }else if(res.data.result !=="1"){
                 Toast(res.data.msg);
-              }else if(res.data.result=="0"){
-                Toast(res.data.msg);
-              }   
+              }
             })
             .catch(function (error) {
               Toast('加载失败error')

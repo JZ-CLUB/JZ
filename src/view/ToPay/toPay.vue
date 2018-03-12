@@ -1,6 +1,6 @@
 <template>
   <div class="toPayBox">
-    <van-cell-group class="payAddress" v-if="goodsType==='2'">
+    <van-cell-group class="payAddress" v-if="goodsType!=='1'">
       <router-link to="/address">
         <van-cell is-link>
           <div v-if="selectAddress!==''">

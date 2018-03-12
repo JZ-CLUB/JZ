@@ -25,8 +25,8 @@
       <van-row class="cardBox">
         <van-col span="12" v-for="(item,index) in searchData" :key="index">
           <div @click="$router.push({ name: 'activityGoods', params: { id:item.goodsId }})">
-            <!--<img class="cardImg" :src=comPath.imgPath+item.goodsImage alt="">-->
-            <img class="cardImg" src='../../images/cardImg.jpg' alt="">
+            <img class="cardImg" :src=comPath.imgPath+item.goodsImage alt="">
+            <!--<img class="cardImg" src='../../images/cardImg.jpg' alt="">-->
             <p class="cardText">{{item.goodsName}}</p>
           </div>
         </van-col>
@@ -80,13 +80,24 @@
         flag: true
       };
     },
+    beforeCreate() {
+      localStorage.curUrl = window.location.href
+      if(!localStorage.getItem('openId')){
+        console.log(window.location.href)
+        window.location.href = "http://www.jzmember.com/#/h5backurl"
+      }
+    },
     created() {
       let vm = this
       Toast.loading({mask: true, duration: 0});
-      sig(true).then(function (message) {
+      /*if(!localStorage.getItem('openId')){
+        console.log(window.location.href)
+        window.location.href = "http://www.jzmember.com/#/h5backurl"
+      }*/
+      /*sig(true).then(function (message) {
         // vm.recommend()
       }, function (error) {
-      });
+      });*/
       vm.recommend()
 
     },

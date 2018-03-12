@@ -18,10 +18,19 @@ import BuySuccessful  from '@/view/buySuccessful/buySuccessful';//购票成功
 import MyOrder  from '@/view/MyOrder/myOrder';//我的订单列表
 import OrderDetail  from '@/view/MyOrder/orderDetail';//订单详情
 import Calendar  from '@/view/ShowCalendar/calendar';//演出日历
+import h5backurl from '@/view/backUrl/index'
 
 Vue.use(Router);
 
 const routes = [
+  {
+    path: '/h5backurl',
+    name: 'h5backurl',
+    component: h5backurl,
+    meta: {
+      title: '爵士活动'
+    }
+  },
   {
     path: '/',
     name: 'home',

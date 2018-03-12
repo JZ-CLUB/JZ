@@ -21,7 +21,7 @@
           </van-col>
           <van-col span="2">
             <div class="title_right">
-              <img src="../../images/myInfo_03.png">
+              <!-- <img src="../../images/myInfo_03.png"> -->
             </div>
           </van-col>
         </van-row>
@@ -36,16 +36,16 @@
         <div class="myInfo_num">
           <ul class="myInfo_num_border">
             <li>爵士豆</li>
-            <li>1000</li>
+            <li>0</li>
           </ul>
           <ul class="myInfo_num_ul">
             <li>优惠券</li>
-            <li>5</li>
+            <li>0</li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="myInfo_con_second">
+    <!-- <div class="myInfo_con_second">
       <van-cell-group>
         <span class="icon_bean">
           <img src="../../images/myInfo_11.png">
@@ -56,7 +56,7 @@
         </span>
         <van-cell :border='false' title="我的优惠券" is-link/>
       </van-cell-group>
-    </div>
+    </div> -->
   </div>
 </template>
 

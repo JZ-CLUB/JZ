@@ -9,6 +9,7 @@
   </div>
 </template>
 <script>
+  import {sig} from '../../common/weixin'
   import './mod/css/calendar.css';
 
 
@@ -294,8 +295,10 @@
     export default {
       name: "calendar",
       created: function() {
+        sig()
+      },
+      created: function() {
         this.send(this);
-
       },
       methods:{
         send:function (e) {
@@ -373,7 +376,7 @@
             for (let b in a){
               $(".item[data="+b+"]").addClass("item-curMonth");
               //console.log(test+"/#/activityGoods/155")
-              let url = "http://"+test+"/#/activityGoods/"+a[b];
+              let url = "http://"+test+"/h5/#/activityGoods/"+a[b];
               $(".item[data="+b+"]").parent(a).attr("href",url)
               //console.log($(".item[data="+b+"]").parent(a))
             }

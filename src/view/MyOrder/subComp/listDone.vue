@@ -1,21 +1,21 @@
 <template>
-  <scroller :on-infinite="refresh" ref="my_scroller">
-    <div style="height: 58px;"></div>
-    <div v-for="(it, index) in items"
-         :key="index"
-    >
+  <scroller :on-infinite="refresh" ref="my_scroller" class="myOrderBox">
+    <div style="height: 0.9rem;"></div>
+    <div class="orderItem" v-for="(it, index) in items"
+         :key="index">
       <div v-for="(item, i) in it.orderGoodsList"
            :key="i"
            @click="$router.push({ name: 'orderDetail', params: { orderId:item.orderId }})">
-        <van-card
-          :title="item.goodsName"
-          :desc="item.specInfo"
-          :thumb="comPath.imgPath+item.goodsImage"
-        >
-          <div slot="footer">
-            <van-button v-if="it.orderState===40" size="mini">已出票</van-button>
-          </div>
-        </van-card>
+        <p class="title">{{item.goodsName}}</p>
+        <p class="subTitle">{{item.specInfo}}</p>
+
+        <span class="statusBtn" v-if="it.orderState===10">待付款</span>
+        <span class="doneBtn" v-if="it.orderState===40">已出票</span>
+        <span class="" v-if="it.orderState===20">待发货</span>
+        <span class="" v-if="it.orderState===30">已发货</span>
+        <span class="" v-if="it.orderState===50">已提交</span>
+        <span class="" v-if="it.orderState===60">已确认</span>
+        <span class="" v-if="it.orderState===0">已取消</span>
       </div>
     </div>
   </scroller>
@@ -41,7 +41,7 @@
         flag:true,
         imageURL:'https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg',
         param:{
-          memberId:88,
+          memberId:localStorage.getItem('memberId'),
           status:40,
           pageNo:0,
           pageSize:10
@@ -96,69 +96,55 @@
   }
 </script>
 <style lang="less">
-  .plugin-name {
-    margin: 0;
-    padding-top: 60px;
-    text-align: center;
-    color: #666;
-    font-style: normal;
-    font-variant-ligatures: normal;
-    font-variant-caps: normal;
-    font-variant-numeric: normal;
-    font-weight: normal;
-    font-stretch: normal;
-    font-size: 48px;
-    line-height: 48px;
-    margin-bottom: 10px;
-  }
-
-  .for-vue-js {
-    text-align: center;
-    color: #666;
-    margin-bottom: 40px;
-  }
-
-  .plugin-name, .for-vue-js {
-    font-family: Candara, Calibri, Segoe, Segoe UI, Optima, Arial, sans-serif;
-  }
-
-  .row {
-    display: block;
-    width: 100%;
-    height: 50px;
-    padding: 10px 0 10px 15px;
-    font-size: 16px;
-    line-height: 30px;
-    color: #444;
-    background-color: #fff;
-  }
-
-  .grey-bg {
-    background-color: #eee;
-  }
-
-  .arrow-right {
-    width: 8px;
-    height: 16px;
-    float: right;
-    margin-top: 7px;
-    margin-right: 15px;
-  }
-  .github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}
-
-  .user {
-    &-links {
-      position: relative;
-      z-index: 22222;
-      padding: 5px 0;
-      font-size: 12px;
-      text-align: center;
-      background-color: #fff;
-
-      .van-icon {
-        display: block;
-        font-size: 24px;
+  .myOrderBox{
+    background: #1a1a1a;
+    margin-top:0.04rem;
+    .orderItem{
+      padding: 0.15rem 0 0 0.4rem;
+      line-height: 0.6rem;
+      >div{
+        border-bottom: 0.01rem solid #000;
+        padding-right:1.9rem;
+        padding-bottom: 0.15rem;
+        position: relative;
+        p{
+          height: 0.6rem;
+          word-break: break-all;
+          text-overflow: ellipsis;
+          display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+          -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+          -webkit-line-clamp: 1; /** 显示的行数 **/
+          overflow: hidden; /** 隐藏超出的内容 **/
+        }
+        p.title{
+          font-size: 0.28rem;
+        }
+        p.subTitle{
+          color: #666666;
+          font-size: 0.24rem;
+        }
+        span{
+          position: absolute;
+          top: 50%;
+          right: 0.4rem;
+          font-size: 0.28rem;
+          color: #666666;
+          display: block;
+          width: 1.2rem;
+          height: 0.56rem;
+          text-align: center;
+          transform: translate(0, -50%);
+          &.statusBtn{
+            color: #000;
+            background: #f0c37a;
+            border-radius: 0.03rem;
+          }
+          &.doneBtn{
+            color: #f0c37a;
+          }
+        }
       }
+
     }
   }
 </style>

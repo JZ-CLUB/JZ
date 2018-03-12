@@ -1,145 +1,281 @@
 <template>
-  <div>
+  <div id="myInfo_body">
     <div class="myInfo_con_first">
-      <van-row>
-        <van-col span="22">
-          <div class="tit_con">
-            <div class="title_left">
-              <div class="title_left_left">
-                <img src="../../images/Info_logo.png">
-              </div>
-              <div class="title_left_right">
-                <p class="myInfo_title">爵士之语</p>
-                <img src="../../images/info_07.png">
+      <div class="myInfo_con_first_con">
+        <van-row>
+          <van-col span="22">
+            <div class="tit_con">
+              <div class="title_left">
+                <div class="title_left_left">
+                  <img src="../../images/myInfo_logo.png">
+                </div>
+                <div class="title_left_right">
+                  <p class="myInfo_title">爵士之语</p>
+                  <div class="card_type">
+                    <i></i>
+                    <span>普通乐迷卡</span>
+                  </div>
+                </div>
               </div>
             </div>
+          </van-col>
+          <van-col span="2">
+            <div class="title_right">
+              <!-- <img src="../../images/myInfo_03.png"> -->
+            </div>
+          </van-col>
+        </van-row>
+        <van-row class="card_con">
+          <van-col span="24">
+            <img src="../../images/myInfoCard.png">
+          </van-col>
+          <div class="cardNum">
+            <p>6357&nbsp;&nbsp;1998</p>
           </div>
-        </van-col>
-        <van-col span="2">
-          <div class="title_right">
-              <img src="../../images/info_03.png">
-            </div>
-        </van-col>
-      </van-row>
-      <van-row>
-        <van-col span="24">
-          <img src="../../images/info_card.png">
-        </van-col>
-      </van-row>
-      <van-row class="myInfo_num">
-        <van-col span="12">
-          <ul>
+        </van-row>
+        <div class="myInfo_num">
+          <ul class="myInfo_num_border">
             <li>爵士豆</li>
-            <li>1000</li>
+            <li>0</li>
           </ul>
-        </van-col>
-        <van-col span="12">
-          <ul>
+          <ul class="myInfo_num_ul">
             <li>优惠券</li>
-            <li>5</li>
+            <li>0</li>
           </ul>
-        </van-col>
-      </van-row>
+        </div>
+      </div>
     </div>
-    <div class="myInfo_con_second">
+    <!-- <div class="myInfo_con_second">
       <van-cell-group>
-        <i class="icon_bean"></i><van-cell title="我的爵士豆" is-link />
-        <i class="icon_coupon"></i><van-cell title="我的优惠券" is-link />
+        <span class="icon_bean">
+          <img src="../../images/myInfo_11.png">
+        </span>
+        <van-cell :border='false' title="我的爵士豆" class="icon_first_border" is-link/>
+        <span class="icon_bean_second">
+          <img src="../../images/myInfo_14.png">
+        </span>
+        <van-cell :border='false' title="我的优惠券" is-link/>
       </van-cell-group>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
-import { Row, Col, Icon, Cell, CellGroup } from 'vant';
-export default {
-  components: {
-    [Row.name]: Row,
-    [Col.name]: Col,
-    [Icon.name]: Icon,
-    [Cell.name]: Cell,
-    [CellGroup.name]: CellGroup
-  },
-  created () {
-    let vm = this
-    vm.getMyInfo()
-  },
-  methods: {
-    getMyInfo: function () {
-      let data={
-        memberId:'111'
+  import {sig} from '../../common/weixin'
+  import {Row, Col, Icon, Cell, CellGroup} from 'vant';
+
+  export default {
+    components: {
+      [Row.name]: Row,
+      [Col.name]: Col,
+      [Icon.name]: Icon,
+      [Cell.name]: Cell,
+      [CellGroup.name]: CellGroup
+    },
+    beforeCreate() {
+      sig()
+    },
+    created() {
+      let vm = this
+      vm.getMyInfo()
+    },
+    methods: {
+      getMyInfo: function () {
+        let data = {
+          memberId: localStorage.getItem('openId')
+        }
+        Ajax.post('target/memberapi/memberDetail', data)
+          .then(function (response) {
+            // console.log(response);
+          })
+          .catch(function (error) {
+            // console.log(error);
+          });
       }
-      // Ajax.get('/static/test.json')
-      // Ajax.post('api/app/product/goodsBody',{goodsId:3299,storeId:175})
-      Ajax.post('target/memberapi/memberDetail',data)
-      .then(function (response) {
-        // console.log(response);
-      })
-      .catch(function (error) {
-        // console.log(error);
-      });
     }
-  }
-};
+  };
 </script>
 
-<style lang="less" scoped>
-  .myInfo_con_first{
-    width: 88.26%;
-    margin: 0 auto;
-    padding-top: 45px;
-    background: white;
-    .title_left{
-      width: 61.48%;
-      float: left;
-      .title_left_left{
-        width: 42.27%;
-        float: left;
+<style lang="less">
+  #myInfo_body {
+    width: 100%;
+    height: 100%;
+    background: url("../../images/myInfo_bg.jpg") no-repeat center;
+    background-size: cover;
+    background-color: #000;
+    .myInfo_con_first {
+      width: 100%;
+      background: #191919;
+      .myInfo_con_first_con {
+        width: 88.26%;
+        margin: 0 auto;
       }
-      .title_left_right{
-        p{
-          text-align: center;
+      .van-row {
+        width: 100%;
+        margin-top: 0.7rem;
+        position: relative;
+        .title_left {
+          width: 100%;;
+          float: left;
+          .title_left_left {
+            width: 26.06%;
+            height: 1.7rem;
+            float: left;
+            margin-right: 7.4%
+          }
+          .title_left_right {
+            color: white;
+            margin-left: 7.4%;
+            .myInfo_title {
+              font-family: 微软雅黑;
+              color: #f0c37a;
+              font-size: 0.36rem;
+              padding-top: 0.09rem;
+              padding-bottom: 0.25rem;
+            }
+            .card_type {
+              i {
+                width: 0.39rem;
+                height: 0.3rem;
+                background: url("../../images/myInfo_07.png") no-repeat center;
+                background-size: 100%;
+                display: inline-block;
+              }
+              span {
+                font-size: 0.24rem;
+                margin-left: 1%;
+                color: #666666;
+              }
+            }
+          }
         }
-        width: 57%;
-        float: right;
+        .title_right {
+          width: 100%;
+          right: 0;
+          // float: right;
+          // text-align: -webkit-right;
+        }
+        .cardNum {
+          color: white;
+          position: absolute;
+          margin-top: 2.91rem;
+          margin-left: 28.6%;
+        }
+      }
+      .myInfo_num {
+        text-align: center;
+        margin-top: 0 !important;
+        ul {
+          width: 50%;
+          font-size: 0.28rem;
+          color: #666666;
+          font-family: 微软雅黑;
+        }
+        .myInfo_num_border {
+          border-right: 1px solid #333333;
+          margin-bottom: 0.7rem;
+          display: inline-block;
+          box-sizing: border-box;
+          width: 49%;
+          li:nth-child(1) {
+            color: #666;
+            font-size: 0.28rem;
+          }
+          li:nth-child(2) {
+            color: #f0c37a;
+            font-size: 0.58rem;
+            margin-top: 0.1rem;
+          }
+        }
+        .myInfo_num_ul {
+          width: 49%;
+          font-size: 0.28rem;
+          color: #666666;
+          font-family: 微软雅黑;
+          display: inline-block;
+          box-sizing: border-box;
+          li:nth-child(1) {
+            color: #666;
+            font-size: 0.28rem;
+          }
+          li:nth-child(2) {
+            margin-top: 0.1rem;
+            color: #f0c37a;
+            font-size: 0.58rem;
+          }
+        }
+      }
+      .card_con {
+        margin-top: 0.65rem !important;
       }
     }
-    .title_right{
-      width: 80%;
-      right: 0;
-      // float: right;
-      // text-align: -webkit-right;
-    }
-    .myInfo_num{
-      text-align: center;
-    }
-  }
-  .myInfo_con_second{
-    width: 88.26%;
-    margin: 0 auto;
-    margin-top: 10px;
-    background: white;
-    .van-cell{
-      width: 88% !important;
-      display: inline-block !important;
-    }
-    .icon_bean{
-      width: 12%;
-      height: 30px;
-      display: inline-block;
-      vertical-align: super;
-      padding-left: 5px;
-      background: url("../../images/info_11.png") no-repeat center;
-      background-size: contain;
-    }
-    .icon_coupon{
-      width: 12%;
-      height: 30px;
-      padding-left: 5px;
-      display: inline-block;
-      vertical-align: super;
-      background: url("../../images/info_14.png") no-repeat center;
-      background-size: contain;
+    .myInfo_con_second {
+      width: 100%;
+      margin: 0 auto;
+      margin-top: 0.1rem;
+      float: left;
+      background: #191919;
+      .van-cell-group {
+        // width: 88.26%;
+        // margin: 0 auto;
+        background: #1a1a1a;
+        .van-cell {
+          width: 81.25% !important;
+          height: 1rem;
+          line-height: 0.6rem;
+          background: #1a1a1a;
+          font-size: 0.28rem;
+          color: #f0c37a;
+          font-weight: 600;
+          font-family: 微软雅黑;
+          float: left;
+        }
+        .icon_bean {
+          width: 18.15%;
+          height: 1rem;
+          line-height: 1rem;
+          display: inline-block;
+          box-sizing: border-box;
+          text-align: center;
+          float: left;
+          img {
+            width: 36.03%;
+            height: 0.44rem;
+            display: inline-block;
+            vertical-align: middle;
+          }
+        }
+        .icon_bean_second {
+          width: 18.15%;
+          height: 1rem;
+          line-height: 1rem;
+          display: inline-block;
+          box-sizing: border-box;
+          text-align: center;
+          float: left;
+          img {
+            width: 39.7%;
+            height: 0.4rem;
+            display: inline-block;
+            vertical-align: middle;
+          }
+        }
+        .icon_first_border {
+          border-bottom: 1px solid #000000;
+        }
+        .icon_coupon {
+          width: 8.156%;
+          height: 0.4rem;
+          padding-left: 5px;
+          display: inline-block;
+          vertical-align: super;
+          background: url("../../images/myInfo_14.png") no-repeat center;
+          background-size: contain;
+        }
+      }
+      .van-hairline--top-bottom::after {
+        border: 0 !important;
+      }
     }
   }
 </style>

@@ -14,6 +14,7 @@
   </div>
 </template>
 <script>
+  import {sig} from '../../common/weixin'
   import TabAll from '@/view/MyOrder/subComp/listAll'
   import TabUnpay from '@/view/MyOrder/subComp/listUnpay'
   import TabDone from '@/view/MyOrder/subComp/listDone'
@@ -42,6 +43,9 @@
         ],
         activity:0
       }
+    },
+    beforeCreate() {
+      // sig()
     },
     created () {
       Toast.loading({ mask: true,duration:0 });

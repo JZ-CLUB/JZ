@@ -19,7 +19,7 @@ Vue.use(Vuex)
 import storeObject from './store/index'
 var store = new Vuex.Store(storeObject)
 
-import './common/reset.css';
+import './common/reset.less';
 import 'vant/lib/vant-css/icon-local.css'
 new Vue({
   router,

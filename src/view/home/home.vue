@@ -25,8 +25,8 @@
       <van-row class="cardBox">
         <van-col span="12" v-for="(item,index) in searchData" :key="index">
           <div @click="$router.push({ name: 'activityGoods', params: { id:item.goodsId }})">
-            <!--<img class="cardImg" :src=comPath.imgPath+item.goodsImage alt="">-->
-            <img class="cardImg" src='../../images/cardImg.jpg' alt="">
+            <img class="cardImg" :src=comPath.imgPath+item.goodsImage alt="">
+            <!--<img class="cardImg" src='../../images/cardImg.jpg' alt="">-->
             <p class="cardText">{{item.goodsName}}</p>
           </div>
         </van-col>
@@ -80,15 +80,13 @@
         flag: true
       };
     },
+    beforeCreate() {
+      sig()
+    },
     created() {
       let vm = this
       Toast.loading({mask: true, duration: 0});
-      sig(true).then(function (message) {
-        // vm.recommend()
-      }, function (error) {
-      });
       vm.recommend()
-
     },
     computed: {
       showFlag: function () {
@@ -108,7 +106,6 @@
     },
     methods: {
       recommend() {
-        console.log(localStorage.openId)
         let that = this
         Ajax.post('target/recommendGoodsApi/api/Recommedgoodslist', {goodsflagsname: 'recommend'})
           .then(function (response) {
@@ -171,6 +168,7 @@
 
 <style lang="less">
   .goodsList {
+    color: #f0c37a;
     .search {
       input {
         height: 18px;
@@ -198,7 +196,7 @@
 
     .line {
       width: 100%;
-      height: 0.08rem;
+      height: 0.04rem;
       background: #4c0013;
     }
 
@@ -210,6 +208,8 @@
         .cardImg {
           max-width: 100%;
           margin: 0 auto;
+          width: 3.3rem;
+          height: 3.3rem;
         }
         .cardText {
           text-align: center;

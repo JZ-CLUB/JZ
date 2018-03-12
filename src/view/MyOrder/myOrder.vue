@@ -43,6 +43,12 @@
         activity:0
       }
     },
+    beforeCreate() {
+      localStorage.curUrl = window.location.href
+      if(!localStorage.getItem('openId')){
+        window.location.href = "http://www.jzmember.com/h5/#/h5backurl"
+      }
+    },
     created () {
       Toast.loading({ mask: true,duration:0 });
       let vm = this

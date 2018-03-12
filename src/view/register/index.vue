@@ -56,6 +56,13 @@ export default {
         yzCode:''
       }
     },
+  beforeCreate() {
+    localStorage.curUrl = window.location.href
+    if(!localStorage.getItem('openId')){
+      console.log(window.location.href)
+      window.location.href = "http://www.jzmember.com/h5/#/h5backurl"
+    }
+  },
     methods:{
       getCode(formData){
         var reg=11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
@@ -83,12 +90,7 @@ export default {
           Ajax.post('target/loginapi/sendMsgCode',data)
           .then(function (response) {
             let res=response.data
-            if(res.result===1){
-
-            }else{
-
-            }
-            console.log(res.msg);
+            Toast(res.msg)
           })
           .catch(function (error) {
             Toast('加载失败error')
@@ -113,8 +115,8 @@ export default {
             Ajax.post('target/memberapi/wxregister',data)
             .then(function (res) {
               if(res.data.result=="1"){
-                this.$router.push({path: '/home'});
-                // Toast(res.data.msg);
+                localStorage.memberId = res.data.memberId
+                this.$router.push({path: '/'});
               }else if(res.data.result !=="1"){
                 Toast(res.data.msg);
               }

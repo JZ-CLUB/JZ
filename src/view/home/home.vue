@@ -83,23 +83,13 @@
     beforeCreate() {
       localStorage.curUrl = window.location.href
       if(!localStorage.getItem('openId')){
-        console.log(window.location.href)
-        window.location.href = "http://www.jzmember.com/#/h5backurl"
+        window.location.href = "http://www.jzmember.com/h5/#/h5backurl"
       }
     },
     created() {
       let vm = this
       Toast.loading({mask: true, duration: 0});
-      /*if(!localStorage.getItem('openId')){
-        console.log(window.location.href)
-        window.location.href = "http://www.jzmember.com/#/h5backurl"
-      }*/
-      /*sig(true).then(function (message) {
-        // vm.recommend()
-      }, function (error) {
-      });*/
       vm.recommend()
-
     },
     computed: {
       showFlag: function () {
@@ -119,7 +109,6 @@
     },
     methods: {
       recommend() {
-        console.log(localStorage.openId)
         let that = this
         Ajax.post('target/recommendGoodsApi/api/Recommedgoodslist', {goodsflagsname: 'recommend'})
           .then(function (response) {

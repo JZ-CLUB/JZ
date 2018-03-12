@@ -70,6 +70,12 @@ export default {
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup
   },
+  beforeCreate() {
+    localStorage.curUrl = window.location.href
+    if(!localStorage.getItem('openId')){
+      window.location.href = "http://www.jzmember.com/h5/#/h5backurl"
+    }
+  },
   created () {
     let vm = this
     vm.getMyInfo()
@@ -77,10 +83,8 @@ export default {
   methods: {
     getMyInfo: function () {
       let data={
-        memberId:'111'
+        memberId:localStorage.getItem('openId')
       }
-      // Ajax.get('/static/test.json')
-      // Ajax.post('api/app/product/goodsBody',{goodsId:3299,storeId:175})
       Ajax.post('target/memberapi/memberDetail',data)
       .then(function (response) {
         // console.log(response);

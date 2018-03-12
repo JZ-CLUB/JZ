@@ -111,10 +111,11 @@ export default {
             .then(function (res) {
               if(res.data.result=="1"){
                 this.$router.push({path: '/home'});    
-                // Toast(res.data.msg);
               }else if(res.data.result=="2"){
                 Toast(res.data.msg);
-              }  
+              }else if(res.data.result=="0"){
+                Toast(res.data.msg);
+              }   
             })
             .catch(function (error) {
               Toast('加载失败error')

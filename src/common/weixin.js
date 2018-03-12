@@ -1,86 +1,42 @@
-const storage = window.localStorage;
 //登录
 const sig = () => {
-  return new Promise(function (resolve, reject) {
-    global.openid = getUrlParam('openId');
-    localStorage.openId=getUrlParam('openId');
-    if (!openid) {
-      let callback = encodeURIComponent(window.location.href)
-      //window.location.href = 'http://www.jzmember.com/jazz-music/wechat/auth?callback=' + callback;
-      Ajax.post('target/loginapi/wxlogin',{})
-        .then(function (response) {
-          let res=response.data;
-          if(res.result === 1){
-            localStorage.memberId = 88
-            //localStorage.openId = res.data[0].openid
-            //window.open("http://localhost:3000/#/register")
-            console.log(res.msg)
-          }else if(res.result === 2){
-            localStorage.memberId = 88
-            //localStorage.openId = res.data[0].openid
-            // localStorage.memberId = res.data[0].memberid
-            console.log(res.msg)
-          }else{
-            localStorage.memberId = 88
-            console.log(res.msg)
-            //window.open("http://localhost:3000/#/register")
-          }
-          resolve();
-        })
-        .catch(function (error) {
-          reject()
-          console.log(error)
-        });
-    } else {
-      var req = request.get(`/jazz-music/user/query/wechatInfo?openId=${openid}`);
-      req.timeout(10000);
-      req.end((err, res) => {
-        if (err || !res || res.body.error) {
-          alert('获取用户信息失败')
-        } else {
-          // console.log(res.body, '-------user info');
-          localStorage.userinfo = JSON.stringify(res.body);
-          // localStorage.openid=getUrlParam('openId');
-        }
-        resolve(res.body);
-      });
+  localStorage.curUrl = window.location.href
+  if(!localStorage.getItem('openId')){
+    let callback = 'http://www.jzmember.com/h5/#/h5backurl'
+    window.location.href = 'http://www.jzmember.com/h5/target/loginapi/wxlogin_userinfo?back_url=' + callback;
+  }else{
+    if(!localStorage.getItem('memberId')){
+      window.location.href = "http://www.jzmember.com/h5/#/register"
     }
-  })
+  }
 }
 
-const info = () => {
-  return new Promise(function(resolve, reject) {
-    var req = request.get(`/jazz-music/user/query/wechatInfo?openId=${storage['openid']}`);
-    req.timeout(10000);
-    req.end((err, res) => {
-      if (err || !res || res.body.error) {
-        resolve();
-      } else {
-        // console.log(res.body, '-------user info');
-        localStorage.userinfo = JSON.stringify(res.body);
-        // localStorage.openid=getUrlParam('openId');
-      }
-      resolve();
-    });
-  })
-
-}
 
 function jump() {
   let callback = encodeURIComponent(window.location.href)
   window.location.href = 'http://cod.baleina.cn?callback=' + callback + '&client=klz'
 }
 
-function getUrlParam(key) {
-  var m = window.location.search.match(new RegExp('(\\?|#|&)' + key + '=([^&]*)(#|&|$)'));
+function UrlSearch(e) {
+  var name,value;
+  var str=location.href; //取得整个地址栏
+  var num=str.indexOf("?");
+  var dat={};
+  str=str.substr(num+1); //取得所有参数   stringvar.substr(start [, length ]
 
-  if (!m) {
-    m = window.location.hash.match(new RegExp('(#|&)' + key + '=([^&#]*)(#|&|$)'));
+  var arr=str.split("&"); //各个参数放到数组里
+  //console.log(arr)
+  for(var i=0;i < arr.length;i++){
+    num=arr[i].indexOf("=");
+    //console.log(arr[i].indexOf("="));
+    if(num>0){
+      name=arr[i].substring(0,num);
+      value=arr[i].substr(num+1);
+      dat[name] = value;
+    }
   }
-
-  return !m ? "" : decodeURIComponent(m[2]);
+  return dat[e];
 }
-
 function getRandom() { //生成签名的随机串
   var random = "";
   for (var i = 1; i <= 32; i++) {
@@ -211,5 +167,5 @@ global.changeWx = function () {
 }
 
 export {
-  sig, sigin,info
+  sig, sigin
 }

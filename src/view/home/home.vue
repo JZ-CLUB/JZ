@@ -81,14 +81,7 @@
       };
     },
     beforeCreate() {
-      localStorage.curUrl = window.location.href
-      if(!localStorage.getItem('openId')){
-        window.location.href = "http://www.jzmember.com/h5/#/h5backurl"
-      }else{
-        if(!localStorage.getItem('memberId')){
-          window.location.href = "http://www.jzmember.com/h5/#/register"
-        }
-      }
+      sig()
     },
     created() {
       let vm = this

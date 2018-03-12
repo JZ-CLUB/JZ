@@ -6,34 +6,39 @@
 
 <script>
   import {sig} from '../../common/weixin'
+  import {
+     Toast
+  } from 'vant';
 
   export default {
-    components: {},
+    components: {
+      [Toast.name]: Toast
+    },
 
     data() {
       return {};
     },
     created() {
-      this.sig()
+      this.login()
     },
 
     methods: {
-      sig() {
+      login() {
         let that = this
         global.openid = that.UrlSearch('openid');
         if (!openid) {
-          // let callback = encodeURIComponent('http://www.jzmember.com/h5/#/h5backurl)
-          let callback = 'http://www.jzmember.com/h5/#/h5backurl'
-          window.location.href = 'http://www.jzmember.com/h5/target/loginapi/wxlogin_userinfo?back_url=' + callback;
+          Toast('系统繁忙')
         }
         else {
           if (that.UrlSearch('result') === 1) {
             localStorage.memberId = that.UrlSearch('memberid');
             localStorage.openId = that.UrlSearch('openid');
             window.location.href = localStorage.curUrl;
-          } else {
+          } else if(that.UrlSearch('result') === 2) {
             localStorage.openId = that.UrlSearch('openid');
             window.location.href = 'http://www.jzmember.com/h5/#/register';
+          }else{
+            Toast('result不为1或2')
           }
         }
       },

@@ -30,7 +30,6 @@
 </template>
 
 <script>
-let openid = localStorage.getItem("openId");
 import { Row, Col, Icon, Cell, CellGroup, Field, Button, Toast } from 'vant';
 const TIME_COUNT = 60;
 export default {
@@ -107,7 +106,7 @@ export default {
               Toast("请输入验证码！");
           }else{
             let data = {
-              openid: openid,
+              openid: localStorage.getItem('openId'),
               mobile: this.phoneNum,
               smscode: this.yzCode
             }

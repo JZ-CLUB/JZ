@@ -45,7 +45,7 @@
       }
     },
     beforeCreate() {
-      // sig()
+      sig()
     },
     created () {
       Toast.loading({ mask: true,duration:0 });

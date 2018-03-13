@@ -33,7 +33,12 @@
     created() {
 
     },
-    methods: {}
+    methods: {
+
+    },
+    mounted(){
+      Toast.clear()
+    }
   };
 </script>
 

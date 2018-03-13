@@ -122,6 +122,7 @@
         }
         Ajax.post('target/orderapi/saveorder',data)
           .then(function (response) {
+            Toast.clear()
             let res=response.data;
             if(res.result===1){
               that.paySn = res.data[0].paySn

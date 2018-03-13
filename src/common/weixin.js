@@ -2,7 +2,7 @@
 const sig = () => {
   localStorage.curUrl = window.location.href
   if(!localStorage.getItem('openId')){
-    let callback = 'http://www.jzmember.com/h5/#/h5backurl'
+    let callback = encodeURIComponent('http://www.jzmember.com/h5/#/h5backurl')
     window.location.href = 'http://www.jzmember.com/h5/target/loginapi/wxlogin_userinfo?back_url=' + callback;
   }else{
     if(!localStorage.getItem('memberId')){

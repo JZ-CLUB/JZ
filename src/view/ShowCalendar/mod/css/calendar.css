@@ -87,7 +87,7 @@ ul, li { list-style: none; }
 }
 .calendar-date .item:hover,
 .calendar-date .item-curMonth:hover {
-  background-color: #f0f0f0;
+
 }
 .calendar-date .item-curMonth {
   color: #333;
@@ -100,8 +100,7 @@ ul, li { list-style: none; }
 }
 .calendar-date .item-selected,
 .calendar-date .item-selected:hover {
-  color: rgb(255, 128, 142);
-  background: #cde9d9;
+
 }
 .calendar-today {
   display: none;

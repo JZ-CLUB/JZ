@@ -65,6 +65,7 @@
       }
     },
     created () {
+      Toast.loading({mask: true, duration: 0});
       let vm = this
       vm.getAddressList();
       vm.selAddress()
@@ -115,15 +116,17 @@
           for(let i = 0; i< res.data.data.length; i++){
             address_id_str[i] = res.data.data[i].addressId;
           }
+          Toast.clear();
         })
         .catch(function (error) {
-
+          Toast('加载失败');
         });
       },
       onDelete(item, index) {
         Dialog.confirm({
           message: '确定删除吗？'
         }).then(() => {
+          Toast.loading({mask: true, duration: 0});
           this.list.splice(index,1);
           let url = 'target/address/api/delAddress'
           let data = {
@@ -131,13 +134,13 @@
           }
           Ajax.post(url, data)
           .then(function (res) {
-            // Toast("成功");
+            Toast("删除成功");
           })
           .catch(function (error) {
-
+            Toast("加载失败");
           });
         }).catch(() => {
-          // Toast("取消");
+          //Toast("取消");
         });
       },
     }
@@ -248,6 +251,7 @@
       padding: 0 !important;
       height: 1rem;
       line-height: 1rem;
+      z-index: 1;
       // background: #be2c36 !important;
       border:0;
       .van-button--bottom-action{

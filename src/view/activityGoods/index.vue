@@ -67,7 +67,8 @@
     GoodsActionMiniBtn,
     Actionsheet,
     button,
-    Sku
+    Sku,
+    Toast
   } from 'vant';
 
   export default {
@@ -84,7 +85,8 @@
       [GoodsActionMiniBtn.name]: GoodsActionMiniBtn,
       [Actionsheet.name]: Actionsheet,
       [Sku.name]: Sku,
-      [button.name]: button
+      [button.name]: button,
+      [Toast.name]: Toast
     },
 
     data() {
@@ -135,6 +137,7 @@
       };
     },
     created: function() {
+      Toast.loading({mask: true, duration: 0});
       this.send(this);
 
     },
@@ -149,6 +152,7 @@
         return this.showCustomAction= true;
       },
       handleBuyClicked(e){
+        Toast.loading({mask: true, duration: 0});
         let that = this
         console.log(e);
         let oData = this.sku;
@@ -194,10 +198,13 @@
         Ajax.post('target/cartapi/addCart', data)
           .then(
             function (response) {
+              Toast.clear()
               if(response.data.result==1){
                 localStorage.setItem('cartIds',response.data.data[0].cartIds)
                 localStorage.setItem('goodsTitle',that.goods.title)
                 vue.$router.push({ name: 'toPay'})
+              }else{
+                Toast(response.data.msg)
               }
             }
           );
@@ -357,9 +364,10 @@
                 }
               }*/
             }
-
+            Toast.clear()
           })
           .catch(function (error) {
+            Toast('加载失败')
             console.log(error);
           });
       }

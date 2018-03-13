@@ -129,6 +129,7 @@
           message: '确定取消订单？',
           title:'提示'
         }).then(() => {
+          Toast.loading({mask: true, duration: 0});
           this.orderCancel(id)
         }).catch(() => {
           // Toast('取消')
@@ -141,15 +142,16 @@
             let res = response.data;
             if (res.result === 1) {
               that.$router.push({name: 'myOrder'})
+            }else{
+              Toast(res.msg)
             }
-            Toast(res.msg)
           })
           .catch(function (error) {
-            console.log(error)
             Toast('加载失败error')
           });
       },
       toPay: function () {
+        Toast.loading({mask: true, duration: 0});
         let that = this
         let data = {
           paySn: this.orderInfo.paySn,
@@ -161,13 +163,12 @@
             if (res.result === 1) {
               that.signInfo = res.data
               that.callpay()
-              Toast.clear()
+              // Toast.clear()
             } else {
               Toast(res.msg)
             }
           })
           .catch(function (error) {
-            console.log(error)
             Toast(error)
           });
       },
@@ -185,7 +186,8 @@
           function (res) {
             console.log(res)
             if (res.err_msg === 'get_brand_wcpay_request:ok') {
-              Toast('微信支付成功')
+              that.$router.push({name:'/buySuccessful'})
+              // Toast('微信支付成功')
             } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
               Toast('用户取消支付')
             } else if (res.err_msg === 'get_brand_wcpay_request:fail') {

@@ -116,6 +116,7 @@
       }
     },
     created() {
+      Toast.loading({mask: true, duration: 0});
       let vm = this;
       vm.sheng();
       vm.addressInfo = this.$store.state.address.addressInfo;
@@ -257,8 +258,9 @@
           that.columns = nini;
           that.columns1 = [{"text":"请选择"}]
           that.columns2 = [{"text":"请选择"}]
+          Toast.clear()
         }).catch(function (error) {
-
+          Toast('加载失败')
         });
       },
       onConfirm() {
@@ -272,6 +274,7 @@
         }
       },
       saveUse() {
+        Toast.loading({mask: true, duration: 0});
         let _this = this;
         if(_this.username =="" || _this.telpbone == "" || _this.proSheng =="" || _this.proCity =="" || _this.proArea == "" ) {
           Toast('请填写完整');
@@ -302,7 +305,7 @@
               }
 
             }).catch(function (error) {
-
+              Toast('加载失败')
             });
           }
         }

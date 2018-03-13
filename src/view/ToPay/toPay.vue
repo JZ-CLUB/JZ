@@ -105,10 +105,11 @@
         Toast.clear()
       },
       onSubmit() {
+        Toast.loading({mask: true, duration: 0});
         let that = this
-        console.log(localStorage.getItem('selectAddress')===null)
         if(localStorage.getItem('goodstype')!=='1'){
           if(localStorage.getItem('selectAddress')===undefined || localStorage.getItem('selectAddress')===null || localStorage.getItem('selectAddress')===''){
+            Toast.clear()
             Toast('请选择地址')
             return
           }
@@ -134,11 +135,11 @@
             }
           })
           .catch(function (error) {
-            console.log(error)
             Toast('加载失败error')
           });
       },
       toPay:function () {
+        Toast.loading({mask: true, duration: 0});
         let that=this
         let data={
           paySn:that.paySn,
@@ -162,26 +163,28 @@
       },
       onBridgeReady: function () {
         let that=this
+        /*{
+          'appId': that.signInfo.appid,
+          'timeStamp': that.signInfo.timestamp,
+          'nonceStr': that.signInfo.noncestr,
+          'package': "prepay_id=that.signInfo.prepayid",
+          'signType': "MD5",
+          'paySign': that.signInfo.sign
+        }*/
         WeixinJSBridge.invoke(
-          'getBrandWCPayRequest', {
-            'appId': that.signInfo.appid,
-            'timeStamp': that.signInfo.timestamp,
-            'nonceStr': that.signInfo.noncestr,
-            'package': "prepay_id=that.signInfo.prepayid",
-            'signType': "MD5",
-            'paySign': that.signInfo.sign
-          },
+          'getBrandWCPayRequest', that.signInfo,
           function (res) {
-            console.log(res)
             if (res.err_msg === 'get_brand_wcpay_request:ok') {
               localStorage.cartIds=''
               localStorage.datalist=''
               localStorage.goodstype=''
-
-              Toast('微信支付成功')
+              that.$router.push({name:'/buySuccessful'})
+              // Toast('微信支付成功')
             } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
+              that.$router.push({name:'/myOrder'})
               Toast('用户取消支付')
             } else if (res.err_msg === 'get_brand_wcpay_request:fail') {
+              that.$router.push({name:'/myOrder'})
               Toast('网络异常，请重试')
             }
           }

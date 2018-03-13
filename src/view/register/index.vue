@@ -30,7 +30,7 @@
 </template>
 
 <script>
-  import {Row, Col, Icon, Cell, CellGroup, Field, Button, Toast} from 'vant';
+  import {Row, Col, Icon, Cell, CellGroup, Field, Button, Toast, Dialog} from 'vant';
 
   const TIME_COUNT = 60;
   export default {
@@ -42,7 +42,8 @@
       [CellGroup.name]: CellGroup,
       [Field.name]: Field,
       [Button.name]: Button,
-      [Toast.name]: Toast
+      [Toast.name]: Toast,
+      [Dialog.name]: Dialog
     },
     data() {
       return {
@@ -100,6 +101,7 @@
         }
       },
       registerClick() {
+        let that = this
         var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
         if (this.phoneNum == "" || this.phoneNum == undefined) {
           Toast("请填写手机号！")
@@ -116,12 +118,14 @@
             }
             Ajax.post('target/memberapi/wxregister', data)
               .then(function (res) {
-                if (res.data.result == 1) {
+                if (res.data.result == "1") {
                   localStorage.memberId = res.data.memberId
                   that.$router.push({path: '/successRegister'});
-                } else if (res.data.result == 2) {
+                } else if (res.data.result == "2") {
+                  // that.$router.push({name: 'home'})
                   Dialog.alert({
-                    message: '您已经是JZ会员'
+                    message: '您已经是JZ会员',
+                    title:'提示'
                   }).then(() => {
                     that.$router.push({name: 'home'})
                   });
@@ -130,6 +134,7 @@
                 }
               })
               .catch(function (error) {
+                console.log(error)
                 Toast('加载失败error')
               });
           }

@@ -107,7 +107,7 @@
         // Ajax.get('/static/address.json')
         let url = 'target/address/api/addressList'
         let data = {
-          memberId: localStorage.getItem('memberId')
+          memberId: sessionStorage.getItem('memberId')
         }
         // Ajax.get('/static/address.json')
         Ajax.post(url, data)

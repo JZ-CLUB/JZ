@@ -41,7 +41,7 @@
         flag:true,
         imageURL:'https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg',
         param:{
-          memberId:localStorage.getItem('memberId'),
+          memberId:sessionStorage.getItem('memberId'),
           status:40,
           pageNo:0,
           pageSize:10

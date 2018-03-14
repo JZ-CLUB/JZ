@@ -67,7 +67,7 @@
         items: [],
         flag: true,
         param: {
-          memberId: localStorage.getItem('memberId'),
+          memberId: sessionStorage.getItem('memberId'),
           status: '',
           pageNo: 0,
           pageSize: 10

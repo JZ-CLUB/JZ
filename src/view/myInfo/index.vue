@@ -82,7 +82,7 @@
     methods: {
       getMyInfo: function () {
         let data = {
-          memberId: localStorage.getItem('openId')
+          memberId: sessionStorage.getItem('openId')
         }
         Ajax.post('target/memberapi/memberDetail', data)
           .then(function (response) {

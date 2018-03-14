@@ -144,7 +144,7 @@
         let that=this
         let data={
           paySn:that.paySn,
-          memberId:localStorage.getItem('memberId')
+          memberId:sessionStorage.getItem('memberId')
         }
         Ajax.post('target/wxpay/api/payorder',data)
           .then(function (response) {

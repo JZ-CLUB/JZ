@@ -30,11 +30,11 @@
         }
         else {
           if (that.UrlSearch('result') === '1') {
-            localStorage.memberId = that.UrlSearch('memberid');
-            localStorage.openId = that.UrlSearch('openid');
+            sessionStorage.memberId = that.UrlSearch('memberid');
+            sessionStorage.openId = that.UrlSearch('openid');
             window.location.href = localStorage.curUrl;
           } else if(that.UrlSearch('result') === '2') {
-            localStorage.openId = that.UrlSearch('openid');
+            sessionStorage.openId = that.UrlSearch('openid');
             window.location.href = 'http://www.jzmember.com/h5/#/register';
           }else{
             Toast('result不为1或2')

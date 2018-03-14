@@ -106,7 +106,7 @@
         provinceId:'',        //选中的省的ID
         cityId:'',        //选中的市的ID
         areaId:'',         //选中的区的ID
-        memberId:localStorage.getItem('memberId'),
+        memberId:sessionStorage.getItem('memberId'),
         addressInfo:'',
         zipCode:'',
         mobPhone:'',
@@ -131,7 +131,7 @@
         let that = this;
         let url = 'target/address/api/addressList'
         let data = {
-          memberId: localStorage.getItem('memberId')
+          memberId: sessionStorage.getItem('memberId')
         }
         Ajax.post(url, data)
         .then(function (res) {
@@ -284,7 +284,7 @@
             Toast("手机格式不正确");
           }else{
             let data = {
-              memberId:localStorage.getItem('memberId'),
+              memberId:sessionStorage.getItem('memberId'),
               trueName:_this.username,
               mobPhone:_this.mobPhone,
               telPhone:_this.telpbone,

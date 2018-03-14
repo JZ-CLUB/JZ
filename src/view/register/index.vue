@@ -59,6 +59,7 @@
       }
     },
     beforeCreate() {
+      localStorage.curUrl = window.location.href
       if(!sessionStorage.getItem('openId')){
         let callback = 'http://www.jzmember.com/h5/#/h5backurl'
         window.location.href = 'http://www.jzmember.com/h5/target/loginapi/wxlogin_userinfo?back_url=' + callback;

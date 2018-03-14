@@ -57,6 +57,7 @@
 </template>
 
 <script>
+  import {sig} from '../../common/weixin'
   import Vue from 'vue'
   import {
     Tag,
@@ -142,6 +143,9 @@
 
       };
     },
+    beforeCreate() {
+      sig()
+    },
     created: function() {
       Toast.loading({mask: true, duration: 0});
       this.send(this);
@@ -219,7 +223,7 @@
         Ajax.post('target/goods/api/goodsdetail', {
         //Ajax.post('http://rap.taobao.org/mockjsdata/31603/get', {
           goodsId: e.$route.params.id,
-          memberId:sessionStorage.getItem('memberId')
+          memberId:localStorage.getItem('memberId')
         })
           .then(function (response) {
             //console.log(response)

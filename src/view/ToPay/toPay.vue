@@ -1,7 +1,7 @@
 <template>
   <div class="toPayBox">
     <van-cell-group class="payAddress" v-if="goodsType!=='1'">
-      <router-link to="/address">
+      <router-link to="/address" v-if="flag === 0">
         <van-cell is-link>
           <div v-if="selectAddress!==''">
             <div class="van-address-list__name">收货人：{{ selectAddress.trueName }} <span class="telPhone">{{ selectAddress.telPhone }}</span></div>
@@ -11,6 +11,16 @@
           <div v-if="selectAddress===''" class="van-address-list__address">请选择收货地址</div>
         </van-cell>
       </router-link>
+
+      <van-cell v-if="flag === 1">
+        <div v-if="selectAddress!==''">
+          <div class="van-address-list__name">收货人：{{ selectAddress.trueName }} <span class="telPhone">{{ selectAddress.telPhone }}</span></div>
+          <div class="van-address-list__address">收货地址：{{ selectAddress.address }}{{ selectAddress.areaInfo }}</div>
+        </div>
+
+        <div v-if="selectAddress===''" class="van-address-list__address">请选择收货地址</div>
+      </van-cell>
+
     </van-cell-group>
     <div class="itemInfo">
       <h1 class="">{{goodsTitle}}</h1>
@@ -34,11 +44,18 @@
       <p class="showDiv__con">四、本门票最终解释权······</p>
     </van-popup>
 
-    <van-submit-bar
+    <van-submit-bar  v-if="flag === 0 "
       :price="totalPrice"
       label="总金额："
       button-text="立即购买"
       @submit="onSubmit"
+    />
+
+    <van-submit-bar v-if="flag === 1"
+      :price="totalPrice"
+      label="总金额："
+      button-text="立即支付"
+      @submit="toPay"
     />
   </div>
 </template>
@@ -58,6 +75,7 @@
     },
     data() {
       return {
+        flag: 0,
         chosenAddressId: '1',
         list:'',
         goodsType:localStorage.getItem('goodstype'),//1---二维码  2-----实体票
@@ -125,6 +143,7 @@
             Toast.clear()
             let res=response.data;
             if(res.result===1){
+              that.flag = 1
               that.paySn = res.data[0].paySn
               if(that.totalPrice === 0){
                 that.$router.push({ name: 'buySuccessful'})
@@ -158,22 +177,20 @@
             }
           })
           .catch(function (error) {
-            console.log(error)
             Toast(error)
           });
       },
       onBridgeReady: function () {
         let that=this
-        /*{
-          'appId': that.signInfo.appid,
-          'timeStamp': that.signInfo.timestamp,
-          'nonceStr': that.signInfo.noncestr,
-          'package': "prepay_id=that.signInfo.prepayid",
-          'signType': "MD5",
-          'paySign': that.signInfo.sign
-        }*/
         WeixinJSBridge.invoke(
-          'getBrandWCPayRequest', that.signInfo,
+          'getBrandWCPayRequest', {
+            appId: that.signInfo.appid,
+            timeStamp: that.signInfo.timestamp,
+            nonceStr: that.signInfo.noncestr,
+            package: "prepay_id="+that.signInfo.prepayid,
+            signType: "MD5",
+            paySign: that.signInfo.sign
+          },
           function (res) {
             if (res.err_msg === 'get_brand_wcpay_request:ok') {
               localStorage.cartIds=''

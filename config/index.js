@@ -23,13 +23,13 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 3000,
+    port: 80,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
       '/target/': {
-        target: 'http://15.146.38.175:80/hpeshop-front', // target host
+        target: 'http://www.jzmember.com/h5/target', // target host
         secure: false,
         changeOrigin: true,               // needed for virtual hosted sites
         ws: true,                         // proxy websockets

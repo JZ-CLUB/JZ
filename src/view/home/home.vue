@@ -172,7 +172,6 @@
     .search {
       input {
         height: 18px;
-        line-height: 44px;
         text-align: center;
       }
     }

@@ -174,17 +174,18 @@
       },
       onBridgeReady: function () {
         let that = this
+        let aaa={
+          appId: that.signInfo.appid,
+          timeStamp: that.signInfo.timestamp,
+          nonceStr: that.signInfo.noncestr,
+          package: "prepay_id="+that.signInfo.prepayid,
+          signType: "MD5",
+          paySign: that.signInfo.sign
+        }
+        console.log(aaa)
         WeixinJSBridge.invoke(
-          'getBrandWCPayRequest', {
-            'appId': that.signInfo.appid,
-            'timeStamp': that.signInfo.timestamp,
-            'nonceStr': that.signInfo.noncestr,
-            'package': "prepay_id=that.signInfo.prepayid",
-            'signType': "MD5",
-            'paySign': that.signInfo.sign
-          },
+          'getBrandWCPayRequest', aaa,
           function (res) {
-            console.log(res)
             if (res.err_msg === 'get_brand_wcpay_request:ok') {
               that.$router.push({name:'/buySuccessful'})
               // Toast('微信支付成功')

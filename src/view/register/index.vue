@@ -118,8 +118,9 @@
             }
             Ajax.post('target/memberapi/wxregister', data)
               .then(function (res) {
+                Toast.clear()
                 if (res.data.result == "1") {
-                  localStorage.memberId = res.data.memberId
+                  sessionStorage.memberId = res.data.memberId
                   that.$router.push({path: '/successRegister'});
                 } else if (res.data.result == "2") {
                   // that.$router.push({name: 'home'})

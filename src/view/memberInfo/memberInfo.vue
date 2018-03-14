@@ -3,7 +3,7 @@
     <van-cell-group>
       <van-cell icon="" title="真实姓名" :value="defaultName" is-link @click="nameShow=true"/>
       <van-cell icon="" title="性别" :value="itemVal" is-link @click="show=true"/>
-      <van-cell icon="" title="生日" :value="birthData" is-link @click="dataShow=true"/>
+      <!-- <van-cell icon="" title="生日" :value="birthData" is-link @click="dataShow=true"/> -->
       <van-cell icon="" title="手机号" :value="telNum" is-link @click="phoneShow=true"/>
     </van-cell-group>
 
@@ -85,12 +85,12 @@
     },
     data() {
       return {
-        defaultName: '张三',
+        defaultName: '',
         errMsg: '',
         nameShow: false,
         username: '',
-        itemVal: '男',
-        birthData: '2018-01-01',
+        itemVal: '',
+        birthData: '',
         show: false,
         phoneShow: false,
         actions: [
@@ -111,7 +111,7 @@
         maxDate: new Date(2019, 10, 1),
         currentDate: new Date(2018, 0, 1),
         dataShow: false,
-        telNum: '13378836285',
+        telNum: '',
         codeShow: true,
         formData: {
           phoneNum: this.phoneNum,
@@ -120,7 +120,8 @@
         count: '',
         timer: null,
         phoneNum: '',
-        yzCode: ''
+        yzCode: '',
+        returnSex:0
       };
     },
     created() {
@@ -132,15 +133,22 @@
       memberInfo() {
         let that = this;
         let data = {
-          memberId: 88
+          memberId: sessionStorage.getItem("memberId")
         }
         Ajax.post('target/memberapi/memberDetail', data)
           .then(function (res) {
-            that.defaultName = res.data.data[0].memberName;
+            let response = res.data;
+            if(response.data[0].memberTruename!=null || response.data[0].memberTruename!=undefined){
+              that.defaultName = res.data.data[0].memberTruename;
+            }else{
+              that.defaultName = res.data.data[0].memberName;
+            }
+            that.birthData = res.data.data[0].memberBirthday;
+            that.telNum = res.data.data[0].memberMobile;
             if (res.data.data[0].memberSex == "1") {
-              that.itemVal = "女";
-            } else {
               that.itemVal = "男";
+            } else {
+              that.itemVal = "女";
             }
           })
           .catch(function (error) {
@@ -150,7 +158,28 @@
       },
       onClick(item) {
         this.show = false;
-        this.itemVal = item.name
+        this.itemVal = item.name;
+        if(this.itemVal == "男"){
+          this.returnSex = 1;
+        }else{
+          this.returnSex = 2;
+        }
+        let data = {
+            memberId: sessionStorage.getItem("memberId"),
+            birthday: this.birthData,
+            nichen: this.username,
+            sex: this.returnSex,
+            areaInfo:'',
+            mobile:this.telNum
+          }
+          Ajax.post('target/memberapi/updateMember', data)
+          .then(function (res) {
+            Toast(res.data.msg)
+          })
+          .catch(function (error) {
+            console.log(error)
+            Toast('加载失败error')
+          });
         // Toast(item.name);
       },
       onChange(picker) {
@@ -158,29 +187,85 @@
       },
       onConfirm(val) {
         this.birthData = new Date(val).Format("yyyy-MM-dd");
-        this.dataShow = false
+        this.dataShow = false;
+        let data = {
+            memberId:sessionStorage.getItem("memberId"),
+            birthday: this.birthData,
+            nichen: this.username,
+            sex: this.returnSex,
+            areaInfo:'',
+            mobile:this.telNum
+        }
+        Ajax.post('target/memberapi/updateMember', data)
+        .then(function (res) {
+          Toast(res.data.msg)
+        })
+        .catch(function (error) {
+          console.log(error)
+          Toast('加载失败error')
+        });
       },
       oncalcel() {
         this.dataShow = false
       },
       saveName() {
-        if (this.username === '') {
+        let _this = this;
+        if (_this.username === '') {
           Toast('请输入真实姓名');
         } else {
-          this.nameShow = false
+          _this.nameShow = false;
+          let data = {
+            memberId: sessionStorage.getItem("memberId"),
+            birthday:_this.birthData,
+            nichen: _this.username,
+            sex: _this.returnSex,
+            areaInfo:'',
+            mobile:_this.telNum
+          }
+          Ajax.post('target/memberapi/updateMember', data)
+          .then(function (res) {
+            Toast(res.data.msg);
+            if(res.data.result == "1"){
+              _this.defaultName =_this.username;
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+            Toast('加载失败error')
+          });
         }
       },
       savePhone() {
-        if (this.phoneCheck(this.phoneNum)) {
-          if (this.yzCode === '') {
+        let that = this;
+        if (that.phoneCheck(that.phoneNum)) {
+          if (that.yzCode === '') {
             Toast('请输入验证码！')
             return false
           } else {
             Toast('保存信息')
-            this.telNum = this.phoneNum
-            this.phoneShow = false
-            clearInterval(this.timer)
+            that.telNum = that.phoneNum
+            that.phoneShow = false
+            clearInterval(that.timer)
+            let data = {
+            memberId:sessionStorage.getItem("memberId"),
+            birthday:that.birthData,
+            nichen: that.username,
+            sex: that.returnSex,
+            areaInfo:'',
+            mobile:that.telNum
           }
+          Ajax.post('target/memberapi/updateMember', data)
+          .then(function (res) {
+            Toast(res.data.msg)
+            if(res.data.result == "1"){
+              that.telNum = that.phoneNum;
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+            Toast('加载失败error')
+          });
+        }
         }
       },
       phoneCheck(phoneNum) {
@@ -200,6 +285,17 @@
       },
       getCode(formdata) {
         this.phoneCheck(this.phoneNum) ? this.timeKeeper() : ''
+        let data = {
+            mobile: this.phoneNum
+          }
+          Ajax.post('target/loginapi/sendMsgCode', data)
+            .then(function (response) {
+              let res = response.data
+              Toast(res.msg)
+            })
+            .catch(function (error) {
+              Toast('加载失败error')
+            });
       },
       timeKeeper() {
         if (!this.timer) {
@@ -209,8 +305,11 @@
             console.log(this.count)
             if (this.count > 0 && this.count <= TIME_COUNT) {
               this.count--;
+              if(this.count<=0){
+                this.codeShow = true;
+              }
             } else {
-              this.show = true;
+              // this.codeShow = false;
               clearInterval(this.timer);
               this.timer = null;
             }
@@ -291,6 +390,7 @@
       position: relative;
       .van-field__control {
         background: #1a1a1a;
+        color:white !important;
       }
     }
     .van-cell__title {

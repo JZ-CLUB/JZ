@@ -20,9 +20,11 @@
             </div>
           </van-col>
           <van-col span="2">
-            <div class="title_right">
-              <!-- <img src="../../images/myInfo_03.png"> -->
-            </div>
+            <router-link to="/memberInfo">
+              <div class="title_right">
+                <img src="../../images/myInfo_03.png">
+              </div>
+            </router-link>
           </van-col>
         </van-row>
         <van-row class="card_con">

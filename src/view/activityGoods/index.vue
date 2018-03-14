@@ -1,54 +1,58 @@
 <template>
-  <div class="goods">
+  <div>
+    <div class="goodTitle">
+      <p class="first_tit" v-html="goodsName">{{goodsName}}</p>
+      <p class="second_tit" v-html="goodsSubtitle">{{goodsSubtitle}}</p>
+    </div>
+    <div class="goods">
+      <div v-html="goodsBody">{{goodsBody}}</div>
+      <van-goods-action>
+        <van-goods-action-big-btn primary @click="showShu">
+          我要购票
+        </van-goods-action-big-btn>
+      </van-goods-action>
 
-    <div v-html="goodsBody">{{goodsBody}}</div>
-
-    <van-goods-action>
-      <van-goods-action-big-btn primary @click="showShu">
-        我要购票
-      </van-goods-action-big-btn>
-    </van-goods-action>
-
-    <van-sku
-      v-model="showCustomAction"
-      stepper-title="数量"
-      :sku="sku"
-      :goods="goods_con"
-      :goods-id="goodsId"
-      :hide-stock="sku.hide_stock"
-      :show-add-cart-btn="false"
-      :quota="quota"
-      :quota-used="quotaUsed"
-      :reset-stepper-on-hide="true"
-      :initial-sku="initialSku"
-      @buy-clicked="handleBuyClicked"
-    >
-      <!-- 自定义 sku header -->
-      <template slot="sku-header" slot-scope="props">
-        <div class="van-sku-header van-hairline--bottom">
-          <div class="van-sku-header__img-wrap" v-show="imgShow">
-            <img class="van-sku__goods-img" :src="goods_con.Img">
+      <van-sku
+        v-model="showCustomAction"
+        stepper-title="数量"
+        :sku="sku"
+        :goods="goods_con"
+        :goods-id="goodsId"
+        :hide-stock="sku.hide_stock"
+        :show-add-cart-btn="false"
+        :quota="quota"
+        :quota-used="quotaUsed"
+        :reset-stepper-on-hide="true"
+        :initial-sku="initialSku"
+        @buy-clicked="handleBuyClicked"
+      >
+        <!-- 自定义 sku header -->
+        <template slot="sku-header" slot-scope="props">
+          <div class="van-sku-header van-hairline--bottom">
+            <div class="van-sku-header__img-wrap" v-show="imgShow">
+              <img class="van-sku__goods-img" :src="goods_con.Img">
+            </div>
+            <div class="van-sku-header__goods-info">
+              <div class="van-sku__goods-name">{{ goods.title }}</div>
+              <div class="van-sku__goods-price" style="display: none"><span class="van-sku__price-symbol">￥</span><span class="van-sku__price-num">{{ price }}</span></div>
+              <span class="van-sku__close-icon" style="display: none" @click="props.skuEventBus.$emit('sku:close')" />
+            </div>
           </div>
-          <div class="van-sku-header__goods-info">
-            <div class="van-sku__goods-name">{{ goods.title }}</div>
-            <div class="van-sku__goods-price" style="display: none"><span class="van-sku__price-symbol">￥</span><span class="van-sku__price-num">{{ price }}</span></div>
-            <span class="van-sku__close-icon" style="display: none" @click="props.skuEventBus.$emit('sku:close')" />
+        </template>
+        <!-- 隐藏 sku messages -->
+        <template slot="sku-messages"></template>
+        <!-- 自定义 sku actions -->
+        <template slot="sku-actions" slot-scope="props">
+          <div class="van-sku-actions">
+            <!--<van-button bottom-action @click="handlePointClicked">积分兑换</van-button>-->
+            <!-- 直接触发 sku 内部事件，通过内部事件执行 handleBuyClicked 回调 -->
+            <van-button type="primary" bottom-action  @click="props.skuEventBus.$emit('sku:buy')">立即购买</van-button>
           </div>
-        </div>
-      </template>
-      <!-- 隐藏 sku messages -->
-      <template slot="sku-messages"></template>
-      <!-- 自定义 sku actions -->
-      <template slot="sku-actions" slot-scope="props">
-        <div class="van-sku-actions">
-          <!--<van-button bottom-action @click="handlePointClicked">积分兑换</van-button>-->
-          <!-- 直接触发 sku 内部事件，通过内部事件执行 handleBuyClicked 回调 -->
-          <van-button type="primary" bottom-action  @click="props.skuEventBus.$emit('sku:buy')">立即购买</van-button>
-        </div>
-      </template>
-    </van-sku>
+        </template>
+      </van-sku>
 
 
+    </div>
   </div>
 </template>
 
@@ -108,6 +112,8 @@
           ]
         },
         goodsBody:'',
+        goodsName:'',
+        goodsSubtitle:'',
         showCustomAction: false,
         sku: {
           // 所有sku规格类目与其值的从属关系，比如商品有颜色和尺码两大类规格，颜色下面又有红色和蓝色两个规格值。
@@ -226,6 +232,8 @@
               let j = 0;
               let o = 0;
               e.goodsBody = nData.goodsBody;
+              e.goodsName = nData.goodsName;
+              e.goodsSubtitle = nData.goodsSubtitle;
               e.goodsId = nData.goodsId;
               e.goods.title = nData.goodsName;
               e.price = nData.goodsStorePrice;
@@ -378,13 +386,34 @@
 </script>
 
 <style lang="less">
+    .goodTitle{
+      width: 100%;
+      height: 3.62rem;
+      background: url("../../images/goodsAct_bg_02.png") no-repeat center;
+      background-size: cover;
+      .first_tit{
+        font-size: 0.5rem;
+        color:#efc181;
+        text-shadow:2px 5px 4px #000;
+        text-align: center;
+        padding-top: 1.2rem;
+        font-weight: 800;
+      }
+      .second_tit{
+        font-size: 0.32rem;
+        color:#efc181;
+        text-shadow:2px 5px 4px #000;
+        text-align: center;
+        font-weight: 600;
+        padding-top:0.1rem;
+      }
+    }
   .goods {
     background-color: #1a1a1a;
     padding-left: 20px;
     padding-right: 20px;
     font-family: "Microsoft YaHei";
     font-size: 14px;
-
     img{
       width: 100%
     }

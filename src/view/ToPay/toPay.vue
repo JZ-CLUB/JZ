@@ -117,7 +117,7 @@
         let data={
           cartIds:localStorage.getItem('cartIds'),
           addressId:that.selectAddress.addressId,
-          memberid:localStorage.getItem('memberId'),
+          memberid:sessionStorage.getItem('memberId'),
           paytype:1
         }
         Ajax.post('target/orderapi/saveorder',data)

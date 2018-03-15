@@ -109,7 +109,7 @@
           })
           .catch(function (error) {
             console.log(error)
-            Toast('加载失败error')
+            // Toast('加载失败error')
           });
       },
       getCode: function (orderSn) {
@@ -147,7 +147,8 @@
             }
           })
           .catch(function (error) {
-            Toast('加载失败error')
+            console.log(error)
+            // Toast('加载失败error')
           });
       },
       toPay: function () {

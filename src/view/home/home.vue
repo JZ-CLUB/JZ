@@ -118,7 +118,7 @@
           })
           .catch(function (error) {
             console.log(error)
-            Toast('加载失败error')
+            // Toast('加载失败error')
           });
       },
       refresh(done) {
@@ -158,7 +158,7 @@
               setTimeout(() => {
                 done(true)
               }, 0)
-              Toast('加载失败error')
+              // Toast('加载失败error')
             });
         }
       }

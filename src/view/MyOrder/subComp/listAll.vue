@@ -121,7 +121,7 @@
             })
             .catch(function (error) {
               console.log(error)
-              Toast('加载失败error')
+              // Toast('加载失败error')
             });
         }
       }

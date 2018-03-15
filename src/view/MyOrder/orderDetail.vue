@@ -161,52 +161,49 @@
           .then(function (response) {
             let res = response.data;
             if (res.result === 1) {
-              that.signInfo = res.data
+              that.signInfo = res.data.jsdata
               that.callpay()
-              // Toast.clear()
+              Toast.clear()
             } else {
               Toast(res.msg)
             }
           })
           .catch(function (error) {
+            console.log(error)
             Toast(error)
           });
       },
       onBridgeReady: function () {
-        let that = this
-        let aaa={
-          appId: that.signInfo.appid,
-          timeStamp: that.signInfo.timestamp,
-          nonceStr: that.signInfo.noncestr,
-          package: "prepay_id="+that.signInfo.prepayid,
-          signType: "MD5",
-          paySign: that.signInfo.sign
-        }
-        console.log(aaa)
-        WeixinJSBridge.invoke(
-          'getBrandWCPayRequest', aaa,
-          function (res) {
-            if (res.err_msg === 'get_brand_wcpay_request:ok') {
-              that.$router.push({name:'/buySuccessful'})
-              // Toast('微信支付成功')
-            } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
-              Toast('用户取消支付')
-            } else if (res.err_msg === 'get_brand_wcpay_request:fail') {
-              Toast('网络异常，请重试')
+          WeixinJSBridge.invoke(
+            'getBrandWCPayRequest', this.signInfo,
+            function(res){
+              if (res.err_msg === 'get_brand_wcpay_request:ok') {
+                localStorage.cartIds=''
+                localStorage.datalist=''
+                localStorage.goodstype=''
+                this.$router.push({name:'/buySuccessful'})
+                // Toast('微信支付成功')
+              } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
+                this.$router.push({name:'/myOrder'})
+                Toast('用户取消支付')
+              } else if (res.err_msg === 'get_brand_wcpay_request:fail') {
+                this.$router.push({name:'/myOrder'})
+                Toast('网络异常，请重试')
+              }
             }
-          }
-        )
+          );
+
       },
       callpay: function () {
-        if (typeof WeixinJSBridge === 'undefined') {
-          if (document.addEventListener) {
-            document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady(), false)
-          } else if (document.attachEvent) {
-            document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady())
-            document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady())
+        if (typeof WeixinJSBridge == "undefined"){
+          if( document.addEventListener ){
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+          }else if (document.attachEvent){
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
           }
-        } else {
-          this.onBridgeReady()
+        }else{
+          this.onBridgeReady();
         }
       }
     }

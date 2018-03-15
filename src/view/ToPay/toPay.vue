@@ -169,7 +169,7 @@
           .then(function (response) {
             let res=response.data;
             if(res.result===1){
-              that.signInfo = res.data
+              that.signInfo = res.data.jsdata
               that.callpay()
               Toast.clear()
             }else{
@@ -181,32 +181,25 @@
           });
       },
       onBridgeReady: function () {
-        let that=this
         WeixinJSBridge.invoke(
-          'getBrandWCPayRequest', {
-            appId: that.signInfo.appid,
-            timeStamp: that.signInfo.timestamp,
-            nonceStr: that.signInfo.noncestr,
-            package: "prepay_id="+that.signInfo.prepayid,
-            signType: "MD5",
-            paySign: that.signInfo.sign
-          },
-          function (res) {
+          'getBrandWCPayRequest', this.signInfo,
+          function(res){
             if (res.err_msg === 'get_brand_wcpay_request:ok') {
               localStorage.cartIds=''
               localStorage.datalist=''
               localStorage.goodstype=''
-              that.$router.push({name:'/buySuccessful'})
+              this.$router.push({name:'/buySuccessful'})
               // Toast('微信支付成功')
             } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
-              that.$router.push({name:'/myOrder'})
+              this.$router.push({name:'/myOrder'})
               Toast('用户取消支付')
             } else if (res.err_msg === 'get_brand_wcpay_request:fail') {
-              that.$router.push({name:'/myOrder'})
+              this.$router.push({name:'/myOrder'})
               Toast('网络异常，请重试')
             }
           }
-        )
+        );
+
       },
       callpay: function () {
         if (typeof WeixinJSBridge === 'undefined') {

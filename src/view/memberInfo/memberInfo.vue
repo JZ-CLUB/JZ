@@ -1,6 +1,6 @@
 <template>
   <div class="memberInfo">
-    <van-cell-group>
+    <van-cell-group class="memberInfo_dis">
       <van-cell icon="" title="真实姓名" :value="defaultName" is-link @click="nameShow=true"/>
       <van-cell icon="" title="性别" :value="itemVal" is-link @click="show=true"/>
       <!-- <van-cell icon="" title="生日" :value="birthData" is-link @click="dataShow=true"/> -->
@@ -322,7 +322,11 @@
 
 <style lang="less">
   .memberInfo {
-
+    .memberInfo_dis{
+      .van-cell__value{
+        display: table-cell !important;
+      }
+    }
     .van-cell-group {
       background: #000;
     }
@@ -337,8 +341,10 @@
       }
     }
     .van-cell {
-      height: 0.75rem;
-      line-height: 0.75rem;
+      // height: 0.75rem;
+      // line-height: 0.75rem;
+      height: 1rem;
+      line-height: 0.8rem;
       background: #1a1a1a !important;
     }
     .van-cell:not(:last-child)::after {
@@ -386,8 +392,10 @@
       color: white !important;
     }
     .van-cell__value {
-      padding-left: 60px !important;
+      padding-left: 15% !important;
       position: relative;
+      display: inline-block !important;
+      // display: inline-block;
       .van-field__control {
         background: #1a1a1a;
         color:white !important;
@@ -396,7 +404,7 @@
     .van-cell__title {
       color: #eec27f !important;
       font-size: 0.28rem;
-      top: 0 !important;
+      // top: 0 !important;
       .van-cell__text {
         display: inline-block;
         color: #eec27f !important;
@@ -435,8 +443,9 @@
       position: absolute;
       float: right;
       vertical-align: top;
-      margin-top: -34px;
+      margin-top: -0.6rem;
       right: 5px;
+      top:50%;
       .code-btn {
         background: none;
         border: 0;

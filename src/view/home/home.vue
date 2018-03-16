@@ -81,7 +81,7 @@
       };
     },
     beforeCreate() {
-      sig()
+      // sig()
     },
     created() {
       let vm = this

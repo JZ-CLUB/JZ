@@ -2,7 +2,7 @@
   <div id="myInfo_body">
     <div class="myInfo_con_first">
       <div class="myInfo_con_first_con">
-        <van-row>
+        <van-row class="Info_top">
           <van-col span="22">
             <div class="tit_con">
               <div class="title_left">
@@ -112,9 +112,12 @@
         width: 88.26%;
         margin: 0 auto;
       }
+      .Info_top{
+        padding-top: 0.7rem;
+      }
       .van-row {
         width: 100%;
-        margin-top: 0.7rem;
+        // margin-top: 0.7rem;
         position: relative;
         .title_left {
           width: 100%;;

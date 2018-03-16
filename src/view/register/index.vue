@@ -9,17 +9,19 @@
           placeholder="请输入手机号"
           @click-icon="phoneNum = ''"
         />
-        <van-field
-          type="text"
-          label="验证码"
-          v-model="yzCode"
-          placeholder="6位验证码"
-        />
-        <div class="dj_yzCode">
-          <button @click="getCode(formData)" class="code-btn" :disabled="!show">
-            <span v-show="show">获取验证码</span>
-            <span v-show="!show" class="count">{{count}}s</span>
-          </button>
+        <div class="yzCode_div">
+          <van-field
+            type="text"
+            label="验证码"
+            v-model="yzCode"
+            placeholder="6位验证码"
+          />
+          <div class="dj_yzCode">
+            <button @click="getCode(formData)" class="code-btn" :disabled="!show">
+              <span v-show="show">获取验证码</span>
+              <span v-show="!show" class="count">{{count}}s</span>
+            </button>
+          </div>
         </div>
       </van-cell-group>
       <div class="register_button">
@@ -155,7 +157,11 @@
     .con_container {
       font-size: 0.28rem;
       font-family: 微软雅黑;
-      border-radius: 0.2rem;
+      border-top-left-radius:0.05rem;
+      border-top-right-radius:0.05rem;
+      border-bottom-left-radius:0.05rem;
+      border-bottom-right-radius:0.05rem;
+      // border-radius: 0.2rem;
       .van-field {
         height: 1rem;
         line-height: 0.6rem;
@@ -178,6 +184,8 @@
           border: 0;
           font-family: 微软雅黑;
           font-size: 0.28rem;
+          height: 0.8rem;
+          line-height: 0.8rem;
         }
       }
       .van-cell--required::before {
@@ -186,6 +194,7 @@
       .van-cell__value {
         padding-left: 60px !important;
         position: relative;
+        display: inline-block !important;
       }
       .van-cell__text {
         display: inline-block;
@@ -198,20 +207,29 @@
           border-radius: 5px;
         }
       }
-      .dj_yzCode {
-        width: auto;
-        position: absolute;
-        float: right;
-        vertical-align: top;
-        margin-top: -34px;
-        right: 0.5rem;
-        .code-btn {
-          background: none;
-          border: 0;
-          font-size: 0.28rem;
-          color: #f0c37a;
+      .yzCode_div{
+          // border:1px solid red;
+          position: relative;
+         .dj_yzCode {
+            width: auto;
+            position: absolute;
+            float: right;
+            vertical-align: middle;
+            margin-top: -0.23rem;
+            right: 0.5rem;
+            top: 50%;
+            height: 1rem;
+          .code-btn {
+            background: none;
+            border: 0;
+            font-size: 0.28rem;
+            color: #f0c37a;
+          }
         }
       }
+    }
+    .van-hairline--top-bottom::after{
+      border:0 !important;
     }
   }
 </style>

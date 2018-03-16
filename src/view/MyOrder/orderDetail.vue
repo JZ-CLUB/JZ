@@ -175,6 +175,7 @@
           });
       },
       onBridgeReady: function () {
+        let that = this
           WeixinJSBridge.invoke(
             'getBrandWCPayRequest', this.signInfo,
             function(res){
@@ -182,13 +183,13 @@
                 localStorage.cartIds=''
                 localStorage.datalist=''
                 localStorage.goodstype=''
-                this.$router.push({name:'/buySuccessful'})
+                that.$router.push({name:'buySuccessful'})
                 // Toast('微信支付成功')
               } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
-                this.$router.push({name:'/myOrder'})
+                that.$router.push({name:'myOrder'})
                 Toast('用户取消支付')
               } else if (res.err_msg === 'get_brand_wcpay_request:fail') {
-                this.$router.push({name:'/myOrder'})
+                that.$router.push({name:'myOrder'})
                 Toast('网络异常，请重试')
               }
             }

@@ -31,7 +31,7 @@
       return {}
     },
     created() {
-
+      // localStorage.selectAddress = ''
     },
     methods: {
 
@@ -80,7 +80,7 @@
       text-align: center;
       span{
         display: inline-block;
-        padding: 0 0.68rem;
+        padding: 0 0.5rem;
         line-height: 0.6rem;
         color: #eec27f;
         border: 2px solid #eec27f;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background: #1a1a1a">
     <div class="goodTitle">
       <p class="first_tit" v-html="goodsName">{{goodsName}}</p>
       <p class="second_tit" v-html="goodsSubtitle">{{goodsSubtitle}}</p>

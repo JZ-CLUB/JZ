@@ -85,7 +85,6 @@
     },
     created() {
       let vm = this
-      Toast.loading({mask: true, duration: 0});
       vm.recommend()
     },
     computed: {
@@ -106,6 +105,7 @@
     },
     methods: {
       recommend() {
+        Toast.loading({mask: true, duration: 0});
         let that = this
         Ajax.post('target/recommendGoodsApi/api/Recommedgoodslist', {goodsflagsname: 'recommend'})
           .then(function (response) {

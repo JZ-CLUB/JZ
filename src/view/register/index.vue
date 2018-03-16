@@ -157,11 +157,7 @@
     .con_container {
       font-size: 0.28rem;
       font-family: 微软雅黑;
-      border-top-left-radius:0.05rem;
-      border-top-right-radius:0.05rem;
-      border-bottom-left-radius:0.05rem;
-      border-bottom-right-radius:0.05rem;
-      // border-radius: 0.2rem;
+      border-radius: 0.05rem;
       .van-field {
         height: 1rem;
         line-height: 0.6rem;

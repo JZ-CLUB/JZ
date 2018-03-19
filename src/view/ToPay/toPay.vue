@@ -27,6 +27,7 @@
       <van-cell-group>
         <van-cell title="门票类型" :value="tickType" />
         <van-cell v-for="(val, key, index) in carType" :key="index" :title="key" :value="val" />
+        <van-cell title="购买数量" :value="tickNum" />
       </van-cell-group>
     </div>
 
@@ -89,7 +90,7 @@
         selectAddress:'',
         totalPrice:0,
         goodsTitle:localStorage.getItem('goodsTitle'),
-        show: false
+        show: false,
       }
     },
     created() {
@@ -109,16 +110,17 @@
             let res=response.data;
             if(res.result==='1'){
               that.totalPrice = Number(res.goodsPrice)*100*Number(res.goodsNum)
+              that.tickNum = res.goodsNum
 
             }else{
               Toast(res.msg)
             }
+            Toast.clear()
           })
           .catch(function (error) {
             console.log(error)
-            Toast('加载失败error')
+            // Toast('加载失败error')
           });
-        Toast.clear()
       },
       onSubmit() {
         Toast.loading({mask: true, duration: 0});

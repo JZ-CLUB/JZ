@@ -393,7 +393,7 @@
     .goodTitle{
       width: 100%;
       height: 3.62rem;
-      background: url("../../images/goodsAct_bg_02.png") no-repeat center;
+      background: url("../../images/goodsAct_bg_02.jpg") no-repeat center;
       background-size: cover;
       .first_tit{
         font-size: 0.5rem;

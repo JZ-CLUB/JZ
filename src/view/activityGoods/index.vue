@@ -96,7 +96,7 @@
 
     data() {
       return {
-        quota: 1,
+        quota: 0,
         goodsId: 1,
         quotaUsed: 0,
         imgShow: false,
@@ -201,7 +201,7 @@
           goodsId:this.$route.params.id,
           memberId:sessionStorage.getItem('memberId'),
           specId:specId,
-          selectedNum:e.selectedNum
+          count:e.selectedNum
         };
 
         console.log(data);

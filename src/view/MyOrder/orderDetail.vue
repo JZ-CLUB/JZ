@@ -37,7 +37,7 @@
       <van-button @click="checkOpr(orderInfo.orderSn)">取消订单</van-button><van-button @click="toPay">付款</van-button>
     </div>
 
-    <div v-if="orderInfo.orderType==='1'&&orderInfo.orderStateNum===40" class="ewm">
+    <div v-if="orderInfo.orderType==='1'&&orderInfo.orderStateNum===40 && codeImg!=='' " class="ewm">
       <!--<p>二维码号：222332444554</p>-->
       <div>
         <img :src="comPath.imgPath+codeImg" alt="">
@@ -75,7 +75,7 @@
     created() {
       Toast.loading({mask: true, duration: 0});
       let vm = this
-      this.orderDetail();
+      vm.orderDetail();
     },
     computed: {},
     mounted() {
@@ -94,7 +94,7 @@
                 paySn: res.data[0].paySn,
                 orderTotalPrice: res.data[0].orderTotalPrice,
                 orderStateNum: res.data[0].orderState,
-                orderState: res.data[0].orderState === 10 ? '待付款' : (res.data[0].orderState === 20 ? '待发货' : (res.data[0].orderState === 30 ? '已发货' : (res.data[0].orderState === 40 ? '已出票' : (res.data[0].orderState === 50 ? '已提交' : (res.data[0].orderState === 60 ? '已确认' : '已取消')))))
+                orderState: res.data[0].orderState === 10 ? '待付款' : (res.data[0].orderState === 20 ? '待发货' : (res.data[0].orderState === 30 ? '已发货' : (res.data[0].orderState === 40 ? '已出票' : (res.data[0].orderState === 50 ? '已提交' : (res.data[0].orderState === 60 ? '已确认' : (res.data[0].orderState === 70 ? '已验票' : (res.data[0].orderState === 80 ? '已失效' : '已取消')))))))
               }
               that.addressInfo = res.data[0].address
               that.orderGoodsList = res.data[0].orderGoodsList[0]

@@ -108,9 +108,7 @@
           .then(function (response) {
             let res=response.data;
             if(res.result==='1'){
-              that.totalPrice = Number(res.goodsPrice)*100
-              // that.carType = res
-              // console.log(res.specInfo.split(';'))
+              that.totalPrice = Number(res.goodsPrice)*100*Number(res.goodsNum)
 
             }else{
               Toast(res.msg)

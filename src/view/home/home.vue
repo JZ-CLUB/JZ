@@ -1,9 +1,9 @@
 <template>
   <div class="goodsList">
-    <scroller :on-infinite="refresh" ref="my_scroller">
+    <scroller :on-infinite="refresh" ref="my_scroller" v-if="load">
       <van-search class="search" background="#000000" v-model='info' placeholder="请输入商品名称"/>
 
-      <van-swipe v-show="showFlag">
+      <van-swipe v-show="showFlag" :autoplay="3000">
         <div v-for="(image, index) in imageList" :key="index"
              @click="$router.push({ name: 'activityGoods', params: { id:image.goodsId }})">
           <van-swipe-item>
@@ -77,15 +77,19 @@
           sortSize: ''
         },
         info: '',
-        flag: true
+        flag: true,
+        load: false,
       };
     },
     beforeCreate() {
-      // sig()
+      sig()
     },
     created() {
       let vm = this
-      vm.recommend()
+      sig(true).then(function () {
+        vm.load = true
+        vm.recommend()
+      })
     },
     computed: {
       showFlag: function () {

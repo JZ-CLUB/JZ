@@ -1,30 +1,4 @@
 <template>
-  <!--<scroller :on-infinite="refresh" ref="my_scroller" class="myOrderBox">
-    <div style="height: 0.9rem;"></div>
-    <div v-for="(it, index) in items"
-         :key="index"
-    >
-      <div v-for="(item, i) in it.orderGoodsList"
-           :key="i"
-           @click="$router.push({ name: 'orderDetail', params: { orderId:item.orderId }})">
-        <van-card
-          :title="item.goodsName"
-          :desc="item.specInfo"
-          :thumb="comPath.imgPath+item.goodsImage"
-        >
-          <div slot="footer">
-            <van-button @click="aaa" v-if="it.orderState===10" size="mini">待付款</van-button>
-            <van-button v-if="it.orderState===40" size="mini">已出票</van-button>
-            <van-button v-if="it.orderState===20" size="mini">待发货</van-button>
-            <van-button v-if="it.orderState===30" size="mini">已发货</van-button>
-            <van-button v-if="it.orderState===50" size="mini">已提交</van-button>
-            <van-button v-if="it.orderState===60" size="mini">已确认</van-button>
-            <van-button v-if="it.orderState===0" size="mini">已取消</van-button>
-          </div>
-        </van-card>
-      </div>
-    </div>
-  </scroller>-->
   <scroller :on-infinite="refresh" ref="my_scroller" class="myOrderBox">
     <div style="height: 0.9rem;"></div>
     <div class="orderItem" v-for="(it, index) in items"
@@ -41,6 +15,8 @@
         <span class="" v-if="it.orderState===30">已发货</span>
         <span class="" v-if="it.orderState===50">已提交</span>
         <span class="" v-if="it.orderState===60">已确认</span>
+        <span class="" v-if="it.orderState===70">已验票</span>
+        <span class="" v-if="it.orderState===80">已失效</span>
         <span class="" v-if="it.orderState===0">已取消</span>
       </div>
     </div>
@@ -85,9 +61,6 @@
 
     },
     methods: {
-      aaa() {
-        alert(1)
-      },
       refresh(done) {
         let that = this
         that.param.pageNo++

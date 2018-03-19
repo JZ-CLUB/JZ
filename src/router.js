@@ -20,6 +20,7 @@ import MyOrder  from '@/view/MyOrder/myOrder';//我的订单列表
 import OrderDetail  from '@/view/MyOrder/orderDetail';//订单详情
 import Calendar  from '@/view/ShowCalendar/calendar';//演出日历
 import h5backurl from '@/view/backUrl/index'
+import checkcode from '@/view/checkcode'
 
 
 Vue.use(Router);
@@ -168,6 +169,14 @@ const routes = [
     component: Calendar,
     meta: {
       title: '演出日历'
+    }
+  },
+  {
+    path: '',
+    name: 'checkcode',
+    component: checkcode,
+    meta: {
+      title: '验票'
     }
   }
 ];

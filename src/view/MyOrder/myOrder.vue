@@ -1,5 +1,5 @@
 <template>
-  <div class="myOrder">
+  <div class="myOrder" v-if="load">
     <van-row class="myOrder-links">
       <van-col class="tabItem" span="8" v-for="(item,index) in tabList" :key="index">
         <div @click="tabFun(index,item.comp)" :class="{cur:activity===index}">
@@ -33,6 +33,7 @@
     },
     data () {
       return {
+        load: false,
         currentTab:'tabAll',
         bottom: [],
         imageURL:'https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg',
@@ -45,11 +46,14 @@
       }
     },
     beforeCreate() {
-      sig()
+
     },
     created () {
       Toast.loading({ mask: true,duration:0 });
       let vm = this
+      sig(true).then(function () {
+        vm.load = true
+      })
     },
     computed: {
 

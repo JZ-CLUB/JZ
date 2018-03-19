@@ -104,8 +104,10 @@
 
               if (res.data[0].goodsType === '1' && (res.data[0].orderState === 40||res.data[0].orderState === 70||res.data[0].orderState === 80)) {
                 that.getCode(res.data[0].orderSn)
+              }else{
+                Toast.clear()
               }
-              Toast.clear()
+
             } else {
               Toast(res.msg)
             }
@@ -121,6 +123,7 @@
           .then(function (response) {
             let res = response.data;
             that.codeImg = res.codePath
+            Toast.clear()
           })
           .catch(function (error) {
             console.log(error)

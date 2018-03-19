@@ -1,27 +1,48 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import User from '@/view/user/index';//demo
-import Cart from '@/view/cart/index';//demo
-import Goods from '@/view/goods/index';//demo
-import Register from '@/view/register/index';//demo
-import MyInfo from '@/view/myInfo/index';//demo
-import SuccessRegister from '@/view/register/successRegister';//注册成功
+// import User from '@/view/user/index';//demo
+// import Cart from '@/view/cart/index';//demo
+// import Goods from '@/view/goods/index';//demo
+//import Register from '@/view/register/index';//demo
+//import MyInfo from '@/view/myInfo/index';//demo
+//import SuccessRegister from '@/view/register/successRegister';//注册成功
 
-import Home from '@/view/home/home';//活动列表
-import ActivityGoods from '@/view/activityGoods/index';//活动详情
-import MemberInfo  from '@/view/memberInfo/memberInfo';//个人信息
-import MyDot  from '@/view/myDot/myDot';//我的爵士豆
-import ToPay  from '@/view/ToPay/toPay';//去支付
-import Address  from '@/view/address/index';//收货地址
-import AddressEdit  from '@/view/address/addressEdit';//地址编辑
-import BuySuccessful  from '@/view/buySuccessful/buySuccessful';//购票成功
-import MyOrder  from '@/view/MyOrder/myOrder';//我的订单列表
-import OrderDetail  from '@/view/MyOrder/orderDetail';//订单详情
-import Calendar  from '@/view/ShowCalendar/calendar';//演出日历
-import h5backurl from '@/view/backUrl/index'
-import checkcode from '@/view/checkcode'
+// import Home from '@/view/home/home';//活动列表
+// import ActivityGoods from '@/view/activityGoods/index';//活动详情
+//import MemberInfo  from '@/view/memberInfo/memberInfo';//个人信息
+//import MyDot  from '@/view/myDot/myDot';//我的爵士豆
+//import ToPay  from '@/view/ToPay/toPay';//去支付
+//import Address  from '@/view/address/index';//收货地址
+//import AddressEdit  from '@/view/address/addressEdit';//地址编辑
+//import BuySuccessful  from '@/view/buySuccessful/buySuccessful';//购票成功
+//import MyOrder  from '@/view/MyOrder/myOrder';//我的订单列表
+//import OrderDetail  from '@/view/MyOrder/orderDetail';//订单详情
+// import Calendar  from '@/view/ShowCalendar/calendar';//演出日历
+//import h5backurl from '@/view/backUrl/index'
+//import checkcode from '@/view/checkcode'
 
+//import Register from '@/view/register/index';//demo
+//import MyInfo from '@/view/myInfo/index';//demo
+//import SuccessRegister from '@/view/register/successRegister';//注册成功
+
+const Register = () => import('./view/register/index')
+const MyInfo = () => import('./view/myInfo/index')
+const SuccessRegister = () => import('./view/register/successRegister')
+
+const Calendar = () => import('./view/ShowCalendar/calendar')
+const Home = () => import('./view/home/home')
+const ActivityGoods = () => import('./view/activityGoods/index')
+const MemberInfo = () => import('./view/memberInfo/memberInfo')
+const MyDot = () => import('./view/myDot/myDot')
+const ToPay = () => import('./view/ToPay/toPay')
+const Address = () => import('./view/address/index')
+const AddressEdit = () => import('./view/address/addressEdit')
+const BuySuccessful = () => import('./view/buySuccessful/buySuccessful')
+const MyOrder = () => import('./view/MyOrder/myOrder')
+const OrderDetail = () => import('./view/MyOrder/orderDetail')
+const h5backurl = () => import('./view/backUrl/index')
+const checkcode = () => import('./view/checkcode')
 
 Vue.use(Router);
 
@@ -40,14 +61,6 @@ const routes = [
     component: Home,
     meta: {
       title: '爵士活动'
-    }
-  },
-  {
-    path: '/user',
-    name: 'user',
-    component: User,
-    meta: {
-      title: '会员中心'
     }
   },
   {
@@ -72,23 +85,6 @@ const routes = [
     component: MyInfo,
     meta: {
       title: '我的信息'
-    }
-  },
-
-  {
-    path: '/cart',
-    name: 'cart',
-    component: Cart,
-    meta: {
-      title: '购物车'
-    }
-  },
-  {
-    path: '/goods',
-    name: 'goods',
-    component: Goods,
-    meta: {
-      title: '商品详情'
     }
   },
   {

@@ -1,5 +1,5 @@
 <template>
-  <div id="myInfo_body" >
+  <div id="myInfo_body" v-if="load">
     <div class="myInfo_con_first">
       <div class="myInfo_con_first_con">
         <van-row class="Info_top">
@@ -67,6 +67,11 @@
   import {Row, Col, Icon, Cell, CellGroup, Toast} from 'vant';
 
   export default {
+    data () {
+      return {
+        load: false
+      }
+    },
     components: {
       [Row.name]: Row,
       [Col.name]: Col,

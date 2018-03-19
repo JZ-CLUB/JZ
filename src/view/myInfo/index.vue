@@ -101,16 +101,16 @@
 <style lang="less">
   #myInfo_body {
     width: 100%;
-    height: 100%;
-    background: url("../../images/myInfo_bg.jpg") no-repeat center;
-    background-size: cover;
-    background-color: #000;
     .myInfo_con_first {
       width: 100%;
-      background: #191919;
+      background-image: url(/static/img/info_02.65ddee9.jpg);
+      background-size: 100%;
+      background-repeat: no-repeat;
+      background-color: #1a1a1a;
       .myInfo_con_first_con {
         width: 88.26%;
         margin: 0 auto;
+        // background-color: #1a1a1a;
       }
       .Info_top{
         padding-top: 0.7rem;

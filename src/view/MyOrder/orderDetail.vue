@@ -29,7 +29,7 @@
       【注】如有任何票务疑问，请联系JZ票务负责人 XXX ，电话：13011111111
     </div>
 
-    <van-cell class="totalPrice" :value="'¥'+orderInfo.orderTotalPrice">
+    <van-cell class="totalPrice" :value="'¥'+ orderInfo.orderTotalPrice ">
       <div slot="title">订单总价：</div>
     </van-cell>
 
@@ -37,11 +37,12 @@
       <van-button @click="checkOpr(orderInfo.orderSn)">取消订单</van-button><van-button @click="toPay">付款</van-button>
     </div>
 
-    <div v-if="orderInfo.orderType==='1'&&orderInfo.orderStateNum===40 && codeImg!=='' " class="ewm">
+    <div v-if="orderInfo.orderType==='1'&& (orderInfo.orderStateNum===40 ||orderInfo.orderStateNum===70 ||orderInfo.orderStateNum===80 ) && codeImg!=='' " class="ewm">
       <!--<p>二维码号：222332444554</p>-->
-      <div>
-        <img :src="comPath.imgPath+codeImg" alt="">
-      </div>
+      <img :class="{done:orderInfo.orderStateNum===70 || orderInfo.orderStateNum===80 || orderInfo.orderStateNum===0}" :src="comPath.imgPath+codeImg" alt="">
+
+      <!--<img :class="{done:orderInfo.orderStateNum===70 || orderInfo.orderStateNum===80 || orderInfo.orderStateNum===0}" src="http://www.jzmember.com/h5/target/orderapi/ticketcode/20180319085158951" alt="">-->
+      <div class="ewmModal" v-if="orderInfo.orderStateNum===70 || orderInfo.orderStateNum===80 || orderInfo.orderStateNum===0"></div>
     </div>
 
   </van-cell-group>
@@ -65,7 +66,9 @@
     data() {
       return {
         comPath: PublicPath,
-        orderInfo: [],
+        orderInfo: {
+          orderTotalPrice:0
+        },
         addressInfo: '',
         orderGoodsList: [],
         signInfo: '',
@@ -79,7 +82,7 @@
     },
     computed: {},
     mounted() {
-      Toast.clear()
+
     },
     methods: {
       orderDetail: function () {
@@ -99,7 +102,7 @@
               that.addressInfo = res.data[0].address
               that.orderGoodsList = res.data[0].orderGoodsList[0]
 
-              if (res.data[0].goodsType === '1' && res.data[0].orderState === 40) {
+              if (res.data[0].goodsType === '1' && (res.data[0].orderState === 40||res.data[0].orderState === 70||res.data[0].orderState === 80)) {
                 that.getCode(res.data[0].orderSn)
               }
               Toast.clear()
@@ -312,11 +315,25 @@
       text-align: center;
     }
     .ewm {
-      p, div {
+      text-align: center;
+      position: relative;
+      p{
         text-align: center;
-        img {
-          margin: 0 auto;
-        }
+      }
+      .ewmModal{
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #fff;
+        width: 100%;
+        height: 100%;
+      }
+      img {
+        margin: 0 auto;
+      }
+      img.done{
+        opacity: 0.5;
       }
     }
   }

@@ -71,8 +71,8 @@
           brandId: '',
           areaId: '',
           specFilter: '',
-          sortField: '',
-          sortOrder: '',
+          sortField: 'goodsId',
+          sortOrder: 'desc',
           pageField: '',
           sortSize: ''
         },

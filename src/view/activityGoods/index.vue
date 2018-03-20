@@ -219,7 +219,6 @@
       },
       send:function (e) {
         Ajax.post('target/goods/api/goodsdetail', {
-        //Ajax.post('http://rap.taobao.org/mockjsdata/31603/get', {
           goodsId: e.$route.params.id,
           memberId:sessionStorage.getItem('memberId')
         })

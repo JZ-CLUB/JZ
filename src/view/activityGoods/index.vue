@@ -6,7 +6,7 @@
     </div>
     <div class="goods">
       <div v-html="goodsBody">{{goodsBody}}</div>
-      <van-goods-action>
+      <van-goods-action v-show="goodsShow">
         <van-goods-action-big-btn primary @click="showShu">
           我要购票
         </van-goods-action-big-btn>
@@ -100,6 +100,7 @@
         goodsId: 1,
         quotaUsed: 0,
         imgShow: false,
+        goodsShow: false,
         price: '',
         initialSku: {
         },
@@ -135,16 +136,13 @@
           hide_stock: false // 是否隐藏剩余库存
         },
         goods_con: {// 商品标题
-          title: '测试商品',
+          title: '',
           Img: ''
         },
 
 
 
       };
-    },
-    beforeCreate() {
-      sig()
     },
     created: function() {
       Toast.loading({mask: true, duration: 0});
@@ -201,7 +199,7 @@
           goodsId:this.$route.params.id,
           memberId:sessionStorage.getItem('memberId'),
           specId:specId,
-          count:e.selectedNum
+          conunt:e.selectedNum
         };
 
         console.log(data);
@@ -223,12 +221,15 @@
         Ajax.post('target/goods/api/goodsdetail', {
         //Ajax.post('http://rap.taobao.org/mockjsdata/31603/get', {
           goodsId: e.$route.params.id,
-          memberId:localStorage.getItem('memberId')
+          memberId:sessionStorage.getItem('memberId')
         })
           .then(function (response) {
             //console.log(response)
+            if(response.data.data[0].goodsShow == "1"){
+              e.goodsShow = true
+            }
             if(response.statusText=="OK"){
-              console.log("ee:"+e.$route.params.id);
+              //console.log("ee:"+e.$route.params.id);
 
               let nData = response.data.data[0];
               let oData = e.sku;
@@ -285,12 +286,12 @@
 
               let b;
               function aaa(e,a) {
-                console.log("a"+a);
-                console.log(oData);
+                //console.log("a"+a);
+                //console.log(oData);
                 let len = oData.tree[a].v.length - 1;
                 for(let j in oData.tree[a].v){
 
-                  console.log(e +"===="+oData.tree[a].v[j].id);
+                  //console.log(e +"===="+oData.tree[a].v[j].id);
                   if( e == oData.tree[a].v[j].id){
                     b = a;
                     //console.log("t");
@@ -311,12 +312,12 @@
                   aaa(z,0);
                   Data = "s"+b;
                   oData.list[o]["s"+b]=z;
-                  console.log(b+":"+z);
+                  //console.log(b+":"+z);
                   //a++;
                 }
                 o++;
               }
-              console.log(oData);
+              //console.log(oData);
               /*数组长度*/
               /*let len = 1;//数据总长度
               let row = 0;

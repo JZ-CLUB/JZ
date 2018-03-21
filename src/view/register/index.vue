@@ -1,5 +1,5 @@
 <template>
-  <div id="register_body">
+  <div id="register_body" v-if="load">
     <div class="register_con">
       <van-cell-group class="con_container">
         <van-field
@@ -57,7 +57,8 @@
         count: '',
         timer: null,
         phoneNum: '',
-        yzCode: ''
+        yzCode: '',
+        load:false
       }
     },
     beforeCreate() {
@@ -65,6 +66,8 @@
       if(!sessionStorage.getItem('openId')){
         let callback = 'http://www.jzmember.com/h5/#/h5backurl'
         window.location.href = 'http://www.jzmember.com/h5/target/loginapi/wxlogin_userinfo?back_url=' + callback;
+      }else{
+        this.load = true
       }
     },
     created(){

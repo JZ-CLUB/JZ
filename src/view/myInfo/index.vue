@@ -1,5 +1,5 @@
 <template>
-  <div id="myInfo_body">
+  <div id="myInfo_body" v-if="load">
     <div class="myInfo_con_first">
       <div class="myInfo_con_first_con">
         <van-row class="Info_top">
@@ -64,30 +64,41 @@
 
 <script>
   import {sig} from '../../common/weixin'
-  import {Row, Col, Icon, Cell, CellGroup} from 'vant';
+  import {Row, Col, Icon, Cell, CellGroup, Toast} from 'vant';
 
   export default {
+    data () {
+      return {
+        load: false
+      }
+    },
     components: {
       [Row.name]: Row,
       [Col.name]: Col,
       [Icon.name]: Icon,
       [Cell.name]: Cell,
-      [CellGroup.name]: CellGroup
+      [CellGroup.name]: CellGroup,
+      [Toast.name]: Toast
     },
     beforeCreate() {
-      sig()
+      Toast.loading({ mask: true,duration:0 });
     },
     created() {
       let vm = this
-      vm.getMyInfo()
+      sig(true).then(function () {
+        vm.load = true
+        vm.getMyInfo()
+      })
+
     },
     methods: {
       getMyInfo: function () {
         let data = {
-          memberId: sessionStorage.getItem('openId')
+          memberId: sessionStorage.getItem('memberId')
         }
         Ajax.post('target/memberapi/memberDetail', data)
           .then(function (response) {
+            Toast.clear()
             // console.log(response);
           })
           .catch(function (error) {
@@ -103,7 +114,7 @@
     width: 100%;
     .myInfo_con_first {
       width: 100%;
-      background-image: url(/static/img/info_02.65ddee9.jpg);
+      background-image: url("../../images/myInfo_bg.jpg");
       background-size: 100%;
       background-repeat: no-repeat;
       background-color: #1a1a1a;

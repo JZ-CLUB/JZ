@@ -71,8 +71,8 @@
           brandId: '',
           areaId: '',
           specFilter: '',
-          sortField: '',
-          sortOrder: '',
+          sortField: 'goodsId',
+          sortOrder: 'desc',
           pageField: '',
           sortSize: ''
         },
@@ -131,7 +131,7 @@
         if (!that.flag) {
           setTimeout(() => {
             done(true)
-          }, 1500)
+          }, 0)
           return;
         }
         if (that.flag) {
@@ -148,7 +148,7 @@
                 }
                 setTimeout(() => {
                   done()
-                }, 1500)
+                }, 300)
                 Toast.clear()
               } else {
                 Toast(res.msg)

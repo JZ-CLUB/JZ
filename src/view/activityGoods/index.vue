@@ -8,7 +8,13 @@
       <div v-html="goodsBody">{{goodsBody}}</div>
       <van-goods-action v-show="goodsShow">
         <van-goods-action-big-btn primary @click="showShu">
-          我要购票
+          {{goodsShowtit}}
+        </van-goods-action-big-btn>
+      </van-goods-action>
+
+      <van-goods-action v-show="goodsShow_two">
+        <van-goods-action-big-btn disabled >
+          {{goodsShowtit}}
         </van-goods-action-big-btn>
       </van-goods-action>
 
@@ -101,6 +107,8 @@
         quotaUsed: 0,
         imgShow: false,
         goodsShow: false,
+        goodsShow_two: true,
+        goodsShowtit:"我要购票",
         price: '',
         initialSku: {
         },
@@ -225,7 +233,12 @@
           .then(function (response) {
             //console.log(response)
             if(response.data.data[0].goodsShow == "1"){
-              e.goodsShow = true
+              e.goodsShow = true;
+              e.goodsShow_two = false;
+            }else{
+              //let ad =  format(days[d].activityStartTime);
+              e.goodsShow_two = true;
+              e.goodsShowtit = "暂未开售"
             }
             if(response.statusText=="OK"){
               //console.log("ee:"+e.$route.params.id);
@@ -502,6 +515,10 @@
       .van-sku-layout{
         background: #262626;
       }
+    }
+    .van-button--bottom-action.van-button--default {
+      color: #999;
+      background-color: #353535;
     }
     .van-stepper{
       &__stepper{

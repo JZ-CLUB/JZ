@@ -207,7 +207,7 @@
           goodsId:this.$route.params.id,
           memberId:sessionStorage.getItem('memberId'),
           specId:specId,
-          conunt:e.selectedNum
+          count:e.selectedNum
         };
 
         console.log(data);

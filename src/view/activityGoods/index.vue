@@ -236,9 +236,11 @@
               e.goodsShow = true;
               e.goodsShow_two = false;
             }else{
-              //let ad =  format(days[d].activityStartTime);
+              let ad =  format(response.data.data[0].startTime);
+              console.log(ad)
+              ad = ad+"开始售卖";
               e.goodsShow_two = true;
-              e.goodsShowtit = "暂未开售"
+              e.goodsShowtit = ad;
             }
             if(response.statusText=="OK"){
               //console.log("ee:"+e.$route.params.id);
@@ -388,6 +390,18 @@
                   row++;
                 }
               }*/
+            }
+            function add0(m){return m<10?'0'+m:m }
+            function format(shijianchuo)
+            {
+              let time = new Date(shijianchuo);
+              let y = time.getFullYear();
+              let m = time.getMonth()+1;
+              let d = time.getDate();
+              var h = time.getHours();
+              /*var mm = time.getMinutes();
+              var s = time.getSeconds();*/
+              return add0(m)+"月"+add0(d)+"日"+h+"点";
             }
             Toast.clear()
           })

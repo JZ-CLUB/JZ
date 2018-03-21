@@ -58,7 +58,7 @@
         timer: null,
         phoneNum: '',
         yzCode: '',
-        load:false
+        load:sessionStorage.getItem('openId')
       }
     },
     beforeCreate() {
@@ -66,11 +66,10 @@
       if(!sessionStorage.getItem('openId')){
         let callback = 'http://www.jzmember.com/h5/#/h5backurl'
         window.location.href = 'http://www.jzmember.com/h5/target/loginapi/wxlogin_userinfo?back_url=' + callback;
-      }else{
-        this.load = true
       }
     },
     created(){
+      Toast.loading({ mask: true,duration:0 });
     },
     methods: {
       getCode(formData) {
@@ -147,6 +146,9 @@
           }
         }
       }
+    },
+    mounted() {
+      Toast.clear()
     }
   };
 </script>

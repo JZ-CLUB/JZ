@@ -84,12 +84,14 @@
       Toast.loading({ mask: true,duration:0 });
     },
     created() {
+
+    },
+    beforeMount:function () {
       let vm = this
       sig(true).then(function () {
         vm.load = true
         vm.getMyInfo()
       })
-
     },
     methods: {
       getMyInfo: function () {

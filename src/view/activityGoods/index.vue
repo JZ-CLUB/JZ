@@ -1,5 +1,5 @@
 <template>
-  <div style="background: #1a1a1a">
+  <div style="background: #1a1a1a" v-if="load">
     <div class="goodTitle">
       <p class="first_tit" v-html="goodsName">{{goodsName}}</p>
       <p class="second_tit" v-html="goodsSubtitle">{{goodsSubtitle}}</p>
@@ -102,6 +102,7 @@
 
     data() {
       return {
+        load: false,
         quota: 0,
         goodsId: 1,
         quotaUsed: 0,
@@ -153,9 +154,23 @@
       };
     },
     created: function() {
-      Toast.loading({mask: true, duration: 0});
-      this.send(this);
+      /*let vm = this
+      sig(true).then(function () {
+        vm.load = true
+        Toast.loading({mask: true, duration: 0});
+        vm.send(this)
+      })*/
+      // this.send(this);
 
+
+    },
+    beforeMount:function () {
+      let vm = this
+      sig(true).then(function () {
+        vm.load = true
+        Toast.loading({mask: true, duration: 0});
+        vm.send(vm)
+      })
     },
     computed:{
 

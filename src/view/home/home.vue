@@ -81,10 +81,7 @@
         load: false,
       };
     },
-    beforeCreate() {
-      sig()
-    },
-    created() {
+    beforeMount:function () {
       let vm = this
       sig(true).then(function () {
         vm.load = true

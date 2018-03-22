@@ -1,5 +1,5 @@
 <template>
-  <div style="background: #1a1a1a" v-if="load">
+  <div style="background: #1a1a1a">
     <div class="goodTitle">
       <p class="first_tit" v-html="goodsName">{{goodsName}}</p>
       <p class="second_tit" v-html="goodsSubtitle">{{goodsSubtitle}}</p>
@@ -154,23 +154,11 @@
       };
     },
     created: function() {
-      /*let vm = this
-      sig(true).then(function () {
-        vm.load = true
-        Toast.loading({mask: true, duration: 0});
-        vm.send(this)
-      })*/
-      // this.send(this);
-
-
+      Toast.loading({mask: true, duration: 0});
+      this.send(this)
     },
     beforeMount:function () {
       let vm = this
-      sig(true).then(function () {
-        vm.load = true
-        Toast.loading({mask: true, duration: 0});
-        vm.send(vm)
-      })
     },
     computed:{
 
@@ -180,7 +168,10 @@
         return '¥' + (this.goods.price / 100).toFixed(2);
       },
       showShu() {
-        return this.showCustomAction= true;
+        let that = this
+        sig(true).then(function () {
+          that.showCustomAction= true;
+        })
       },
       handleBuyClicked(e){
         Toast.loading({mask: true, duration: 0});
@@ -242,8 +233,7 @@
       },
       send:function (e) {
         Ajax.post('target/goods/api/goodsdetail', {
-          goodsId: e.$route.params.id,
-          memberId:sessionStorage.getItem('memberId')
+          goodsId: e.$route.params.id
         })
           .then(function (response) {
             //console.log(response)

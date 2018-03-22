@@ -1,17 +1,18 @@
 <template>
   <div class="checkcode" v-if="load">
     <div class="checkResult">
-      <van-icon name="passed"/>
+      <i class="s" v-if="flag"></i>
+      <i class="f" v-if="!flag"></i>
       <p>{{tips}}</p>
+      <p class="error">{{error}}</p>
     </div>
 
-    <div class="itemInfo">
-      <h1 class="">{{goodsTitle}}活动标题</h1>
+    <div class="itemInfo" v-if="flag">
+      <h1 class="">{{dataInfo.goodsName}}</h1>
       <van-cell-group>
-        <van-cell title="门票类型" :value="tickType"/>
-        <van-cell v-for="(val, key, index) in carType" :key="index" :title="key" :value="val"/>
-        <van-cell title="购买数量" :value="tickNum"/>
-        <van-cell class="price" title="总金额" value="¥300"/>
+        <van-cell title="演出时间" :value="specInfo"/>
+        <van-cell title="购买数量" :value="dataInfo.goodsNum"/>
+        <van-cell class="price" title="总金额" :value="goodsPrice"/>
       </van-cell-group>
     </div>
   </div>
@@ -32,13 +33,17 @@
     data() {
       return {
         load: false,
-        tips: '验票成功!'
+        tips: '验票成功!',
+        flag:true,
+        error:'',
+        dataInfo:'',
+        specInfo:'',
+        goodsPrice:0
       }
     },
     created() {
       let vm = this
       sig(true).then(function () {
-        vm.load = true
         vm.checkcode()
       })
       //vm.checkcode()
@@ -49,14 +54,26 @@
     },
     methods: {
       checkcode() {
+        let that = this
         Ajax.post('target/orderapi/checkticket', {
           openid: sessionStorage.getItem('openId'),
           ticket: UrlSearch('ticket'),
           sign: 'aaaaa'
         })
           .then(function (response) {
+            that.load = true
             let res = response.data;
-            Toast(res.msg)
+            if(res.result !=='1' ){
+              that.flag = false
+              that.error = res.msg
+              that.tips = '验票失败!'
+            }else{
+              that.dataInfo = res.data[0].orderGoodsList[0]
+              that.specInfo = res.data[0].orderGoodsList[0].specInfo.split(';')[0].split(':')[1]
+              that.goodsPrice = '¥'+res.data[0].orderGoodsList[0].goodsPrice
+              that.flag = true
+              that.tips = '验票成功!'
+            }
           })
           .catch(function (error) {
             console.log(error)
@@ -73,14 +90,25 @@
       padding: 0.35rem;
       background: #1a1a1a;
       i {
-        font-size: 1.05rem;
-        color: #5fb951;
-        font-weight: bold;
+        width: 1rem;
+        height: 1rem;
+        display: inline-block;
+        background-size: cover;
+        &.s{
+          background-image: url("../images/success.png");
+        }
+        &.f{
+          background-image: url("../images/fail.png");
+        }
       }
       p {
         text-align: center;
         color: #f0c37a;
         font-size: 0.34rem;
+        &.error{
+          font-size: 0.28rem;
+          color: #666;
+        }
       }
     }
     .itemInfo {

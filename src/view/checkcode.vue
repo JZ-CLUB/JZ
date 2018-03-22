@@ -42,13 +42,15 @@
       }
     },
     created() {
+
+    },
+    computed: {},
+    beforeMount:function () {
       let vm = this
       sig(true).then(function () {
         vm.checkcode()
       })
-      //vm.checkcode()
     },
-    computed: {},
     mounted() {
 
     },
@@ -68,9 +70,9 @@
               that.error = res.msg
               that.tips = '验票失败!'
             }else{
-              that.dataInfo = res.data[0].orderGoodsList[0]
-              that.specInfo = res.data[0].orderGoodsList[0].specInfo.split(';')[0].split(':')[1]
-              that.goodsPrice = '¥'+res.data[0].orderGoodsList[0].goodsPrice
+              that.dataInfo = res.data[0]
+              that.specInfo = res.data[0].specInfo.split(';')[0].split(':')[1]
+              that.goodsPrice = '¥'+res.data[0].goodsPrice
               that.flag = true
               that.tips = '验票成功!'
             }

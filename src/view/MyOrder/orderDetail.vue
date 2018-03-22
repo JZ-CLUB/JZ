@@ -177,7 +177,7 @@
           })
           .catch(function (error) {
             console.log(error)
-            Toast(error)
+            Toast('error')
           });
       },
       onBridgeReady: function () {

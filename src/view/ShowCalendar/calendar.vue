@@ -361,7 +361,7 @@
             });
             let a ={};
             for(let d in days){
-              let ad =  format(days[d].startTime);
+              let ad =  format(days[d].activityStartTime);
               let goodsId =  days[d].goodsId;
               if(parseInt(ad)>=parseInt(day)){
                 a[ad]= goodsId;

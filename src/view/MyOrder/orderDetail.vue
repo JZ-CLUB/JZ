@@ -21,7 +21,7 @@
     </div>
     <div class="orderInfoBox" @click="$router.push({ name: 'activityGoods', params: { id:orderGoodsList.goodsId }})">
       <p class="title">{{orderGoodsList.goodsName}}</p>
-      <p class="subTitle">{{orderGoodsList.specInfo}}</p>
+      <p class="subTitle">{{orderGoodsList.specInfo}}数量:{{orderGoodsList.goodsNum}}</p>
     </div>
 
 

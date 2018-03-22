@@ -1,5 +1,5 @@
 <template>
-  <div id="register_body">
+  <div id="register_body" v-if="load">
     <div class="register_con">
       <van-cell-group class="con_container">
         <van-field
@@ -57,7 +57,8 @@
         count: '',
         timer: null,
         phoneNum: '',
-        yzCode: ''
+        yzCode: '',
+        load:sessionStorage.getItem('openId')
       }
     },
     beforeCreate() {
@@ -68,6 +69,7 @@
       }
     },
     created(){
+      Toast.loading({ mask: true,duration:0 });
     },
     methods: {
       getCode(formData) {
@@ -144,6 +146,9 @@
           }
         }
       }
+    },
+    mounted() {
+      Toast.clear()
     }
   };
 </script>

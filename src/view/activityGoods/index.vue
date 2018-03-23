@@ -220,7 +220,7 @@
         Ajax.post('target/cartapi/addCart', data)
           .then(
             function (response) {
-              Toast.clear()
+              Toast.clear();
               if(response.data.result==1){
                 localStorage.setItem('cartIds',response.data.data[0].cartIds)
                 localStorage.setItem('goodsTitle',that.goods.title)
@@ -237,12 +237,12 @@
         })
           .then(function (response) {
             //console.log(response)
-            if(response.data.data[0].goodsShow == "1"){
+            if(response.data.data[0].goodsShow == "2"){
               e.goodsShow = true;
               e.goodsShow_two = false;
             }else{
               let ad =  format(response.data.data[0].startTime);
-              console.log(ad)
+              //console.log(ad)
               ad = ad+"开始售卖";
               e.goodsShow_two = true;
               e.goodsShowtit = ad;
@@ -403,10 +403,10 @@
               let y = time.getFullYear();
               let m = time.getMonth()+1;
               let d = time.getDate();
-              var h = time.getHours();
-              /*var mm = time.getMinutes();
-              var s = time.getSeconds();*/
-              return add0(m)+"月"+add0(d)+"日"+h+"点";
+              let h = time.getHours();
+              let mm = time.getMinutes();
+              let s = time.getSeconds();
+              return add0(m)+"月"+add0(d)+"日"+h+":"+mm+":"+s;
             }
             Toast.clear()
           })

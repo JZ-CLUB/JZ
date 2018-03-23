@@ -446,8 +446,7 @@
     }
   .goods {
     background-color: #1a1a1a;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 0 20px 50px 20px;
     font-family: "Microsoft YaHei";
     font-size: 14px;
     img{

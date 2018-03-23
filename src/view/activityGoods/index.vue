@@ -154,8 +154,7 @@
     },
     created: function() {
       Toast.loading({mask: true, duration: 0});
-      this.send(this);
-
+      this.send(this)
     },
     computed:{
 
@@ -165,7 +164,10 @@
         return '¥' + (this.goods.price / 100).toFixed(2);
       },
       showShu() {
-        return this.showCustomAction= true;
+        let that = this
+        sig(true).then(function () {
+          that.showCustomAction= true;
+        })
       },
       handleBuyClicked(e){
         Toast.loading({mask: true, duration: 0});
@@ -227,8 +229,7 @@
       },
       send:function (e) {
         Ajax.post('target/goods/api/goodsdetail', {
-          goodsId: e.$route.params.id,
-          memberId:sessionStorage.getItem('memberId')
+          goodsId: e.$route.params.id
         })
           .then(function (response) {
             //console.log(response)
@@ -441,8 +442,7 @@
     }
   .goods {
     background-color: #1a1a1a;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 0 20px 50px 20px;
     font-family: "Microsoft YaHei";
     font-size: 14px;
     img{

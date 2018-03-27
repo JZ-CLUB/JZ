@@ -43,6 +43,7 @@ const MyOrder = () => import('./view/MyOrder/myOrder')
 const OrderDetail = () => import('./view/MyOrder/orderDetail')
 const h5backurl = () => import('./view/backUrl/index')
 const checkcode = () => import('./view/checkcode')
+const Music = () => import('./view/music/music')
 
 Vue.use(Router);
 
@@ -174,7 +175,15 @@ const routes = [
     meta: {
       title: '验票'
     }
-  }
+  },
+  {
+    path: '/music',
+    name: 'music',
+    component: Music,
+    meta: {
+      title: '每日歌单'
+    }
+  },
 ];
 
 // add route path

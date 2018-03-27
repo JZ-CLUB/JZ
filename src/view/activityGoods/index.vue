@@ -236,12 +236,15 @@
             if(response.data.data[0].goodsShow == "1"){
               e.goodsShow = true;
               e.goodsShow_two = false;
-            }else{
+            }else if(response.data.data[0].goodsShow == "2"){
               let ad =  format(response.data.data[0].startTime);
               //console.log(ad)
               ad = ad+"开始售卖";
               e.goodsShow_two = true;
               e.goodsShowtit = ad;
+            }else{
+              e.goodsShow_two = true;
+              e.goodsShowtit = "商品已下架"
             }
             if(response.statusText=="OK"){
               //console.log("ee:"+e.$route.params.id);

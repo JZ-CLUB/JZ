@@ -6,6 +6,7 @@
       <div v-for="(item, i) in it.orderGoodsList"
            :key="i"
            @click="$router.push({ name: 'orderDetail', params: { orderId:item.orderId }})">
+        <img :src="comPath.imgPath+item.goodsImage" alt="">
         <p class="title">{{item.goodsName}}</p>
         <p class="subTitle">{{item.specInfo}}</p>
 
@@ -15,6 +16,8 @@
         <span class="" v-if="it.orderState===30">已发货</span>
         <span class="" v-if="it.orderState===50">已提交</span>
         <span class="" v-if="it.orderState===60">已确认</span>
+        <span class="" v-if="it.orderState===70">已验票</span>
+        <span class="" v-if="it.orderState===80">已失效</span>
         <span class="" v-if="it.orderState===0">已取消</span>
       </div>
     </div>
@@ -95,20 +98,30 @@
     }
   }
 </script>
+
 <style lang="less">
   .myOrderBox{
     background: #1a1a1a;
     margin-top:0.04rem;
     .orderItem{
-      padding: 0.15rem 0 0 0.4rem;
-      line-height: 0.6rem;
+      padding: 0.4rem 0 0 0.4rem;
+      line-height: 0.5rem;
       >div{
         border-bottom: 0.01rem solid #000;
         padding-right:1.9rem;
-        padding-bottom: 0.15rem;
+        padding-bottom: 0.4rem;
+        padding-left: 1.1rem;
         position: relative;
+        img{
+          position: absolute;
+          width: 1rem;
+          height: 1rem;
+          vertical-align: middle;
+          top: 0;
+          left: 0;
+        }
         p{
-          height: 0.6rem;
+          height: 0.5rem;
           word-break: break-all;
           text-overflow: ellipsis;
           display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
@@ -132,8 +145,9 @@
           display: block;
           width: 1.2rem;
           height: 0.56rem;
+          line-height: 0.56rem;
           text-align: center;
-          transform: translate(0, -50%);
+          transform: translate(0, -90%);
           &.statusBtn{
             color: #000;
             background: #f0c37a;

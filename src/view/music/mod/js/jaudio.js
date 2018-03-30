@@ -56,6 +56,7 @@
     this.timer              = undefined;
 
     this.init();
+    this.play();
   }
 
   Plugin.prototype = {
@@ -70,7 +71,7 @@
       self.updateTotalTime();
       self.events();
       self.debug();
-      self.domAudio.volume = 0.05
+      self.domAudio.volume = 1
     },
 
     play: function()
@@ -169,7 +170,7 @@
       self.currentTrack  = index;
       self.domAudio.src  = self.settings.playlist[index].file;
 
-      if(self.currentState === "play" || self.settings.autoPlay) self.play();
+      if(self.currentState === "play" || self.settings.autoPlay=="true") self.play();
 
       self.highlightTrack();
 

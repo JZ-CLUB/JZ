@@ -4,7 +4,7 @@
 
     <div class='jAudio--player'>
 
-      <audio></audio>
+      <audio autoplay preload="auto"></audio>
 
       <div class='jAudio--ui'>
 
@@ -95,7 +95,7 @@
               trackAlbum: "Single",
             }
           ],
-          autoPlay:false
+          autoPlay:true
         }
 
         }

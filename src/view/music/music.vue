@@ -1,5 +1,5 @@
 <template>
-  <div id="music">
+  <div id="music" v-show="musicshow">
 
 
     <div class='jAudio--player'>
@@ -51,44 +51,51 @@
 </template>
 <script>
 
-  import "./mod/js/jaudio";
+  import "./mod/js/jaudio"
+  import Vue from 'vue'
+  import {
+    Toast
+  } from 'vant';
+
 
 
   export default {
+    components: {
+      [Toast.name]: Toast
+    },
     name: "music",
     created: function() {
-
-    },
-    created: function() {
-      this.showm(this);
+      this.send(this)
     },
     data() {
       return {
+        musicshow:false,
+        comPath: PublicPath,
         t:{
           playlist:[
             {
-              file: "tracks/jq22com1.mp3",
-              thumb: "thumbs/01.jpg",
+              file: "./mod/tracks/jq22com1.mp3",
+              thumb: "./mod/thumbs/01.jpg",
               trackName: "Dusk",
               trackArtist: "Tobu & Syndec",
               trackAlbum: "Single",
             },
             {
-              file: "tracks/jq22com2.mp3",
+              file: "./mod/tracks/jq22com2.mp3",
               thumb: "thumbs/02.jpg",
               trackName: "Blank",
               trackArtist: "Disfigure",
               trackAlbum: "Single",
             },
             {
-              file: "tracks/jq22com3.mp3",
-              thumb: "thumbs/03.jpg",
+              file: "./mod/tracks/jq22com3.mp3",
+              thumb: "./mod/thumbs/03.jpg",
               trackName: "Fade",
               trackArtist: "Alan Walker",
               trackAlbum: "Single",
             }
           ],
-          autoPlay:true
+          autoPlay:false
         }
 
         }
@@ -96,8 +103,27 @@
 
       },
     methods:{
-      showm:function (_this) {
-        $(".jAudio--player").jAudio(_this.t);
+      send:function (e) {
+        Toast.loading({ mask: true,duration:0 });
+        Ajax.post('target/music/musicList', {
+          musicShow: "1"
+        })
+          .then(function (response) {
+            //console.log(response.data.playlist);
+            e.musicshow = true;
+            e.t.playlist = response.data.playlist;
+            //console.log(e.t.playlist)"http://47.104.183.132"+
+            for (let i in e.t.playlist){
+              e.t.playlist[i].file = e.comPath.imgPath+e.t.playlist[i].file;
+              e.t.playlist[i].thumb = e.comPath.imgPath+e.t.playlist[i].thumb;
+            }
+            $(".jAudio--player").jAudio(e.t);
+            Toast.clear();
+          })
+          .catch(function (error) {
+            Toast('加载失败');
+            console.log(error);
+          });
       }
 
     }
@@ -120,10 +146,6 @@
     color: #888;
     outline: none;
 
-
-
-
-
   }
 
 
@@ -132,15 +154,15 @@
     overflow: hidden;
     background: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
-    margin: 30px auto;
-    width: 352px;
+    /*margin: 30px auto;*/
+    width: 100%;
   }
-  .jAudio--player:after {
+  /*.jAudio--player:after {
     content: " ";
     display: block;
     width: 100%;
     clear: both;
-  }
+  }*/
   .jAudio--player .jAudio--ui {
     position: relative;
     width: 100%;
@@ -149,7 +171,7 @@
     width: 100%;
     z-index: 1;
     position: relative;
-    padding: 100px 2rem 2rem 2rem;
+    padding: 100px 0.5rem 0.5rem 0.5rem;
     display: table;
   }
   .jAudio--player .jAudio--status-bar:after {
@@ -162,6 +184,9 @@
     width: 100%;
     display: table;
     background: #fafafa;
+    position: fixed;
+    bottom: 0;
+    height: 1.2rem;
   }
   .jAudio--player .jAudio--controls:after {
     content: " ";
@@ -183,9 +208,9 @@
   .jAudio--player .jAudio--controls li {
     position: relative;
     width: 33.3333%;
-    height: 5rem;
-    line-height: 5rem;
-    float: right;
+    height: 1.2rem;
+    line-height: 1.2rem;
+    float: left;
   }
   .jAudio--player .jAudio--thumb {
     position: absolute;
@@ -212,7 +237,7 @@
     float: left;
     color: #fff;
     text-shadow: 0 1px 1px #000;
-    font-size: 0.9rem;
+    font-size: 0.22rem;
   }
   .jAudio--player .jAudio--time .jAudio--time-elapsed {
     text-align: left;
@@ -223,7 +248,7 @@
   .jAudio--player .jAudio--details * {
     color: #fff;
     text-shadow: 0 1px 1px #000;
-    font-size: 1.2rem;
+    font-size: 0.3rem;
   }
   .jAudio--player .jAudio--details *:first-of-type {
     font-weight: bold;
@@ -235,7 +260,7 @@
     display: block;
   }
   .jAudio--player .jAudio--progress-bar {
-    margin: 1.33333rem 0;
+    margin: 0.35rem 0;
   }
   .jAudio--player .jAudio--progress-bar .jAudio--progress-bar-wrapper {
     width: 100%;
@@ -262,10 +287,17 @@
   .jAudio--player .jAudio--playlist {
     background: #fff;
   }
+  .jAudio--player .jAudio--playlist:after{
+    padding-bottom: 1.2rem;
+    content: " ";
+    display: block;
+    width: 100%;
+    clear: both;
+  }
   .jAudio--player .jAudio--playlist .jAudio--playlist-item {
     display: block;
     width: 100%;
-    padding: 1.33333rem 2rem;
+    padding: 0.35rem 0.5rem;
     display: table;
   }
   .jAudio--player .jAudio--playlist .jAudio--playlist-item:after {
@@ -290,7 +322,7 @@
   }
   .jAudio--player .jAudio--playlist .jAudio--playlist-thumb {
     float: left;
-    margin-right: 0.66667rem;
+    margin-right: 0.15rem;
     display: table;
   }
   .jAudio--player .jAudio--playlist .jAudio--playlist-thumb:after {
@@ -300,18 +332,18 @@
     clear: both;
   }
   .jAudio--player .jAudio--playlist .jAudio--playlist-thumb img {
-    height: 2.4rem;
-    width: 2.4rem;
+    height: .9rem;
+    width: .9rem;
     border-radius: 50%;
     float: left;
-    margin-right: 0.5rem;
+    margin-right: 0.12rem;
   }
   .jAudio--player .jAudio--playlist .jAudio--playlist-meta-text h4 {
-    font-size: 1rem;
+    font-size: 0.25rem;
     color: #000;
   }
   .jAudio--player .jAudio--playlist .jAudio--playlist-meta-text p {
-    font-size: 0.8rem;
+    font-size: 0.2rem;
   }
 
   .btn {

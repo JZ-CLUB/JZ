@@ -20,6 +20,7 @@
       <h3>活动信息</h3>
     </div>
     <div class="orderInfoBox" @click="$router.push({ name: 'activityGoods', params: { id:orderGoodsList.goodsId }})">
+      <img :src="comPath.imgPath+orderGoodsList.goodsImage" alt="">
       <p class="title">{{orderGoodsList.goodsName}}</p>
       <p class="subTitle">{{orderGoodsList.specInfo}}数量:{{orderGoodsList.goodsNum}}</p>
     </div>
@@ -264,12 +265,20 @@
     }
     .orderInfoBox {
       background: #1a1a1a;
-      padding: 0.15rem 0.4rem;
-      line-height: 0.6rem;
+      padding: 0.15rem 0.4rem 0.15rem 1.5rem;
+      line-height: 0.5rem;
       border-bottom: 0.01rem solid #000;
       position: relative;
+      img{
+        position: absolute;
+        width: 1rem;
+        height: 1rem;
+        vertical-align: middle;
+        top: 0.15rem;
+        left: 0.4rem;
+      }
       p {
-        height: 0.6rem;
+        height: 0.5rem;
         word-break: break-all;
         text-overflow: ellipsis;
         display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/

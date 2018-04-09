@@ -13,7 +13,9 @@ Vue.config.productionTip = false
 FastClick.attach(document.body)
 
 import VueScroller from 'vue-scroller'
+import { List } from 'vant';
 Vue.use(VueScroller)
+Vue.use(List)
 
 Vue.use(Vuex)
 import storeObject from './store/index'

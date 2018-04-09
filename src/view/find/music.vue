@@ -4,7 +4,7 @@
 
     <div class='jAudio--player'>
 
-      <audio autoplay preload="auto"></audio>
+      <audio autoplay></audio>
 
       <div class='jAudio--ui'>
 
@@ -114,7 +114,8 @@
             e.t.playlist = response.data.playlist;
             //console.log(e.t.playlist)"http://47.104.183.132"+
             for (let i in e.t.playlist){
-              e.t.playlist[i].file = e.comPath.imgPath+e.t.playlist[i].file;
+              e.t.playlist[i].file = 'http://audio.xmcdn.com/group18/M01/21/30/wKgJJVeF0OXTd52JACbG6HVeP8k020.m4a';
+              // e.t.playlist[i].file = e.comPath.imgPath+e.t.playlist[i].file;
               e.t.playlist[i].thumb = e.comPath.imgPath+e.t.playlist[i].thumb;
             }
             $(".jAudio--player").jAudio(e.t);

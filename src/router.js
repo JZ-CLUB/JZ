@@ -43,7 +43,9 @@ const MyOrder = () => import('./view/MyOrder/myOrder')
 const OrderDetail = () => import('./view/MyOrder/orderDetail')
 const h5backurl = () => import('./view/backUrl/index')
 const checkcode = () => import('./view/checkcode')
-const Music = () => import('./view/music/music')
+const Music = () => import('./view/find/music')
+const JzMan = () => import('./view/find/jzMan')
+// const Man = () => import('./view/find/man')
 
 Vue.use(Router);
 
@@ -184,6 +186,22 @@ const routes = [
       title: '每月歌单'
     }
   },
+  {
+    path: '',
+    name: 'JzMan',
+    component: JzMan,
+    meta: {
+      title: '爵士大叔'
+    }
+  },
+  /*{
+    path: '',
+    name: 'man',
+    component: Man,
+    meta: {
+      title: '爵士大叔'
+    }
+  },*/
 ];
 
 // add route path

@@ -5,6 +5,9 @@
       .van-col-12 {
         margin: 0.2rem 0px 0 0;
         padding: 0 0.15rem;
+        a{
+          color: #F0C37A;
+        }
         .cardImg {
           max-width: 100%;
           margin: 0 auto;
@@ -52,10 +55,10 @@
             </a>
           </van-col>
           <van-col v-for="(item,index) in it" :key="index" span="12" v-if="index!==0">
-            <div>
+            <a :href="item.videoUrl">
               <img class="cardImg" :src='item.pathImage' alt="">
               <p class="cardText">{{item.videoName}}</p>
-            </div>
+            </a>
           </van-col>
         </van-row>
       </div>

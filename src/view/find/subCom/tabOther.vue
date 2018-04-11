@@ -43,7 +43,7 @@
         <van-row class="cardBox" >
           <van-col v-for="(item,index) in it" :key="index" class="musicItem" span="24" v-if="index===0">
             <a :href="item.videoUrl">
-              <img :src="item.pathImage" alt="">
+              <img :src="comPath.imgPath+item.pathImage" alt="">
               <!--<div class="play">
                 <div class="left">
                   <div class="jiao"></div>
@@ -56,7 +56,7 @@
           </van-col>
           <van-col v-for="(item,index) in it" :key="index" span="12" v-if="index!==0">
             <a :href="item.videoUrl">
-              <img class="cardImg" :src='item.pathImage' alt="">
+              <img class="cardImg" :src='comPath.imgPath+item.pathImage' alt="">
               <p class="cardText">{{item.videoName}}</p>
             </a>
           </van-col>
@@ -83,6 +83,7 @@
         loading: false,
         finished: false,
         musicList: [],
+        comPath: PublicPath,
         param: {
           pageNo: 1,
           pageSize: 20,

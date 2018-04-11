@@ -12,7 +12,7 @@
     >
       <div class="musicItem" v-for="(item,index) in musicList" :key="index">
         <a :href="item.videoUrl">
-          <img :src="item.pathImage" alt="">
+          <img :src="comPath.imgPath+item.pathImage" alt="">
           <!--<div class="play">
             <div class="left">
               <div class="jiao"></div>
@@ -42,6 +42,7 @@
         finished: false,
         list:[],
         flag:true,
+        comPath: PublicPath,
         param: {
           pageNo: 1,
           pageSize: 20,

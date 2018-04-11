@@ -45,7 +45,7 @@ const h5backurl = () => import('./view/backUrl/index')
 const checkcode = () => import('./view/checkcode')
 const Music = () => import('./view/find/music')
 const JzMan = () => import('./view/find/jzMan')
-// const Man = () => import('./view/find/man')
+const findDifer = () => import('./view/find/findDifer')
 
 Vue.use(Router);
 
@@ -194,14 +194,14 @@ const routes = [
       title: '爵士大叔'
     }
   },
-  /*{
+  {
     path: '',
-    name: 'man',
-    component: Man,
+    name: 'FindDifer',
+    component: findDifer,
     meta: {
-      title: '爵士大叔'
+      title: '看见不同'
     }
-  },*/
+  },
 ];
 
 // add route path

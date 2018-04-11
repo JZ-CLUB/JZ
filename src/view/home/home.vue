@@ -1,3 +1,64 @@
+<style lang="less">
+  .goodsList {
+    color: #f0c37a;
+    .search {
+      input {
+        height: 18px;
+        text-align: center;
+      }
+    }
+
+    .van-swipe-item {
+      height: 4.18rem;
+      img {
+        max-width: 100%;
+        height: 4.18rem;
+        margin: 0 auto;
+      }
+    }
+
+    .goImg {
+      padding: 0.15rem;
+      img{
+        width: 5.9rem;
+        margin: 0 auto;
+      }
+    }
+
+    .line {
+      width: 100%;
+      height: 0.04rem;
+      background: #4c0013;
+    }
+
+    .cardBox {
+      padding: 0 0.15rem;
+      .van-col-12 {
+        margin: 0.15rem 0 0 0;
+        padding: 0 0.15rem;
+        .cardImg {
+          max-width: 100%;
+          margin: 0 auto;
+          width: 3.3rem;
+          height: 3.3rem;
+        }
+        .cardText {
+          text-align: center;
+          padding-top: 0.1rem;
+          font-size: 0.12rem;
+          height: 0.8rem;
+          line-height: 0.3rem;
+          word-break: break-all;
+          text-overflow: ellipsis;
+          display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+          -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+          -webkit-line-clamp: 2; /** 显示的行数 **/
+          overflow: hidden; /** 隐藏超出的内容 **/
+        }
+      }
+    }
+  }
+</style>
 <template>
   <div class="goodsList">
     <scroller :on-infinite="refresh" ref="my_scroller" v-if="load">
@@ -166,65 +227,3 @@
     }
   };
 </script>
-
-<style lang="less">
-  .goodsList {
-    color: #f0c37a;
-    .search {
-      input {
-        height: 18px;
-        text-align: center;
-      }
-    }
-
-    .van-swipe-item {
-      height: 4.18rem;
-      img {
-        max-width: 100%;
-        height: 4.18rem;
-        margin: 0 auto;
-      }
-    }
-
-    .goImg {
-      padding: 0.15rem;
-      img{
-        width: 5.9rem;
-        margin: 0 auto;
-      }
-    }
-
-    .line {
-      width: 100%;
-      height: 0.04rem;
-      background: #4c0013;
-    }
-
-    .cardBox {
-      padding: 0 0.15rem;
-      .van-col-12 {
-        margin: 15px 0px 0 0;
-        padding: 0 0.15rem;
-        .cardImg {
-          max-width: 100%;
-          margin: 0 auto;
-          width: 3.3rem;
-          height: 3.3rem;
-        }
-        .cardText {
-          text-align: center;
-          padding-top: 10px;
-          font-size: 12px;
-          height: 0.8rem;
-          line-height: 0.3rem;
-          word-break: break-all;
-          text-overflow: ellipsis;
-          display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
-          -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
-          -webkit-line-clamp: 2; /** 显示的行数 **/
-          overflow: hidden; /** 隐藏超出的内容 **/
-        }
-      }
-    }
-  }
-</style>

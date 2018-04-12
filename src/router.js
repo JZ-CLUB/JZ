@@ -46,6 +46,7 @@ const checkcode = () => import('./view/checkcode')
 const Music = () => import('./view/find/music')
 const JzMan = () => import('./view/find/jzMan')
 const findDifer = () => import('./view/find/findDifer')
+const club = () => import('./view/club')
 
 Vue.use(Router);
 
@@ -200,6 +201,14 @@ const routes = [
     component: findDifer,
     meta: {
       title: '看见不同'
+    }
+  },
+  {
+    path: '',
+    name: 'Club',
+    component: club,
+    meta: {
+      title: 'club演出'
     }
   },
 ];

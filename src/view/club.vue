@@ -65,10 +65,11 @@
     .card{
       height: 1.6rem;
       margin-top: 0.1rem;
-      background: #252627;
       display: flex;
       justify-content: left;
       border-radius: 0.05rem;
+      background:#252627 url("../images/clubBg.png") no-repeat right top;
+      background-size: 2.67rem 1.88rem;
       >div{
         display: flex;
         flex-direction: column;
@@ -78,7 +79,9 @@
         width: 1.2rem;
         border-top-left-radius: 0.05rem;
         border-bottom-left-bottom-radius: 0.05rem;
-        background: #f0c37a;
+        background-image: url("../images/leftBg.png");
+        background-size: cover;
+        border-right: 0;
         p{
           text-align: center;
           color: #252627;

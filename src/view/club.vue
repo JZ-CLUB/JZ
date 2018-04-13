@@ -124,45 +124,33 @@
 
 <template>
   <div class="club">
-    <div class="ban">
+    <div class="ban" v-for="(item,index) in goodsMainList"
+         @click="$router.push({ name: 'activityGoods', params: { id:item.goodsId }})">
       <img src="../images/ban.jpg" alt="">
       <div>
         <div class="calender">
-          <p>12日</p>
-          <p>03月</p>
+          <p>{{item.activityStartTime | timeTrans(2)}}日</p>
+          <p>{{item.activityStartTime | timeTrans(1)}}月</p>
           <div class="line"></div>
         </div>
-        RETURN TO MONGOLIA 回到蒙古
+        {{item.goodsName}}
       </div>
     </div>
 
     <div class="title">
       <p>推荐演出</p>
-      <p>08<span>月</span>05<span>日</span> — 08<span>月</span>05<span>日</span></p>
+      <p>{{curDate.getMonth()+1}}<span>月</span>{{curDate.getDate()}}<span>日</span> — {{lastDate.month}}<span>月</span>{{lastDate.date}}<span>日</span></p>
     </div>
 
     <div class="list">
-      <div class="card">
+      <div class="card" v-for="(item,index) in goodsList"
+           @click="$router.push({ name: 'activityGoods', params: { id:item.goodsId }})">
         <div class="left">
-          <p>Aug.</p>
-          <p>05<span>日</span></p>
+          <p>{{item.activityStartTime | timeTrans(1) | EnMonthTrans}}.</p>
+          <p>{{item.activityStartTime | timeTrans(2)}}<span>日</span></p>
         </div>
         <div class="con">
-          <p>王若琳音乐会</p>
-          <p>RETURN TO MONGOLIA 回到蒙古 MON RETURN TO MONGOLIA 回到蒙古 MON </p>
-          <p>王若琳音乐会</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="left">
-          <p>Aug.</p>
-          <p>05<span>日</span></p>
-        </div>
-        <div class="con">
-          <p>王若琳音乐会</p>
-          <p>RETURN TO MONGOLIA 回到蒙古 MON RETURN TO MONGOLIA 回到蒙古 MON </p>
-          <p>王若琳音乐会</p>
+          <p v-for="(it,ind) in item.programList">{{it}}</p>
         </div>
       </div>
 
@@ -171,7 +159,7 @@
 </template>
 
 <script>
-  import {sig, UrlSearch} from '../common/weixin'
+  import '../common/dataFormate'
   import {Toast, Icon, Cell, CellGroup} from 'vant';
 
   export default {
@@ -184,21 +172,93 @@
     },
     data() {
       return {
-
+        goodsMainList:[],
+        goodsList:[],
+        curDate:new Date(),
+        lastDate:''
       }
     },
     created() {
-
+      Toast.loading({ mask: true,duration:0 });
+      let that = this
+      that.clubList()
+      that.time()
     },
     computed: {},
     beforeMount:function () {
 
     },
+    methods: {
+      clubList() {
+        let that = this
+        Ajax.post('target/product/goodsActivityTime', {})
+          .then(function (response) {
+            let res = response.data;
+            if (res.result === '1') {
+              that.goodsMainList = res.goodsMainList
+              res.goodsList.map(item=>{
+                item.programList = item.programList.split('。')
+              })
+              that.goodsList=res.goodsList
+              Toast.clear()
+            } else {
+              Toast(res.msg)
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+          });
+      },
+      time() {
+        var date = new Date();
+        date.setDate(date.getDate() + 14);
+        this.lastDate = {
+          month:date.getMonth() + 1,
+          date:date.getDate()
+        }
+      }
+    },
     mounted() {
 
     },
-    methods: {
-
+    filters: {
+      timeTrans(val,i) {
+        if(val){
+          let time = (new Date(val).Format("yyyy-MM-dd")).split('-')
+          return time[i]
+        }
+      },
+      EnMonthTrans(val){
+        if(val){
+          let str='Jan'
+          if(val === '01'){
+            str='Jan'
+          }else if(val === '02'){
+            str='Feb'
+          }else if(val === '03'){
+            str='Mar'
+          }else if(val === '04'){
+            str='Apr'
+          }else if(val === '05'){
+            str='May'
+          }else if(val === '06'){
+            str='Jun'
+          }else if(val === '07'){
+            str='Jul'
+          }else if(val === '08'){
+            str='Aug'
+          }else if(val === '09'){
+            str='Sep'
+          }else if(val === '10'){
+            str='Oct'
+          }else if(val === '11'){
+            str='Nov'
+          }else if(val === '12'){
+            str='Dec'
+          }
+          return str;
+        }
+      }
     }
   }
 </script>

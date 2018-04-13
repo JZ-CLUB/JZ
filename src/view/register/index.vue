@@ -62,7 +62,7 @@
       }
     },
     created(){
-      Toast.loading({ mask: true,duration:0 });
+      // Toast.loading({ mask: true,duration:0 });
     },
     beforeMount:function () {
       localStorage.curUrl = window.location.href
@@ -148,7 +148,7 @@
       }
     },
     mounted() {
-      Toast.clear()
+      Toast.clear();
     }
   };
 </script>

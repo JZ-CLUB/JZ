@@ -114,8 +114,8 @@
             e.t.playlist = response.data.playlist;
             //console.log(e.t.playlist)"http://47.104.183.132"+
             for (let i in e.t.playlist){
-              //e.t.playlist[i].file = e.comPath.imgPath+e.t.playlist[i].file;
-              e.t.playlist[i].file = "http://audio.xmcdn.com/group18/M01/21/30/wKgJJVeF0OXTd52JACbG6HVeP8k020.m4a"
+              e.t.playlist[i].file = e.comPath.imgPath+e.t.playlist[i].file;
+              //e.t.playlist[i].file = "http://audio.xmcdn.com/group18/M01/21/30/wKgJJVeF0OXTd52JACbG6HVeP8k020.m4a"
               e.t.playlist[i].thumb = e.comPath.imgPath+e.t.playlist[i].thumb;
             }
             $(".jAudio--player").jAudio(e.t);
@@ -416,7 +416,7 @@
     margin-left: -0.9rem;
   }
   .btn:active {
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
   }
 
   #btn-prev span:before, #btn-prev span:after, #btn-next span:before, #btn-next span:after, #btn-play span:before, #btn-play span:after {
@@ -487,7 +487,7 @@
     margin-right: 5px;
   }
   #btn-pause span:active:before, #btn-pause span:active:after, #btn-pause span.active:before, #btn-pause span.active:after {
-    background: #fff;
+
     margin-right: 5px;
   }
 

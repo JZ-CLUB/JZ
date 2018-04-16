@@ -1,10 +1,211 @@
+<style lang="less">
+  .goodTitle{
+    width: 100%;
+    height: 4.18rem;
+    position: relative;
+    /*background: url("../../images/goodsAct_bg_02.jpg") no-repeat center;*/
+    /*background-size: cover;*/
+    img{
+      display: flex;
+      justify-content: center;
+      max-width: 100%;
+      height: 4.18rem;
+      margin: 0 auto;
+    }
+    >div{
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 0.9rem;
+      background: rgba(0,0,0,0.4);
+      color: #FFFFFF;
+      font-size: 0.32rem;
+      padding: 0 0.4rem;
+      line-height: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      .price{
+        color: #F93B48;
+        font-size: 0.46rem;
+        .pre{
+          font-size: 0.24rem;
+        }
+        .text{
+          font-size: 0.24rem;
+          color: #ffffff;
+        }
+      }
+    }
+    /*.first_tit{
+      font-size: 0.5rem;
+      color:#efc181;
+      text-shadow:2px 5px 4px #000;
+      text-align: center;
+      padding-top: 1.2rem;
+      font-weight: 800;
+    }
+    .second_tit{
+      font-size: 0.32rem;
+      color:#efc181;
+      text-shadow:2px 5px 4px #000;
+      text-align: center;
+      font-weight: 600;
+      padding-top:0.1rem;
+    }*/
+  }
+  .goods {
+    background-color: #1a1a1a;
+    padding: 0 20px 50px 20px;
+    font-family: "Microsoft YaHei";
+    font-size: 14px;
+    img{
+      width: 100%;
+    }
+    .intru{
+      padding: 0.4rem 0.4rem 0.4rem 0;
+      font-size: 0.28rem;
+      line-height: 0.28rem;
+      display: flex;
+      &:before{
+        content: '';
+        display: inline-block;
+        width:0.04rem;
+        height:0.28rem;
+        background:rgba(190,44,54,1);
+        margin-right: 0.2rem;
+      }
+
+    }
+    h1,h2,h3,h4,h5,h6{
+      color: #d25454;
+      font-weight: bold;
+      line-height: 30px;
+    }
+    p{
+      line-height: 24px;
+    }
+
+    &-swipe {
+      img {
+        width: 7.5rem;
+        height: 7.5rem;
+        display: block;
+      }
+    }
+
+    &-title {
+      font-size: 16px;
+    }
+
+    &-price {
+      color: #f44;
+    }
+
+    &-express {
+      color: #999;
+      font-size: 12px;
+      padding: 5px 15px;
+    }
+
+    &-cell-group {
+      margin: 15px 0;
+
+      .van-cell__value {
+        color: #999;
+      }
+    }
+
+
+
+    .van-hairline--bottom::after{
+      border-bottom: 1px solid #070d1a;
+    }
+    .van-sku-row{
+      &__title {
+        font-size: 12px;
+      }
+    }
+    .van-sku{
+      &-header__goods-info{
+        min-height: 24px;
+        padding-right: 10px;
+      }
+      &__goods-name{
+        font-size: 14px;
+        text-align: center;
+      }
+      &-row__item{
+        min-width: 45%;
+        color: #c7a070;
+        text-align: center;
+        border: 1px solid #c7a070;
+      }
+      &-row__item.van-sku-row__item--active{
+        color: #d52d33;
+        border: 1px solid #d52d33;
+        background: transparent;
+      }
+      &__quota{
+        color: #be2c36;
+      }
+
+    }
+    .van-button--bottom-action.van-button--primary{
+      background-color: #be2c36;
+    }
+    .van-popup--bottom{
+      .van-sku-layout{
+        background: #262626;
+      }
+    }
+    .van-button--bottom-action.van-button--default {
+      color: #999;
+      background-color: #353535;
+    }
+    .van-stepper{
+      &__stepper{
+        background-color: #f0c37a;
+        border-color: #282828;
+        color: #000;
+      }
+      &__minus--disabled,&__plus--disabled{
+        background-color: #8b7550;
+        border-color: #282828;
+        color: #453a28;
+      }
+      &__input{
+        background-color: #666666;
+        border-color: #282828;
+        color: #fff;
+        font-size: 12px;
+        font-weight: bold;
+      }
+    }
+
+  }
+  .van-sku-container{
+    background: #262626;
+  }
+  .van-sku-messages{
+    padding-bottom: 0;
+    background: #262626;
+    &.van-hairline--top-bottom::after{
+      border: none;
+    }
+  }
+
+
+
+</style>
 <template>
   <div style="background: #1a1a1a">
     <div class="goodTitle">
-      <p class="first_tit" v-html="goodsName">{{goodsName}}</p>
-      <p class="second_tit" v-html="goodsSubtitle">{{goodsSubtitle}}</p>
+      <!--<img src="../../images/detailBan.jpg" alt="">-->
+      <img :src="comPath.imgPath+imgBan" alt="">
+      <div><p>{{goods.title}}</p> <p class="price"><span class="pre">¥</span> {{priceArr | priceMin}} <span class="text">起</span></p> </div>
     </div>
     <div class="goods">
+      <div class="intru">演出介绍</div>
       <div v-html="goodsBody">{{goodsBody}}</div>
       <van-goods-action v-show="goodsShow">
         <van-goods-action-big-btn primary @click="showShu">
@@ -102,6 +303,7 @@
 
     data() {
       return {
+        comPath: PublicPath,
         quota: 0,
         goodsId: 1,
         quotaUsed: 0,
@@ -147,9 +349,8 @@
           title: '',
           Img: ''
         },
-
-
-
+        priceArr:[],
+        imgBan:''
       };
     },
     created: function() {
@@ -157,7 +358,6 @@
       this.send(this)
     },
     computed:{
-
     },
     methods: {
       formatPrice() {
@@ -172,7 +372,7 @@
       handleBuyClicked(e){
         Toast.loading({mask: true, duration: 0});
         let that = this
-        console.log(e);
+        // console.log(e);
         let oData = this.sku;
         let goodsId = e.goodsId;
         let specId="";
@@ -180,7 +380,7 @@
         let tree = this.sku.tree;
 
         let datalist = {};
-        console.log(tree);
+        // console.log(tree);
         for (let z in oData.tree){
           let a = "s"+z;
           e.selectedSkuComb[a];
@@ -201,7 +401,7 @@
 
         }
 
-        console.log(datalist);
+        // console.log(datalist);
         localStorage.setItem("datalist", JSON.stringify(datalist));
 
 
@@ -212,7 +412,7 @@
           count:e.selectedNum
         };
 
-        console.log(data);
+        // console.log(data);
         Ajax.post('target/cartapi/addCart', data)
           .then(
             function (response) {
@@ -228,6 +428,7 @@
           );
       },
       send:function (e) {
+        let  that=this
         Ajax.post('target/goods/api/goodsdetail', {
           goodsId: e.$route.params.id
         })
@@ -248,8 +449,8 @@
             }
             if(response.statusText=="OK"){
               //console.log("ee:"+e.$route.params.id);
-
               let nData = response.data.data[0];
+              that.imgBan = nData.goodsCallyList[0]
               let oData = e.sku;
               let i = 0;
               let j = 0;
@@ -266,7 +467,7 @@
               //e.initialSku.collection_id = nData.goodsId;
               //e.initialSku.stock_num = nData.goodsTotalStorage;
               localStorage.setItem("goodstype", nData.goodsType);
-              console.log(nData);
+              // console.log(nData);
               for (let x in nData.specName){
                 let Data;
                 Data = {
@@ -294,6 +495,7 @@
               for(let k in nData.goodsSpecList){
                 let Data;
                 let goodsSpecList = nData.goodsSpecList[k];
+                that.priceArr.push(goodsSpecList.specGoodsPrice)
                 Data = {
                   id: goodsSpecList.goodsSpecId, // skuId，下单时后端需要
                   price: goodsSpecList.specGoodsPrice, // 价格（单位分）
@@ -414,150 +616,18 @@
             console.log(error);
           });
       }
+    },
+    filters:{
+      priceMin(val,i) {
+        if(val.length!==0){
+          return Math.min.apply(Math, val);
+        }else{
+          return 0
+        }
+      },
     }
   };
 
 
 </script>
 
-<style lang="less">
-    .goodTitle{
-      width: 100%;
-      height: 3.62rem;
-      background: url("../../images/goodsAct_bg_02.jpg") no-repeat center;
-      background-size: cover;
-      .first_tit{
-        font-size: 0.5rem;
-        color:#efc181;
-        text-shadow:2px 5px 4px #000;
-        text-align: center;
-        padding-top: 1.2rem;
-        font-weight: 800;
-      }
-      .second_tit{
-        font-size: 0.32rem;
-        color:#efc181;
-        text-shadow:2px 5px 4px #000;
-        text-align: center;
-        font-weight: 600;
-        padding-top:0.1rem;
-      }
-    }
-  .goods {
-    background-color: #1a1a1a;
-    padding: 0 20px 50px 20px;
-    font-family: "Microsoft YaHei";
-    font-size: 14px;
-    img{
-      width: 100%
-    }
-
-    h1,h2,h3,h4,h5,h6{
-      color: #d25454;
-      font-weight: bold;
-      line-height: 30px;
-    }
-    p{
-      line-height: 24px;
-    }
-
-    &-swipe {
-      img {
-        width: 7.5rem;
-        height: 7.5rem;
-        display: block;
-      }
-    }
-
-    &-title {
-      font-size: 16px;
-    }
-
-    &-price {
-      color: #f44;
-    }
-
-    &-express {
-      color: #999;
-      font-size: 12px;
-      padding: 5px 15px;
-    }
-
-    &-cell-group {
-      margin: 15px 0;
-
-      .van-cell__value {
-        color: #999;
-      }
-    }
-
-
-
-    .van-hairline--bottom::after{
-      border-bottom: 1px solid #070d1a;
-    }
-    .van-sku-row{
-      &__title {
-        font-size: 12px;
-      }
-    }
-    .van-sku{
-      &-header__goods-info{
-        min-height: 24px;
-      }
-      &__goods-name{
-        font-size: 14px;
-        text-align: center;
-      }
-      &-row__item{
-        min-width: 45%;
-        color: #c7a070;
-        text-align: center;
-        border: 1px solid #c7a070;
-      }
-      &-row__item.van-sku-row__item--active{
-        color: #d52d33;
-        border: 1px solid #d52d33;
-        background: transparent;
-      }
-      &__quota{
-        color: #be2c36;
-      }
-
-    }
-    .van-button--bottom-action.van-button--primary{
-      background-color: #be2c36;
-    }
-    .van-popup--bottom{
-      .van-sku-layout{
-        background: #262626;
-      }
-    }
-    .van-button--bottom-action.van-button--default {
-      color: #999;
-      background-color: #353535;
-    }
-    .van-stepper{
-      &__stepper{
-        background-color: #f0c37a;
-        border-color: #282828;
-        color: #000;
-      }
-      &__minus--disabled,&__plus--disabled{
-        background-color: #8b7550;
-        border-color: #282828;
-        color: #453a28;
-      }
-      &__input{
-        background-color: #666666;
-        border-color: #282828;
-        color: #fff;
-        font-size: 12px;
-        font-weight: bold;
-      }
-    }
-
-  }
-
-
-</style>

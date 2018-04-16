@@ -2,18 +2,40 @@
   .goodsList {
     color: #f0c37a;
     .search {
+      .van-search__input-wrap{
+        height: 0.6rem;
+        .van-icon-search:before{
+          /*content: '';*/
+          background: url("../../images/search.png") no-repeat center center;
+          background-size: cover;
+          color: rgba(255,255,255,0);
+        }
+      }
       input {
-        height: 18px;
+        height: 0.28rem;
         text-align: center;
+        font-size: 0.28rem;
       }
     }
 
     .van-swipe-item {
       height: 4.18rem;
+      /*position: relative;*/
       img {
         max-width: 100%;
         height: 4.18rem;
         margin: 0 auto;
+      }
+      >div{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 0.9rem;
+        background: rgba(0,0,0,0.4);
+        color: #FFFFFF;
+        font-size: 0.32rem;
+        padding: 0 0.4rem;
+        line-height: 0.9rem;
       }
     }
 
@@ -32,7 +54,7 @@
     }
 
     .cardBox {
-      padding: 0 0.15rem;
+      padding: 0.15rem 0.15rem 0 0.15rem;
       .van-col-12 {
         margin: 0.15rem 0 0 0;
         padding: 0 0.15rem;
@@ -62,18 +84,19 @@
 <template>
   <div class="goodsList">
     <scroller :on-infinite="refresh" ref="my_scroller" v-if="load">
-      <van-search class="search" background="#000000" v-model='info' placeholder="请输入商品名称"/>
+      <van-search class="search" background="#000000" v-model='info' placeholder="搜索爵士热点活动"/>
 
-      <van-swipe v-show="showFlag" :autoplay="3000">
+      <van-swipe v-show="showFlag" :show-indicators="false" :autoplay="3000">
         <div v-for="(image, index) in imageList" :key="index"
              @click="$router.push({ name: 'activityGoods', params: { id:image.goodsId }})">
           <van-swipe-item>
             <img v-lazy="comPath.imgPath+image.goodsImage"/>
+            <div>{{image.goodsName}}</div>
           </van-swipe-item>
         </div>
       </van-swipe>
 
-      <router-link to="/ShowCalendar">
+      <!--<router-link to="/ShowCalendar">
         <div class="goImg" v-show="showFlag">
           <img src="../../images/go.png" alt="">
         </div>
@@ -81,7 +104,7 @@
 
       <div class="line">
 
-      </div>
+      </div>-->
 
       <van-row class="cardBox">
         <van-col span="12" v-for="(item,index) in searchData" :key="index">

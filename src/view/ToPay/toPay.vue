@@ -1,3 +1,130 @@
+<style lang="less">
+  .toPayBox{
+    .payAddress{
+      margin-top:0.2rem;
+      &:after{
+        border: none;
+      }
+      .van-cell{
+        background: #1a1a1a;
+        color: #f0c37a;
+        padding: 0.15rem 0.4rem;
+        .van-address-list__name{
+          height: 0.45rem;
+          line-height: 0.45rem;
+          font-size: 0.28rem;
+          .telPhone{
+            float: right;
+          }
+        }
+        .van-address-list__address{
+          color: #f0c37a;
+          font-size: 0.28rem;
+          line-height: 0.4rem;
+        }
+        .van-cell__value--link{
+          padding-right: 0.5rem;
+        }
+      }
+    }
+    .showDiv{
+      width: 100%;
+      background-color: #000000;
+      font-size: 12px;
+      padding: 10px;
+      &__con{
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+      &__tit{
+        font-size: 18px;
+        color: #fff;
+        text-align: center;
+      }
+    }
+    .itemInfo{
+      margin: 0.2rem 0;
+      background: #1a1a1a;
+      padding: 0 0.4rem 0.15rem;
+      .goodDetail{
+        display: flex;
+        justify-content: flex-start ;
+        padding: 0.3rem 0;
+        border-bottom: 0.01rem solid #000000;
+        .img{
+          width: 1rem;
+          height: 1rem;
+          margin-right: 0.4rem;
+          img{
+            display: block;
+            height: 100%;
+            max-width: 100%;
+          }
+        }
+        .con{
+          width: 5.3rem;
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          font-size: 0.32rem;
+
+          height: 1rem;
+          word-break: break-all;
+          text-overflow: ellipsis;
+          display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+          -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+          -webkit-line-clamp: 2; /** 显示的行数 **/
+          overflow: hidden; /** 隐藏超出的内容 **/
+        }
+      }
+      h1{
+        height: 0.9rem;
+        line-height: 0.9rem;
+        font-size: 0.32rem;
+      }
+      .van-cell-group{
+        background: none;
+      }
+      .van-hairline--bottom::after,
+      .van-hairline--top-bottom::after,
+      .van-hairline::after{
+        border: none;
+      }
+      .van-cell{
+        padding:0;
+        line-height: 0.6rem;
+        background: none;
+        color: #666666;
+        &:not(:last-child)::after{
+          border: 0;
+        }
+
+      }
+      .van-cell__value{
+        padding-right: 0;
+      }
+    }
+    .tips{
+      padding: 0 0.4rem;
+      color: #736047;
+      font-size: 0.24rem;
+    }
+    .van-submit-bar__bar{
+      background: #1a1a1a;
+      line-height: 50px;
+      span{
+        vertical-align: middle;
+      }
+      .van-button--danger{
+        background: #d52d33;
+      }
+      .van-submit-bar__price-interger,.van-submit-bar__price-decimal{
+        font-size: 0.4rem;
+        color: #bf2b39;
+      }
+    }
+  }
+</style>
 <template>
   <div class="toPayBox">
     <van-cell-group class="payAddress" v-if="goodsType!=='1'">
@@ -23,7 +150,15 @@
 
     </van-cell-group>
     <div class="itemInfo">
-      <h1 class="">{{goodsTitle}}</h1>
+      <div class="goodDetail">
+        <div class="img">
+          <img src="../../images/detailBan.jpg" alt="">
+        </div>
+        <div class="con">
+          <p>{{goodsTitle}}</p>
+        </div>
+      </div>
+      <!--<h1 class="">{{goodsTitle}}</h1>-->
       <van-cell-group>
         <van-cell title="门票类型" :value="tickType" />
         <van-cell v-for="(val, key, index) in carType" :key="index" :title="key" :value="val" />
@@ -219,99 +354,3 @@
 
 </script>
 
-<style lang="less">
-  .toPayBox{
-    .payAddress{
-      margin-top:0.2rem;
-      &:after{
-        border: none;
-      }
-      .van-cell{
-        background: #1a1a1a;
-        color: #f0c37a;
-        padding: 0.15rem 0.4rem;
-        .van-address-list__name{
-          height: 0.45rem;
-          line-height: 0.45rem;
-          font-size: 0.28rem;
-          .telPhone{
-            float: right;
-          }
-        }
-        .van-address-list__address{
-          color: #f0c37a;
-          font-size: 0.28rem;
-          line-height: 0.4rem;
-        }
-        .van-cell__value--link{
-          padding-right: 0.5rem;
-        }
-      }
-    }
-    .showDiv{
-      width: 100%;
-      background-color: #000000;
-      font-size: 12px;
-      padding: 10px;
-      &__con{
-        padding-left: 8px;
-        padding-right: 8px;
-      }
-      &__tit{
-        font-size: 18px;
-        color: #fff;
-        text-align: center;
-      }
-    }
-    .itemInfo{
-      margin: 0.2rem 0;
-      background: #1a1a1a;
-      padding: 0 0.4rem 0.15rem;
-      h1{
-        height: 0.9rem;
-        line-height: 0.9rem;
-        font-size: 0.32rem;
-      }
-      .van-cell-group{
-        background: none;
-      }
-      .van-hairline--bottom::after,
-      .van-hairline--top-bottom::after,
-      .van-hairline::after{
-        border: none;
-      }
-      .van-cell{
-        padding:0;
-        line-height: 0.6rem;
-        background: none;
-        color: #666666;
-        &:not(:last-child)::after{
-          border: 0;
-        }
-
-      }
-      .van-cell__value{
-        padding-right: 0;
-      }
-    }
-    .tips{
-      padding: 0 0.4rem;
-      color: #736047;
-      font-size: 0.24rem;
-    }
-    .van-submit-bar__bar{
-      background: #1a1a1a;
-      line-height: 50px;
-      span{
-        vertical-align: middle;
-      }
-      .van-button--danger{
-        background: #d52d33;
-      }
-      .van-submit-bar__price-interger,.van-submit-bar__price-decimal{
-        font-size: 0.4rem;
-        color: #bf2b39;
-      }
-    }
-  }
-</style>

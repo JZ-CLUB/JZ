@@ -120,7 +120,7 @@ const routes = [
     name: 'toPay',
     component: ToPay,
     meta: {
-      title: '去支付'
+      title: '确认订单'
     }
   },
   {

@@ -134,7 +134,7 @@
   <div class="club">
     <div class="ban" v-for="(item,index) in goodsMainList"
          @click="$router.push({ name: 'activityGoods', params: { id:item.goodsId }})">
-      <img src="../images/ban.jpg" alt="">
+      <img :src="comPath.imgPath+item.goodsImage" alt="">
       <div>
         <div class="calender">
           <p>{{item.activityStartTime | timeTrans(2)}}日</p>
@@ -183,6 +183,7 @@
     },
     data() {
       return {
+        comPath: PublicPath,
         goodsMainList:[],
         goodsList:[],
         curDate:new Date(),

@@ -62,6 +62,11 @@
   }
   .list{
     padding: 0 0.1rem;
+    .noData{
+      text-align: center;
+      line-height: 0.9rem;
+      color: #999999;
+    }
     .card{
       height: 1.6rem;
       margin-top: 0.1rem;
@@ -157,6 +162,9 @@
         </div>
       </div>
 
+
+      <div class="noData" v-if="noData">没有更多数据</div>
+
     </div>
   </div>
 </template>
@@ -178,7 +186,8 @@
         goodsMainList:[],
         goodsList:[],
         curDate:new Date(),
-        lastDate:''
+        lastDate:'',
+        noData:false
       }
     },
     created() {
@@ -198,6 +207,9 @@
           .then(function (response) {
             let res = response.data;
             if (res.result === '1') {
+              if(that.goodsList.length===0&&that.goodsMainList.length===0){
+                that.noData = true
+              }
               that.goodsMainList = res.goodsMainList
               res.goodsList.map(item=>{
                 item.programList = item.programList.split('。')

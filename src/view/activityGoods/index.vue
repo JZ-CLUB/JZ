@@ -24,6 +24,10 @@
       line-height: 0.9rem;
       display: flex;
       justify-content: space-between;
+      .title{
+        max-width: 5rem;
+        text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
+      }
       .price{
         color: #F93B48;
         font-size: 0.46rem;
@@ -202,7 +206,7 @@
     <div class="goodTitle">
       <!--<img src="../../images/detailBan.jpg" alt="">-->
       <img :src="comPath.imgPath+imgBan" alt="">
-      <div><p>{{goods.title}}</p> <p class="price"><span class="pre">¥</span> {{priceArr | priceMin}} <span class="text">起</span></p> </div>
+      <div><p class="title">{{goods.title}}</p> <p class="price"><span class="pre">¥</span> {{priceArr | priceMin}} <span class="text">起</span></p> </div>
     </div>
     <div class="goods">
       <div class="intru">演出介绍</div>

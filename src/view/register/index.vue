@@ -1,3 +1,106 @@
+<style lang="less">
+  #register_body {
+    width: 100%;
+    height: 100%;
+    background: url("../../images/register_bg.jpg");
+    background-size: cover;
+    .con_container {
+      font-size: 0.28rem;
+      font-family: 微软雅黑;
+      border-radius: 0.05rem;
+      .van-field {
+        height: 0.98rem;
+        line-height: 0.4rem;
+        border-radius: 0.1rem;
+        padding-top: 0.3rem;
+        padding-bottom: 0.3rem;
+        font-size: 0.28rem;
+      }
+    }
+    .register_con {
+      width: 88.26%;
+      max-width: 750px;
+      margin: 0 auto;
+      padding-top: 5.38rem;
+      .register_button {
+        height: 0.8rem;
+        line-height: 0.8rem;
+        margin-top: 0.5rem;
+        text-align: center;
+        .van-button {
+          color: white;
+          background: #be2c36 !important;
+          border: 0;
+          font-family: 微软雅黑;
+          font-size: 0.28rem;
+          height: 0.8rem;
+          line-height: 0.8rem;
+        }
+      }
+      /*.van-cell__title{
+        display: flex;
+        justify-content: space-between;
+      }*/
+      .van-field .van-cell__title{
+        min-width: 1.4rem;
+        width: 1.4rem;
+        &:after{
+          display: inline-block;
+          content: ' ';
+          width: 0.08rem;
+          height: 0.08rem;
+          background: #E6122A;
+          border-radius: 50%;
+        }
+      }
+      .van-cell--required::before {
+        color: white !important;
+      }
+      .van-cell__value {
+        position: relative;
+        display: inline-block !important;
+        font-size: 0.28rem;
+        line-height: 0.4rem;
+        .van-field__control{
+          line-height: 0.4rem;
+          font-size: 0.28rem;
+          height: 0.4rem;
+        }
+      }
+      .van-cell__text {
+        display: inline-block;
+        width: 1.08rem;
+        line-height: 0.4rem;
+        font-size: 0.28rem;
+
+      }
+      .yzCode_div{
+        // border:1px solid red;
+        position: relative;
+        .dj_yzCode {
+          width: auto;
+          position: absolute;
+          float: right;
+          vertical-align: middle;
+          margin-top: -0.15rem;
+          right: 0.5rem;
+          top: 50%;
+          height: 0.3rem;
+          .code-btn {
+            background: none;
+            border: 0;
+            font-size: 0.28rem;
+            line-height: 0.3rem;
+            color: #f0c37a;
+          }
+        }
+      }
+    }
+    .van-hairline--top-bottom::after{
+      border:0 !important;
+    }
+  }
+</style>
 <template>
   <div id="register_body" v-if="load">
     <div class="register_con">
@@ -17,10 +120,10 @@
             placeholder="6位验证码"
           />
           <div class="dj_yzCode">
-            <button @click="getCode(formData)" class="code-btn" :disabled="!show">
+            <div @click="getCode(formData)" class="code-btn" :disabled="!show">
               <span v-show="show">获取验证码</span>
               <span v-show="!show" class="count">{{count}}s</span>
-            </button>
+            </div>
           </div>
         </div>
       </van-cell-group>
@@ -153,84 +256,3 @@
   };
 </script>
 
-<style lang="less">
-  #register_body {
-    width: 100%;
-    height: 100%;
-    background: url("../../images/register_bg.jpg");
-    background-size: cover;
-    .con_container {
-      font-size: 0.28rem;
-      font-family: 微软雅黑;
-      border-radius: 0.05rem;
-      .van-field {
-        height: 1rem;
-        line-height: 0.6rem;
-        border-radius: 0.1rem;
-      }
-    }
-    .register_con {
-      width: 88.26%;
-      max-width: 750px;
-      margin: 0 auto;
-      padding-top: 5.38rem;
-      .register_button {
-        height: 0.8rem;
-        line-height: 0.8rem;
-        margin-top: 0.5rem;
-        text-align: center;
-        .van-button {
-          color: white;
-          background: #be2c36 !important;
-          border: 0;
-          font-family: 微软雅黑;
-          font-size: 0.28rem;
-          height: 0.8rem;
-          line-height: 0.8rem;
-        }
-      }
-      .van-cell--required::before {
-        color: white !important;
-      }
-      .van-cell__value {
-        padding-left: 60px !important;
-        position: relative;
-        display: inline-block !important;
-      }
-      .van-cell__text {
-        display: inline-block;
-        .van-cell__text::before {
-          width: 20px;
-          height: 20px;
-          background: red;
-          display: inline-block;
-          z-index: 99;
-          border-radius: 5px;
-        }
-      }
-      .yzCode_div{
-          // border:1px solid red;
-          position: relative;
-         .dj_yzCode {
-            width: auto;
-            position: absolute;
-            float: right;
-            vertical-align: middle;
-            margin-top: -0.23rem;
-            right: 0.5rem;
-            top: 50%;
-            height: 1rem;
-          .code-btn {
-            background: none;
-            border: 0;
-            font-size: 0.28rem;
-            color: #f0c37a;
-          }
-        }
-      }
-    }
-    .van-hairline--top-bottom::after{
-      border:0 !important;
-    }
-  }
-</style>

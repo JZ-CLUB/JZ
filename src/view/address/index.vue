@@ -1,3 +1,99 @@
+<style lang="less">
+  #address_body{
+    // background: #1a1a1a;
+    // font-family: 微软雅黑;
+    .van-address-list{
+      // width: 88.26%;
+      // margin:0 auto;
+      .van-address-list__group{
+        padding-bottom: 0 !important;
+        background:#000 !important;
+        .van-cell{
+          background: #1a1a1a !important;
+          padding: 0 !important;
+          margin-bottom: 0.3rem;
+          .van-cell__value--alone{
+            padding-right: 0;
+            // border-bottom:1px solid red;
+            .add_info{
+              border-bottom: 1px solid #000;
+              .add_info_con{
+                width: 88.667%;
+                margin: 0 auto;
+                .van-address-list__name{
+                  font-size: 0.28rem;
+                  color:#eec27f;
+                  margin-top: 0.45rem;
+                  margin-bottom: 0.3rem;
+                  .tel_tel{
+                    float: right;
+                  }
+                }
+                .van-address-list__address{
+                  font-size: 0.28rem;
+                  color:#b4b0a7;
+                  margin-bottom: 0.3rem;
+                }
+              }
+            }
+            .nihaoa{
+              padding: 0.25rem 0.4rem;
+              display: flex;
+              justify-content: flex-end;
+              vertical-align: middle;
+              p{
+                color:#eec27f;
+                display: flex;
+                justify-content: space-between;
+                span{
+                  height: 0.4rem;
+                  line-height: 0.4rem;
+                }
+                .van_icon_edit{
+                  width: 0.4rem;
+                  height: 0.4rem;
+                  background: url("../../images/icon_address_03.png") no-repeat left center;
+                  background-size:  0.38rem 0.38rem;
+                  margin-right: 0.2rem;
+                }
+                .van_icon_delete{
+                  width: 0.4rem;
+                  height: 0.4rem;
+                  background: url("../../images/icon_address_05.png") no-repeat left center;
+                  background-size: 0.32rem 0.37rem;
+                  margin-left: 0.4rem;
+                  margin-right: 0.2rem;
+                }
+              }
+            }
+          }
+        }
+        .van-cell:not(:last-child)::after{
+          border:0 !important;
+        }
+      }
+      .van-address-list__add{
+        width: 100%;
+        padding: 0 !important;
+        height: 1rem;
+        line-height: 1rem;
+        z-index: 1;
+        // background: #be2c36 !important;
+        border:0;
+        .van-button--bottom-action{
+          height: 1rem !important;
+          line-height: 1rem !important;
+          background: #be2c36;
+        }
+        .van-button--normal{
+          padding: 0 !important;
+          font-size: 0.28rem;
+        }
+      }
+    }
+  }
+</style>
+
 <template>
   <div id="address_body">
    <div class="van-address-list">
@@ -11,8 +107,9 @@
             </div>
           </div>
           <div class="nihaoa">
-            <span @click.stop="onEdit(item, index)"><i name="edit" solt="right" class="van-icon van_icon_edit"></i>编辑地址</span>
-            <span @click="onDelete(item, index)"><i name="delete" class="van-icon van_icon_delete"></i>删除</span>
+            <p @click.stop="onEdit(item, index)"><span name="edit" solt="right" class="van-icon van_icon_edit"></span><span>编辑地址</span></p>
+            <p @click="onDelete(item, index)"><span name="delete" class="van-icon van_icon_delete"></span><span>删除</span></p>
+
           <!-- <van-icon name="delete" @click="onDelete(item, index)" solt="right"/> -->
           <!-- <van-icon name="edit" v-bind:class="{'van-icon-check':indexTrue,'van-icon-checked':!indexTrue}" @click.stop="onEdit(item, index)" /> -->
           </div>
@@ -146,124 +243,3 @@
     }
   }
 </script>
-
-<style lang="less">
-#address_body{
-  // background: #1a1a1a;
-  // font-family: 微软雅黑;
-  .van-address-list{
-    // width: 88.26%;
-    // margin:0 auto;
-    .van-address-list__group{
-      padding-bottom: 0 !important;
-      background:#000 !important;
-      .van-cell{
-        background: #1a1a1a !important;
-        padding: 0 !important;
-        margin-bottom: 0.3rem;
-        .van-cell__value--alone{
-          margin-bottom: 0.16rem;
-          padding-right: 0 !important;
-          // border-bottom:1px solid red;
-          .add_info{
-            border-bottom: 1px solid #000;
-            .add_info_con{
-              width: 88.667%;
-              margin: 0 auto;
-              .van-address-list__name{
-                  font-size: 0.28rem;
-                  color:#eec27f;
-                  margin-top: 0.45rem;
-                  margin-bottom: 0.3rem;
-                .tel_tel{
-                  float: right;
-                }
-              }
-              .van-address-list__address{
-                font-size: 0.28rem;
-                color:#b4b0a7;
-                margin-bottom: 0.3rem;
-              }
-            }
-          }
-          .nihaoa{
-              width: 54.4%;
-              float: right;
-              margin-top: 0.25rem;
-              margin-bottom: 0.25rem;
-
-             span{
-               color:#eec27f;
-              //  display: inline-block;
-              .van_icon{
-                display: inline-block;
-              }
-              .van_icon_edit{
-                width: 10.294%;
-                height: 0.43rem;
-                background: url("../../images/icon_address_03.png") no-repeat center;
-                background-size: 100%;
-                display: inline-block;
-                vertical-align: middle;
-                margin-left: 9.8%;
-                margin-right: 4.41%;
-              }
-              .van_icon_delete{
-                width: 7.843%;
-                height: 0.44rem;
-                background: url("../../images/icon_address_05.png") no-repeat center;
-                background-size: 100%;
-                display: inline-block;
-                vertical-align: middle;
-                margin-left: 9.8%;
-                margin-right: 4.41%;
-              }
-            }
-          }
-          // .van-cell-swipe__wrapper{
-          //   .van-cell-swipe__right{
-          //     background-color: #84c483;
-          //     right: 0;
-          //     -webkit-transform: translate3d(100%, 0, 0);
-          //     transform: translate3d(100%, 0, 0);
-          //   }
-          //   .van-cell-swipe__left, .van-cell-swipe__right{
-          //     top: 0;
-          //     height: 100%;
-          //     position: absolute;
-          //     width: 65px;
-          //     color: #fff;
-          //     font-size: 16px;
-          //     height: 40px;
-          //     display: inline-block;
-          //     text-align: center;
-          //     line-height: 40px;
-          //   }
-          // }
-        }
-      }
-      .van-cell:not(:last-child)::after{
-        border:0 !important;
-      }
-    }
-    .van-address-list__add{
-      width: 100%;
-      padding: 0 !important;
-      height: 1rem;
-      line-height: 1rem;
-      z-index: 1;
-      // background: #be2c36 !important;
-      border:0;
-      .van-button--bottom-action{
-        height: 1rem !important;
-        line-height: 1rem !important;
-        background: #be2c36;
-      }
-      .van-button--normal{
-        padding: 0 !important;
-        font-size: 0.28rem;
-      }
-    }
-  }
-}
-</style>

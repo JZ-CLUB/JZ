@@ -1,116 +1,3 @@
-<template>
-  <div id="myInfo_body" v-if="load">
-    <div class="myInfo_con_first">
-      <div class="myInfo_con_first_con">
-        <van-row class="Info_top">
-          <van-col span="22">
-            <div class="tit_con">
-              <div class="title_left">
-                <div class="title_left_left">
-                  <img src="../../images/myInfo_logo.png">
-                </div>
-                <div class="title_left_right">
-                  <p class="myInfo_title">爵士之语</p>
-                  <div class="card_type">
-                    <i></i>
-                    <span>普通乐迷卡</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </van-col>
-          <van-col span="2">
-            <router-link to="/memberInfo">
-              <div class="title_right">
-                <img src="../../images/myInfo_03.png">
-              </div>
-            </router-link>
-          </van-col>
-        </van-row>
-        <van-row class="card_con">
-          <van-col span="24">
-            <img src="../../images/myInfoCard.png">
-          </van-col>
-          <div class="cardNum">
-            <p>6357&nbsp;&nbsp;1998</p>
-          </div>
-        </van-row>
-        <div class="myInfo_num">
-          <ul class="myInfo_num_border">
-            <li>爵士豆</li>
-            <li>0</li>
-          </ul>
-          <ul class="myInfo_num_ul">
-            <li>优惠券</li>
-            <li>0</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <!-- <div class="myInfo_con_second">
-      <van-cell-group>
-        <span class="icon_bean">
-          <img src="../../images/myInfo_11.png">
-        </span>
-        <van-cell :border='false' title="我的爵士豆" class="icon_first_border" is-link/>
-        <span class="icon_bean_second">
-          <img src="../../images/myInfo_14.png">
-        </span>
-        <van-cell :border='false' title="我的优惠券" is-link/>
-      </van-cell-group>
-    </div> -->
-  </div>
-</template>
-
-<script>
-  import {sig} from '../../common/weixin'
-  import {Row, Col, Icon, Cell, CellGroup, Toast} from 'vant';
-
-  export default {
-    data () {
-      return {
-        load: false
-      }
-    },
-    components: {
-      [Row.name]: Row,
-      [Col.name]: Col,
-      [Icon.name]: Icon,
-      [Cell.name]: Cell,
-      [CellGroup.name]: CellGroup,
-      [Toast.name]: Toast
-    },
-    beforeCreate() {
-      Toast.loading({ mask: true,duration:0 });
-    },
-    created() {
-
-    },
-    beforeMount:function () {
-      let vm = this
-      sig(true).then(function () {
-        vm.load = true
-        vm.getMyInfo()
-      })
-    },
-    methods: {
-      getMyInfo: function () {
-        let data = {
-          memberId: sessionStorage.getItem('memberId')
-        }
-        Ajax.post('target/memberapi/memberDetail', data)
-          .then(function (response) {
-            Toast.clear()
-            // console.log(response);
-          })
-          .catch(function (error) {
-            // console.log(error);
-          });
-      }
-    }
-  };
-</script>
-
 <style lang="less">
   #myInfo_body {
     width: 100%;
@@ -170,11 +57,9 @@
         .title_right {
           width: 100%;
           right: 0;
-          // float: right;
-          // text-align: -webkit-right;
         }
         .cardNum {
-          color: white;
+          color: #666666;
           position: absolute;
           margin-top: 2.91rem;
           margin-left: 28.6%;
@@ -297,3 +182,127 @@
     }
   }
 </style>
+<template>
+  <div id="myInfo_body" v-if="load">
+    <div class="myInfo_con_first">
+      <div class="myInfo_con_first_con">
+        <van-row class="Info_top">
+          <van-col span="22">
+            <div class="tit_con">
+              <div class="title_left">
+                <div class="title_left_left">
+                  <img src="../../images/myInfo_logo.png">
+                </div>
+                <div class="title_left_right">
+                  <p class="myInfo_title">{{myInfo.memberTruename !== ''? myInfo.memberTruename :myInfo.memberName}}</p>
+                  <div class="card_type">
+                    <i></i>
+                    <span><s>普通乐迷卡</s></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </van-col>
+          <van-col span="2">
+            <router-link to="/memberInfo">
+              <div class="title_right">
+                <img src="../../images/myInfo_03.png">
+              </div>
+            </router-link>
+          </van-col>
+        </van-row>
+        <van-row class="card_con">
+          <van-col span="24">
+            <img src="../../images/myInfoCard.png">
+          </van-col>
+          <div class="cardNum">
+            <p><s>0000&nbsp;&nbsp;0000</s></p>
+          </div>
+        </van-row>
+        <div class="myInfo_num">
+          <ul class="myInfo_num_border">
+            <li>爵士豆</li>
+            <li>0</li>
+          </ul>
+          <ul class="myInfo_num_ul">
+            <li>优惠券</li>
+            <li>0</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="myInfo_con_second">
+      <van-cell-group>
+        <span class="icon_bean">
+          <img src="../../images/myInfo_11.png">
+        </span>
+        <van-cell :border='false' title="我的爵士豆" class="icon_first_border" is-link/>
+        <span class="icon_bean_second">
+          <img src="../../images/myInfo_14.png">
+        </span>
+        <van-cell :border='false' title="我的优惠券" is-link/>
+      </van-cell-group>
+    </div> -->
+  </div>
+</template>
+
+<script>
+  import {sig} from '../../common/weixin'
+  import {Row, Col, Icon, Cell, CellGroup, Toast} from 'vant';
+
+  export default {
+    data () {
+      return {
+        load: false,
+        myInfo:{
+          memberName:'爵士之语'
+        }
+      }
+    },
+    components: {
+      [Row.name]: Row,
+      [Col.name]: Col,
+      [Icon.name]: Icon,
+      [Cell.name]: Cell,
+      [CellGroup.name]: CellGroup,
+      [Toast.name]: Toast
+    },
+    beforeCreate() {
+      Toast.loading({ mask: true,duration:0 });
+    },
+    created() {
+
+    },
+    beforeMount:function () {
+      let vm = this
+      sig(true).then(function () {
+        vm.load = true
+        vm.getMyInfo()
+      })
+    },
+    methods: {
+      getMyInfo: function () {
+        let that=this
+        let data = {
+          memberId: sessionStorage.getItem('memberId')
+        }
+        Ajax.post('target/memberapi/memberDetail', data)
+          .then(function (response) {
+            if(response.status === 200){
+              let res = response.data
+              if(res.result===1){
+                that.myInfo = response.data.data[0]
+                Toast.clear()
+              }else{
+                Toast(response.msg)
+              }
+            }
+          })
+          .catch(function (error) {
+            // console.log(error);
+          });
+      }
+    }
+  };
+</script>
+

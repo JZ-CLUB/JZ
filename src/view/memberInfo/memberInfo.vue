@@ -1,3 +1,136 @@
+<style lang="less">
+  .memberInfo {
+    min-height: 3rem;
+    .van-cell-group {
+      background: #000;
+    }
+    .van-popup {
+      box-sizing: border-box;
+      background: #000;
+      &--right {
+        width: 100%;
+        position: absolute;
+        top: 1.5rem;
+      }
+      .van-field .van-cell__title{
+        min-width: 1.4rem;
+        width: 1.4rem;
+      }
+
+
+      .van-button--primary {
+        background: #c20007 !important;
+        width: 6.66rem;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 1rem;
+        height: 0.85rem;
+        line-height: 0.86rem;
+        font-size: 0.28rem;
+      }
+    }
+    .van-actionsheet {
+      background: #1A1A1A;
+      .van-actionsheet__item {
+        background: #1A1A1A;
+        span {
+          font-size: 0.28rem;
+          color: #d2a870;
+        }
+      }
+      .van-picker {
+        background: #1a1a1a !important;
+      }
+      .van-picker__cancel {
+        font-size: 0.28rem;
+        color: #e7bd7b;
+      }
+      .van-picker__confirm {
+        font-size: 0.28rem;
+        color: #e7bd7b;
+      }
+      .van-picker-column--selected {
+        color: white !important;
+        border-top: 1px solid white;
+        border-bottom: 1px solid white;
+        margin: 0.2rem;
+      }
+      .van-hairline--top::after {
+        border-top: 1px solid #000 !important;
+      }
+      .van-actionsheet__cancel {
+        margin-top: 0 !important;
+        background: #c20007 !important;
+        color: white;
+      }
+      .van-cell--required::before {
+        color: #999999 !important;
+      }
+      .van-button--bottom-action {
+        .van-button--primary {
+          background: #c20007 !important;
+
+        }
+      }
+
+    }
+    .van-hairline--top-bottom::after,.van-hairline--bottom::after {
+      border: 0
+    }
+    .van-cell {
+      height: 0.96rem;
+      line-height: 0.56rem;
+      background: #1a1a1a !important;
+      .van-cell__value {
+        position: relative;
+        display: inline-block !important;
+        // display: inline-block;
+        .van-field__control {
+          background: #1a1a1a;
+          color:#999999 !important;
+        }
+      }
+      .van-cell__title {
+        color: #eec27f;
+        font-size: 0.28rem;
+        .van-cell__text {
+          color: #eec27f;
+          .van-cell__text::before {
+            background: red;
+            display: inline-block;
+            z-index: 99;
+            border-radius: 5px;
+          }
+        }
+      }
+      .van-cell__value--link {
+        span {
+          color: #b4b0a7;
+          font-size: 0.28rem;
+        }
+      }
+      &:not(:last-child)::after {
+        border-bottom: 1px solid #000 !important;
+      }
+    }
+    .dj_yzCode {
+      width: auto;
+      position: absolute;
+      float: right;
+      vertical-align: top;
+      margin-top: -0.6rem;
+      right: 0.3rem;
+      top:50%;
+      .code-btn {
+        background: none;
+        border: 0;
+        font-size: 0.28rem;
+        color: #D2A870;
+      }
+    }
+  }
+</style>
 <template>
   <div class="memberInfo">
     <van-cell-group class="memberInfo_dis">
@@ -7,13 +140,13 @@
       <van-cell icon="" title="手机号" :value="telNum" is-link @click="phoneShow=true"/>
     </van-cell-group>
 
-    <van-popup v-model="nameShow" position="right" :overlay="false">
+    <van-popup v-model="nameShow" position="right" :overlay="true">
       <van-cell-group>
         <van-field
           v-model.trim="username"
-          label="用户名"
+          label="真实姓名"
           icon="clear"
-          placeholder="请输入用户名"
+          placeholder="请输入真实姓名"
           @click-icon="username = ''"
         />
         <van-button type="primary" bottom-action @click="saveName">保存并使用</van-button>
@@ -35,20 +168,20 @@
       />
     </van-actionsheet>
 
-    <van-popup v-model="phoneShow" position="right" :overlay="false">
+    <van-popup v-model="phoneShow" position="right" :overlay="true" style="top:2rem;">
       <van-cell-group>
         <van-field
-          label="手机号"
+          label="手机号码"
           v-model="phoneNum"
           icon="clear"
-          placeholder="请输入手机号"
+          placeholder="请输入手机号码"
           @click-icon="phoneNum = ''"
         />
         <van-field
           type="text"
           label="验证码"
           v-model="yzCode"
-          placeholder="6位验证码"
+          placeholder="请填写您的验证码"
         />
         <div class="dj_yzCode">
           <button @click="getCode(formData)" class="code-btn" :disabled="!codeShow">
@@ -319,139 +452,3 @@
     }
   }
 </script>
-
-<style lang="less">
-  .memberInfo {
-    .memberInfo_dis{
-      .van-cell__value{
-        display: table-cell !important;
-      }
-    }
-    .van-cell-group {
-      background: #000;
-    }
-    .van-popup {
-      // padding: 20px;
-      border-radius: 5px;
-      box-sizing: border-box;
-      background: #000;
-      &--right {
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .van-cell {
-      // height: 0.75rem;
-      // line-height: 0.75rem;
-      height: 1rem;
-      line-height: 0.8rem;
-      background: #1a1a1a !important;
-    }
-    .van-cell:not(:last-child)::after {
-      border-bottom: 1px solid #000 !important;
-    }
-    .van-hairline--top-bottom::after {
-      border: 0 !important;
-    }
-    .van-actionsheet {
-      background: #000;
-      .van-actionsheet__item {
-        background: #1a1a1a;
-        span {
-          font-size: 0.28rem;
-          color: #d2a870;
-        }
-      }
-    }
-    .van-picker {
-      background: #1a1a1a !important;
-    }
-    .van-picker__cancel {
-      font-size: 0.28rem;
-      color: #e7bd7b;
-    }
-    .van-picker__confirm {
-      font-size: 0.28rem;
-      color: #e7bd7b;
-    }
-    .van-picker-column--selected {
-      color: white !important;
-      border-top: 1px solid white;
-      border-bottom: 1px solid white;
-      margin: 20px;
-    }
-    .van-hairline--top::after {
-      border-top: 1px solid #000 !important;
-    }
-    .van-actionsheet__cancel {
-      margin-top: 0 !important;
-      background: #c20007 !important;
-      color: white;
-    }
-    .van-cell--required::before {
-      color: white !important;
-    }
-    .van-cell__value {
-      padding-left: 15% !important;
-      position: relative;
-      display: inline-block !important;
-      // display: inline-block;
-      .van-field__control {
-        background: #1a1a1a;
-        color:white !important;
-      }
-    }
-    .van-cell__title {
-      color: #eec27f !important;
-      font-size: 0.28rem;
-      // top: 0 !important;
-      .van-cell__text {
-        display: inline-block;
-        color: #eec27f !important;
-        font-size: 0.28rem;
-        margin-top: -0.04rem;
-        .van-cell__text::before {
-          width: 20px;
-          height: 20px;
-          background: red;
-          display: inline-block;
-          z-index: 99;
-          border-radius: 5px;
-        }
-      }
-    }
-    .van-cell__value--link {
-      span {
-        color: #b4b0a7;
-        font-size: 0.28rem;
-      }
-    }
-    .van-button--primary {
-      background: #c20007 !important;
-      margin-left: 5.87%;
-      width: 88.26%;
-      margin-top: 1rem;
-    }
-    .van-button--bottom-action {
-      .van-button--primary {
-        background: #c20007 !important;
-
-      }
-    }
-    .dj_yzCode {
-      width: auto;
-      position: absolute;
-      float: right;
-      vertical-align: top;
-      margin-top: -0.6rem;
-      right: 5px;
-      top:50%;
-      .code-btn {
-        background: none;
-        border: 0;
-        font-size: 16px;
-        color: red;
-      }
-    }
-  }
-</style>

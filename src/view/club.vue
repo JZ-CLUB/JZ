@@ -2,8 +2,14 @@
 .club{
   .ban{
     height: 3.3rem;
+    width: 7.5rem;
     position: relative;
+    margin: 0 auto;
     margin-bottom: 0.1rem;
+    img{
+      width: 100%;
+      height: 100%;
+    }
     >div{
       width: 100%;
       height: 0.9rem;

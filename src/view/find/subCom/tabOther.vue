@@ -43,7 +43,7 @@
         <van-row class="cardBox" >
           <van-col v-for="(item,index) in it" :key="index" class="musicItem" span="24" v-if="index===0">
             <a :href="item.videoUrl">
-              <img :src="comPath.imgPath+item.pathImage" alt="">
+              <img v-lazy="comPath.imgPath+item.pathImage" alt="">
               <!--<div class="play">
                 <div class="left">
                   <div class="jiao"></div>

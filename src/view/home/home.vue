@@ -109,7 +109,7 @@
       <van-row class="cardBox">
         <van-col span="12" v-for="(item,index) in searchData" :key="index">
           <div @click="$router.push({ name: 'activityGoods', params: { id:item.goodsId }})">
-            <img class="cardImg" :src=comPath.imgPath+item.goodsImage alt="">
+            <img class="cardImg" v-lazy=comPath.imgPath+item.goodsImage alt="">
             <!--<img class="cardImg" src='../../images/cardImg.jpg' alt="">-->
             <p class="cardText">{{item.goodsName}}</p>
           </div>

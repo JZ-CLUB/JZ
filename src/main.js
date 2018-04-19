@@ -21,6 +21,33 @@ Vue.use(Vuex)
 import storeObject from './store/index'
 var store = new Vuex.Store(storeObject)
 
+//订单状态
+Vue.filter('orderStateName', function (val) {
+  // if (!val) return ''
+  let str=''
+  if(val===10){
+    str='待付款'
+  }else if(val===20){
+    str='待发货'
+  }else if(val===30){
+    str='已发货'
+  }else if(val===40){
+    str='已出票'
+  }else if(val===50){
+    str='已提交'
+  }else if(val===60){
+    str='已确认'
+  }else if(val===70){
+    str='已验票'
+  }else if(val===80){
+    str='已失效'
+  }else if(val===0){
+    str='已取消'
+  }
+
+  return str;
+})
+
 import './common/reset.less';
 import 'vant/lib/vant-css/icon-local.css'
 new Vue({

@@ -1,76 +1,3 @@
-<template>
-  <div class="myOrder" v-if="load">
-    <van-row class="myOrder-links">
-      <van-col class="tabItem" span="8" v-for="(item,index) in tabList" :key="index">
-        <div @click="tabFun(index,item.comp)" :class="{cur:activity===index}">
-          <!--<van-icon :name="item.icon" />-->
-          {{item.name}}
-        </div>
-      </van-col>
-    </van-row>
-    <keep-alive>
-      <div :is="currentTab"></div>
-    </keep-alive>
-  </div>
-</template>
-<script>
-  import {sig} from '../../common/weixin'
-  import TabAll from '@/view/MyOrder/subComp/listAll'
-  import TabUnpay from '@/view/MyOrder/subComp/listUnpay'
-  import TabDone from '@/view/MyOrder/subComp/listDone'
-  import {
-    Tab, Tabs, Toast, Row, Col, Icon
-  } from 'vant';
-  export default {
-    components: {
-      [Tabs.name]: Tabs,
-      [Tab.name]: Tab,
-      [Toast.name]: Toast,
-      [Row.name]: Row,
-      [Col.name]: Col,
-      [Icon.name]: Icon,
-      TabAll,TabUnpay,TabDone
-    },
-    data () {
-      return {
-        load: false,
-        currentTab:'tabAll',
-        bottom: [],
-        imageURL:'https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg',
-        tabList:[
-          {icon:'pending-payment',name:'全部',comp:'tabAll'},
-          {icon:'pending-orders',name:'待付款',comp:'tabUnpay'},
-          {icon:'pending-deliver',name:'已出票',comp:'tabDone'}
-        ],
-        activity:0
-      }
-    },
-    beforeCreate() {
-
-    },
-    created () {
-      Toast.loading({ mask: true,duration:0 });
-    },
-    beforeMount:function () {
-      let vm = this
-      sig(true).then(function () {
-        vm.load = true
-      })
-    },
-    computed: {
-
-    },
-    mounted() {
-
-    },
-    methods: {
-      tabFun(i,e) {
-        this.activity = i
-        this.currentTab = e;  // tab 为当前触发标签页的组件名
-      }
-    }
-  }
-</script>
 <style lang="less">
   .myOrder {
     &-links {
@@ -161,3 +88,77 @@
     }
   }
 </style>
+
+<template>
+  <div class="myOrder" v-if="load">
+    <van-row class="myOrder-links">
+      <van-col class="tabItem" span="8" v-for="(item,index) in tabList" :key="index">
+        <div @click="tabFun(index,item.comp)" :class="{cur:activity===index}">
+          <!--<van-icon :name="item.icon" />-->
+          {{item.name}}
+        </div>
+      </van-col>
+    </van-row>
+    <keep-alive>
+      <div :is="currentTab"></div>
+    </keep-alive>
+  </div>
+</template>
+<script>
+  import {sig} from '../../common/weixin'
+  import TabAll from '@/view/MyOrder/subComp/listAll'
+  import TabUnpay from '@/view/MyOrder/subComp/listUnpay'
+  import TabDone from '@/view/MyOrder/subComp/listDone'
+  import {
+    Tab, Tabs, Toast, Row, Col, Icon
+  } from 'vant';
+  export default {
+    components: {
+      [Tabs.name]: Tabs,
+      [Tab.name]: Tab,
+      [Toast.name]: Toast,
+      [Row.name]: Row,
+      [Col.name]: Col,
+      [Icon.name]: Icon,
+      TabAll,TabUnpay,TabDone
+    },
+    data () {
+      return {
+        load: false,
+        currentTab:'tabAll',
+        bottom: [],
+        imageURL:'https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg',
+        tabList:[
+          {icon:'pending-payment',name:'全部',comp:'tabAll'},
+          {icon:'pending-orders',name:'待付款',comp:'tabUnpay'},
+          {icon:'pending-deliver',name:'已出票',comp:'tabDone'}
+        ],
+        activity:0
+      }
+    },
+    beforeCreate() {
+
+    },
+    created () {
+      Toast.loading({ mask: true,duration:0 });
+    },
+    beforeMount:function () {
+      let vm = this
+      sig(true).then(function () {
+        vm.load = true
+      })
+    },
+    computed: {
+
+    },
+    mounted() {
+
+    },
+    methods: {
+      tabFun(i,e) {
+        this.activity = i
+        this.currentTab = e;  // tab 为当前触发标签页的组件名
+      }
+    }
+  }
+</script>

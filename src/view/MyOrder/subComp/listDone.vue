@@ -10,15 +10,7 @@
         <p class="title">{{item.goodsName}}</p>
         <p class="subTitle">{{item.specInfo}}</p>
 
-        <span class="statusBtn" v-if="it.orderState===10">待付款</span>
-        <span class="doneBtn" v-if="it.orderState===40">已出票</span>
-        <span class="" v-if="it.orderState===20">待发货</span>
-        <span class="" v-if="it.orderState===30">已发货</span>
-        <span class="" v-if="it.orderState===50">已提交</span>
-        <span class="" v-if="it.orderState===60">已确认</span>
-        <span class="" v-if="it.orderState===70">已验票</span>
-        <span class="" v-if="it.orderState===80">已失效</span>
-        <span class="" v-if="it.orderState===0">已取消</span>
+        <span :class="{'statusBtn':it.orderState===10,'doneBtn':it.orderState===40}">{{it.orderState | orderStateName}}</span>
       </div>
     </div>
   </scroller>

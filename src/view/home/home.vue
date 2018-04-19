@@ -96,21 +96,10 @@
         </div>
       </van-swipe>
 
-      <!--<router-link to="/ShowCalendar">
-        <div class="goImg" v-show="showFlag">
-          <img src="../../images/go.png" alt="">
-        </div>
-      </router-link>
-
-      <div class="line">
-
-      </div>-->
-
       <van-row class="cardBox">
         <van-col span="12" v-for="(item,index) in searchData" :key="index">
           <div @click="$router.push({ name: 'activityGoods', params: { id:item.goodsId }})">
             <img class="cardImg" v-lazy=comPath.imgPath+item.goodsImage alt="">
-            <!--<img class="cardImg" src='../../images/cardImg.jpg' alt="">-->
             <p class="cardText">{{item.goodsName}}</p>
           </div>
         </van-col>

@@ -258,7 +258,7 @@
                 let allSecond = (sdate1.getTime()-new Date().getTime())/1000
                 that.minute = Math.floor(allSecond/60)
                 that.second = Math.floor(allSecond%60)
-                if(that.minute < 10) {
+                if(parseInt(that.minute) < 10) {
                   that.minute = "0" + that.minute;
                 }
                 if(that.second<10){
@@ -269,7 +269,7 @@
                   if(that.second<10){
                     that.second = "0" + that.second
                   }
-                  if(that.second === '00'){
+                  if(that.second === '0-1'){
                     that.second = 59
                     that.minute = parseInt(that.minute)-1
                     if(that.minute < 10) {
@@ -277,7 +277,7 @@
                     }
                   }
                   if(that.minute === '00'&& that.second === '00'){
-                    res.data[0].orderState = 0
+                    that.orderInfo.orderStateNum = 0
                     clearInterval(setInt)
                   }
                 },1000)

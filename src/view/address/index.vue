@@ -1,4 +1,5 @@
 <style lang="less">
+  @import "../../common/common";
   #address_body{
     // background: #1a1a1a;
     // font-family: 微软雅黑;
@@ -22,7 +23,7 @@
                 margin: 0 auto;
                 .van-address-list__name{
                   font-size: 0.28rem;
-                  color:#eec27f;
+                  color: @yellow;
                   margin-top: 0.45rem;
                   margin-bottom: 0.3rem;
                   .tel_tel{
@@ -31,7 +32,7 @@
                 }
                 .van-address-list__address{
                   font-size: 0.28rem;
-                  color:#b4b0a7;
+                  color: @white;
                   margin-bottom: 0.3rem;
                 }
               }
@@ -42,7 +43,7 @@
               justify-content: flex-end;
               vertical-align: middle;
               p{
-                color:#eec27f;
+                color: @wgray;
                 display: flex;
                 justify-content: space-between;
                 span{
@@ -50,6 +51,7 @@
                   line-height: 0.4rem;
                 }
                 .van_icon_edit{
+
                   width: 0.4rem;
                   height: 0.4rem;
                   background: url("../../images/icon_address_03.png") no-repeat left center;

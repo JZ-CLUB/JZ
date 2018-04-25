@@ -6,7 +6,10 @@
       <div v-for="(item, i) in it.orderGoodsList"
            :key="i"
            @click="$router.push({ name: 'orderDetail', params: { orderId:item.orderId }})">
-        <img :src="comPath.imgPath+item.goodsImage" alt="">
+        <div class="imgbox">
+          <img v-lazy="comPath.imgPath+item.goodsImage" alt="">
+        </div>
+
         <p class="title">{{item.goodsName}}</p>
         <p class="subTitle">{{item.specInfo}}</p>
 
@@ -72,7 +75,7 @@
             .then(function (response) {
               let res = response.data;
               if (res.data.length !== []) {
-                that.items = that.items.concat(res.data)
+                that.items = [...that.items,...res.data]
                 if (res.data.length < that.param.pageSize) {
                   that.flag = false
                 }

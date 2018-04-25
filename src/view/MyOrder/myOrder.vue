@@ -1,4 +1,5 @@
 <style lang="less">
+  @import "../../common/common";
   .myOrder {
     &-links {
       position: relative;
@@ -38,14 +39,20 @@
         padding-bottom: 0.4rem;
         padding-left: 1.4rem;
         position: relative;
-        img{
+        .imgbox{
           position: absolute;
           width: 1rem;
           height: 1rem;
           vertical-align: middle;
           top: 0;
           left: 0;
+          overflow: hidden;
+          img{
+            height: 1rem;
+            float: right;
+          }
         }
+
         p{
           height: 0.5rem;
           word-break: break-all;
@@ -57,9 +64,10 @@
         }
         p.title{
           font-size: 0.28rem;
+          color: @white;
         }
         p.subTitle{
-          color: #666666;
+          color: @gray;
           font-size: 0.24rem;
         }
         span{
@@ -67,7 +75,7 @@
           top: 50%;
           right: 0.4rem;
           font-size: 0.28rem;
-          color: #666666;
+          color: @gray;
           display: block;
           width: 1.2rem;
           height: 0.56rem;
@@ -75,7 +83,7 @@
           text-align: center;
           transform: translate(0, -90%);
           &.statusBtn{
-            color: #000;
+            color: @black;
             background: #f0c37a;
             border-radius: 0.03rem;
           }

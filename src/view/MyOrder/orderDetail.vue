@@ -1,4 +1,5 @@
 <style lang="less">
+  @import "../../common/common";
   .orderDetail {
     &::after {
       border: 0 solid #000000;
@@ -26,20 +27,20 @@
     .van-cell {
       font-size: 0.28rem;
       background: #1a1a1a;
-      color: #f0c37a;
+      color: @yellow;
       padding: 0.4rem;
       &:not(:last-child)::after {
         border-bottom-width: 0;
       }
       &__value {
-        color: #be2c36;
+        color: @red;
       }
     }
     .orderAddress {
       background: #1a1a1a;
       padding: 0.15rem 0.4rem;
+      color: @white;
       .van-address-list__name {
-        color: #f0c37a;
         height: 0.45rem;
         line-height: 0.45rem;
         font-size: 0.28rem;
@@ -48,7 +49,6 @@
         }
       }
       .van-address-list__address {
-        color: #f0c37a;
         font-size: 0.28rem;
         line-height: 0.4rem;
       }
@@ -60,7 +60,8 @@
       padding: 0 0.4rem;
       h3 {
         line-height: 0.7rem;
-        color: #666666;
+        font-size: 0.28rem;
+        color: @gray;
       }
     }
     .orderInfoBox {
@@ -88,15 +89,16 @@
       }
       p.title {
         font-size: 0.28rem;
+        color: @white;
       }
       p.subTitle {
-        color: #666666;
+        color: @gray;
         font-size: 0.24rem;
       }
 
     }
     .tips {
-      color: #736047;
+      color: @wgray;
       padding: 0.15rem 0.4rem;
       font-size: 0.24rem;
     }
@@ -104,6 +106,7 @@
       background: none;
       font-size: 0.28rem;
       .van-cell__value {
+        color: @yellow;
         font-size: 0.4rem;
       }
     }
@@ -113,7 +116,7 @@
         border: 0 solid #000000;
       }
       .van-button {
-        margin-left: 0.2rem;
+        /*margin-left: 0.2rem;*/
         padding: 0 0.3rem;
         border: 0.02rem solid #eec27f;
         color: #eec27f;
@@ -131,21 +134,57 @@
       position: relative;
       p {
         text-align: center;
+        font-size: 0.28rem;
+        color: @white;
+        margin-bottom: 0.3rem;
       }
       .ewmModal {
-        opacity: 0;
+        opacity: 1;
         position: absolute;
         top: 0;
         left: 0;
-        background: #fff;
+        background: rgba(0,0,0,0.5);
         width: 100%;
         height: 100%;
+        p{
+          color: @red;
+        }
       }
-      img {
+      .imgbox{
         margin: 0 auto;
+        width: 4.05rem;
+        height: 4.05rem;
+        height: auto;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+        img.done {
+          opacity: 0.5;
+        }
       }
-      img.done {
-        opacity: 0.5;
+      &.done{
+        p{
+          color: @red;
+          text-decoration :line-through;
+        }
+        .imgbox{
+          position: relative;
+          img {
+            opacity: 0.5;
+          }
+          div{
+            width: 4.05rem;
+            height: 4.05rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(212,212,212,0.6);
+            font-size: 0.28rem;
+            color: @red;
+            padding: 1.5rem;
+          }
+        }
       }
     }
   }
@@ -193,12 +232,15 @@
 
     <div
       v-if="orderInfo.orderType==='1'&& (orderInfo.orderStateNum===40 ||orderInfo.orderStateNum===70 ||orderInfo.orderStateNum===80 ) && codeImg!=='' "
-      class="ewm">
-      <img :class="{done:orderInfo.orderStateNum===70 || orderInfo.orderStateNum===80 || orderInfo.orderStateNum===0}"
-           :src="comPath.imgPath+codeImg" alt="">
-
-      <div class="ewmModal"
-           v-if="orderInfo.orderStateNum===70 || orderInfo.orderStateNum===80 || orderInfo.orderStateNum===0"></div>
+      class="ewm" :class="{done:orderInfo.orderStateNum===70 || orderInfo.orderStateNum===80 || orderInfo.orderStateNum===0}">
+      <p>二维码号：{{orderInfo.orderSn}}</p>
+      <div class="imgbox">
+        <img
+             :src="comPath.imgPath+codeImg" alt="">
+        <div>
+          二维码已失效
+        </div>
+      </div>
     </div>
 
   </van-cell-group>
@@ -252,7 +294,7 @@
             if (res.data !== []) {
               let sdate1 = new Date(new Date(res.data[0].createTime))
               sdate1.setMinutes(sdate1.getMinutes() + 30);
-              if(new Date().getTime() > sdate1.getTime()){
+              if(res.data[0].orderState === 10 && new Date().getTime() > sdate1.getTime()){
                 res.data[0].orderState = 0
               }else{
                 let allSecond = (sdate1.getTime()-new Date().getTime())/1000
@@ -307,13 +349,6 @@
             // Toast('加载失败error')
           });
       },
-      MinutesTest() {
-        /*var sdate1 = new Date(1900, 1, 1, 8, 00);
-
-        sdate1.setMinutes(sdate1.getMinutes() + 30);
-        var now = sdate1.getHours() + ":" + sdate1.getMinutes();
-        return now;*/
-      },
       getCode: function (orderSn) {
         let that = this
         Ajax.post('target/qrCode/findQRCode', {orderSn: orderSn})
@@ -329,7 +364,7 @@
       },
       checkOpr: function (id) {
         Dialog.confirm({
-          message: '确定取消订单？',
+          message: '确定取消订单吗？',
           title: '提示'
         }).then(() => {
           Toast.loading({mask: true, duration: 0});
@@ -374,7 +409,7 @@
           })
           .catch(function (error) {
             console.log(error)
-            Toast('error')
+            // Toast('error')
           });
       },
       onBridgeReady: function () {
@@ -411,6 +446,9 @@
           this.onBridgeReady();
         }
       }
+    },
+    filters:{
+
     }
   }
 </script>

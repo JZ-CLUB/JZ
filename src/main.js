@@ -12,6 +12,12 @@ window.Ajax = Ajax
 Vue.config.productionTip = false
 FastClick.attach(document.body)
 
+import VueLazyLoad from 'vue-lazyload'
+Vue.use(VueLazyLoad, {
+  error: '',
+  loading: ''
+})
+
 import VueScroller from 'vue-scroller'
 import { List } from 'vant';
 Vue.use(VueScroller)

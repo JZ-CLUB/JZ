@@ -144,7 +144,7 @@ const routes = [
     name: 'buySuccessful',
     component: BuySuccessful,
     meta: {
-      title: '购票成功'
+      title: '订单支付成功'
     }
   },
   {

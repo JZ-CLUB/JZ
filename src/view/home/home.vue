@@ -1,6 +1,7 @@
 <style lang="less">
+  @import "../../common/common";
   .goodsList {
-    color: #f0c37a;
+    color: @yellow;
     .search {
       .van-search__input-wrap{
         height: 0.6rem;
@@ -22,7 +23,7 @@
       height: 4.18rem;
       /*position: relative;*/
       img {
-        max-width: 100%;
+        /*max-width: 100%;*/
         height: 4.18rem;
         margin: 0 auto;
       }
@@ -58,18 +59,22 @@
       .van-col-12 {
         margin: 0.15rem 0 0 0;
         padding: 0 0.15rem;
-        .cardImg {
-          max-width: 100%;
-          margin: 0 auto;
+        .imgbox{
           width: 3.3rem;
+          height: 3.3rem;
+          overflow: hidden;
+        }
+        .cardImg {
+          float: right;
           height: 3.3rem;
         }
         .cardText {
+          color: @yellow;
           text-align: center;
           padding-top: 0.1rem;
           font-size: 0.12rem;
           height: 0.8rem;
-          line-height: 0.3rem;
+          line-height: 0.35rem;
           word-break: break-all;
           text-overflow: ellipsis;
           display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
@@ -99,7 +104,9 @@
       <van-row class="cardBox">
         <van-col span="12" v-for="(item,index) in searchData" :key="index">
           <div @click="$router.push({ name: 'activityGoods', params: { id:item.goodsId }})">
-            <img class="cardImg" v-lazy=comPath.imgPath+item.goodsImage alt="">
+            <div class="imgbox">
+              <img class="cardImg" v-lazy=comPath.imgPath+item.goodsImage alt="">
+            </div>
             <p class="cardText">{{item.goodsName}}</p>
           </div>
         </van-col>
@@ -109,19 +116,11 @@
 </template>
 
 <script>
-  import Vue from 'vue';
-  import VueLazyLoad from 'vue-lazyload'
   import {sig} from '../../common/weixin'
-
-  Vue.use(VueLazyLoad, {
-    error: '',
-    loading: ''
-  })
   import {
-    Search, Toast, Swipe, SwipeItem, Row, Col, Waterfall
+    Search, Toast, Swipe, SwipeItem, Row, Col
   } from 'vant';
 
-  Vue.use(Waterfall);
   export default {
     components: {
       [Search.name]: Search,
@@ -221,7 +220,7 @@
                 }, 300)
                 Toast.clear()
               } else {
-                Toast(res.msg)
+                // Toast('没有数据了')
                 setTimeout(() => {
                   done(true)
                 }, 0)

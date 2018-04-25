@@ -1,4 +1,5 @@
 <style lang="less">
+  @import "../../common/common";
   .memberInfo {
     min-height: 3rem;
     .van-cell-group {
@@ -36,7 +37,7 @@
         background: #1A1A1A;
         span {
           font-size: 0.28rem;
-          color: #d2a870;
+          color: @white;
         }
       }
       .van-picker {
@@ -51,13 +52,13 @@
         color: #e7bd7b;
       }
       .van-picker-column--selected {
-        color: white !important;
-        border-top: 1px solid white;
-        border-bottom: 1px solid white;
-        margin: 0.2rem;
+        color: @white !important;
+        border-top: 1px solid @yellow;
+        border-bottom: 1px solid @yellow;
+        margin: 0.1rem 0.2rem;
       }
       .van-hairline--top::after {
-        border-top: 1px solid #000 !important;
+        border-top: 1px solid @black !important;
       }
       .van-actionsheet__cancel {
         margin-top: 0 !important;
@@ -65,7 +66,7 @@
         color: white;
       }
       .van-cell--required::before {
-        color: #999999 !important;
+        color: @wgray !important;
       }
       .van-button--bottom-action {
         .van-button--primary {
@@ -92,10 +93,10 @@
         }
       }
       .van-cell__title {
-        color: #eec27f;
+        color: @white;
         font-size: 0.28rem;
         .van-cell__text {
-          color: #eec27f;
+          color: @white;
           .van-cell__text::before {
             background: red;
             display: inline-block;
@@ -106,10 +107,12 @@
       }
       .van-cell__value--link {
         span {
-          color: #b4b0a7;
+          color: @wgray;
           font-size: 0.28rem;
         }
       }
+      .van-field__icon{
+        color: @wgray;}
       &:not(:last-child)::after {
         border-bottom: 1px solid #000 !important;
       }
@@ -119,14 +122,14 @@
       position: absolute;
       float: right;
       vertical-align: top;
-      margin-top: -0.6rem;
+      margin-top: -1.5rem;
       right: 0.3rem;
       top:50%;
       .code-btn {
         background: none;
         border: 0;
         font-size: 0.28rem;
-        color: #D2A870;
+        color: @yellow;
       }
     }
   }
@@ -136,7 +139,7 @@
     <van-cell-group class="memberInfo_dis">
       <van-cell icon="" title="真实姓名" :value="defaultName" is-link @click="nameShow=true"/>
       <van-cell icon="" title="性别" :value="itemVal" is-link @click="show=true"/>
-      <!-- <van-cell icon="" title="生日" :value="birthData" is-link @click="dataShow=true"/> -->
+       <van-cell icon="" title="生日" :value="birthData" is-link @click="dataShow=true"/>
       <van-cell icon="" title="手机号" :value="telNum" is-link @click="phoneShow=true"/>
     </van-cell-group>
 
@@ -174,7 +177,7 @@
           label="手机号码"
           v-model="phoneNum"
           icon="clear"
-          placeholder="请输入手机号码"
+          placeholder="请填写您的手机号码"
           @click-icon="phoneNum = ''"
         />
         <van-field
@@ -240,9 +243,9 @@
         ],
         minHour: 10,
         maxHour: 20,
-        minDate: new Date(),
+        minDate: new Date(1900, 0, 1),
         maxDate: new Date(2019, 10, 1),
-        currentDate: new Date(2018, 0, 1),
+        currentDate: new Date(),
         dataShow: false,
         telNum: '',
         codeShow: true,
@@ -276,7 +279,13 @@
             }else{
               that.defaultName = res.data.data[0].memberName;
             }
-            that.birthData = res.data.data[0].memberBirthday;
+            if(response.data[0].memberBirthday){
+              that.birthData = new Date(response.data[0].memberBirthday).Format("yyyy-MM-dd")
+              that.currentDate = new Date(response.data[0].memberBirthday)
+            }else{
+
+            }
+            that.username = response.data[0].memberTruename ? response.data[0].memberTruename : response.data[0].memberName
             that.telNum = res.data.data[0].memberMobile;
             if (res.data.data[0].memberSex == "1") {
               that.itemVal = "男";
@@ -307,7 +316,9 @@
           }
           Ajax.post('target/memberapi/updateMember', data)
           .then(function (res) {
-            Toast(res.data.msg)
+            if(res.data.result !== 1){
+              Toast(res.data.msg)
+            }
           })
           .catch(function (error) {
             console.log(error)
@@ -331,11 +342,15 @@
         }
         Ajax.post('target/memberapi/updateMember', data)
         .then(function (res) {
-          Toast(res.data.msg)
+          if(res.data.result === 1){
+
+          }else{
+            Toast(res.data.msg)
+          }
+
         })
         .catch(function (error) {
           console.log(error)
-          Toast('加载失败error')
         });
       },
       oncalcel() {
@@ -357,14 +372,14 @@
           }
           Ajax.post('target/memberapi/updateMember', data)
           .then(function (res) {
-            Toast(res.data.msg);
             if(res.data.result == "1"){
               _this.defaultName =_this.username;
+            }else{
+              Toast(res.data.msg);
             }
           })
           .catch(function (error) {
             console.log(error)
-            Toast('加载失败error')
           });
         }
       },
@@ -389,14 +404,14 @@
           }
           Ajax.post('target/memberapi/updateMember', data)
           .then(function (res) {
-            Toast(res.data.msg)
             if(res.data.result == "1"){
               that.telNum = that.phoneNum;
+            }else{
+              Toast(res.data.msg)
             }
           })
           .catch(function (error) {
             console.log(error)
-            Toast('加载失败error')
           });
         }
         }

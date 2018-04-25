@@ -1,4 +1,5 @@
 <style lang="less">
+  @import "../../common/common";
   .toPayBox{
     .payAddress{
       margin-top:0.2rem;
@@ -7,18 +8,18 @@
       }
       .van-cell{
         background: #1a1a1a;
-        color: #f0c37a;
+        color: @white;
         padding: 0.15rem 0.4rem;
         .van-address-list__name{
-          height: 0.45rem;
-          line-height: 0.45rem;
+          height: 0.6rem;
+          line-height: 0.6rem;
           font-size: 0.28rem;
           .telPhone{
             float: right;
           }
         }
         .van-address-list__address{
-          color: #f0c37a;
+          color: @white;
           font-size: 0.28rem;
           line-height: 0.4rem;
         }
@@ -32,14 +33,19 @@
       background-color: #000000;
       font-size: 12px;
       padding: 10px;
+      &+p{
+        color: @yellow;
+      }
       &__con{
+        color: @white;
         padding-left: 8px;
         padding-right: 8px;
       }
       &__tit{
         font-size: 18px;
-        color: #fff;
+        color: @white;
         text-align: center;
+        font-weight: 100;
       }
     }
     .itemInfo{
@@ -55,10 +61,11 @@
           width: 1rem;
           height: 1rem;
           margin-right: 0.4rem;
+          overflow: hidden;
           img{
-            display: block;
+            float: right;
             height: 100%;
-            max-width: 100%;
+            /*max-width: 100%;*/
           }
         }
         .con{
@@ -94,7 +101,7 @@
         padding:0;
         line-height: 0.6rem;
         background: none;
-        color: #666666;
+        color: @gray;
         &:not(:last-child)::after{
           border: 0;
         }

@@ -1,4 +1,5 @@
 <style lang="less" scoped>
+  @import "../../common/common";
   #jzMan {
     .poSt {
       position: fixed;
@@ -6,6 +7,9 @@
       left: 0;
       z-index: 1000;
       background: #000000;
+      img{
+        width: 100%;
+      }
       .sort {
         height: 0.68rem;
         line-height: 0.68rem;
@@ -58,30 +62,30 @@
     }
     .list {
       ol {
-        padding: 0 0.44rem;
         li {
+          padding: 0 0.3rem;
+          &:nth-child(odd)
+          {
+            background:#2c2c2c;
+          }
           a {
             display: block;
-            padding: 0.3rem 1.3rem 0.3rem 0.9rem;
-            color: #f0c37a;
+            padding: 0.3rem 0rem 0.3rem 2.2rem;
+            color: @white;
             position: relative;
             &:visited {
-              p{
-                &.title{
-                  color: #B1ADA4;
-                }
-              }
+              color: @yellow;
             }
             p {
               &.title {
                 font-size: 0.28rem;
-                line-height: 0.3rem;
-                height: 0.3rem;
+                line-height: 0.4rem;
+                height: 0.8rem;
                 word-break: break-all;
-                text-overflow: ellipsis;
+                /*text-overflow: ellipsis;*/
                 display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
                 -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
-                -webkit-line-clamp: 1; /** 显示的行数 **/
+                -webkit-line-clamp: 2; /** 显示的行数 **/
                 overflow: hidden; /** 隐藏超出的内容 **/
               }
               &.timeLong {
@@ -100,24 +104,30 @@
                 }
               }
             }
+            img{
+              position: absolute;
+              left: 0;
+              width: 1.34rem;
+              height: 1.34rem;
+            }
             span {
               position: absolute;
               vertical-align: middle;
               top: 50%;
               transform: translateY(-50%);
               &.num {
-                left: 0;
+                left: 1.5rem;
                 width: 0.9rem;
                 text-align: left;
               }
-              &.play {
+              /*&.play {
                 width: 0.5rem;
                 height: 0.5rem;
                 display: block;
                 right: 0;
                 background: url("../../images/play.png");
                 background-size: cover;
-              }
+              }*/
             }
           }
         }
@@ -168,6 +178,7 @@
         <ol>
           <li v-for="(item,index) in items">
             <a :href="item.musicUrlId">
+              <img :src="item.pathImage" alt="">
               <span class="num">{{index+1}}</span>
               <p class="title">{{item.musicName}}</p>
               <p class="timeLong"><i></i>03:09</p>

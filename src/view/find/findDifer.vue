@@ -6,6 +6,9 @@
       left: 0;
       z-index: 1000;
       background: #0E0E0E;
+      img{
+        width: 100%;
+      }
       .tab{
         height: 0.94rem;
         background: #0E0E0E;

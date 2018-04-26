@@ -1,0 +1,68 @@
+@import "../common/common";
+@font-face {
+  font-family: xinyalan;
+  src: url('../font/xinyalan.otf')
+}
+#succ {
+  height: 100%;
+  width: 100%;
+  background: url("../images/successBg.jpg") no-repeat center top;
+  background-size: cover;
+  height: 12.13rem;
+  position: relative;
+  .success_zhuce_tit {
+    width: 100%;
+    padding: 0.7rem 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    span {
+      width: 0.17rem;
+      background: url("../images/arrow.png") no-repeat left top;
+      background-size: 0.17rem;
+      &.right {
+        background-image: url("../images/arrowB.png");
+        background-position: right bottom;
+      }
+    }
+    .first_tit {
+      font-family: xinyalan;
+      font-size: 0.3rem;
+      letter-spacing: 0.1rem;
+      color: @white;
+      padding: 0.15rem;
+      text-align: center;
+    }
+  }
+  .successTip {
+    font-family: xinyalan;
+    text-align: center;
+    font-size: 0.5rem;
+    color: @white;
+    letter-spacing: 0.07rem;
+  }
+  .btnBox {
+    /*margin: 0.3rem 0.1rem;*/
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /*span {
+      display: inline-block;
+      padding: 0 0.5rem;
+      line-height: 0.6rem;
+      color: #eec27f;
+      border: 2px solid #eec27f;
+      margin: 0 0.1rem;
+    }*/
+    span{
+      display: block;
+      width: 6.6rem;
+      height: 0.85rem;
+      margin: 0 auto;
+      line-height: 0.85rem;
+      color: @white;
+      background: @red;
+    }
+  }
+
+}

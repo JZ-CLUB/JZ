@@ -21,7 +21,7 @@
       width: 88.26%;
       max-width: 750px;
       margin: 0 auto;
-      padding-top: 5.38rem;
+      padding-top: 4.38rem;
       .register_button {
         height: 0.8rem;
         line-height: 0.8rem;
@@ -31,27 +31,23 @@
           color: white;
           background: #be2c36 !important;
           border: 0;
-          font-family: 微软雅黑;
           font-size: 0.28rem;
           height: 0.8rem;
           line-height: 0.8rem;
+          border-radius: 0;
         }
       }
-      /*.van-cell__title{
-        display: flex;
-        justify-content: space-between;
-      }*/
       .van-field .van-cell__title{
         min-width: 1.4rem;
         width: 1.4rem;
-        &:after{
+        /*&:after{
           display: inline-block;
           content: ' ';
           width: 0.08rem;
           height: 0.08rem;
           background: #E6122A;
           border-radius: 50%;
-        }
+        }*/
       }
       .van-cell--required::before {
         color: white !important;
@@ -69,7 +65,6 @@
       }
       .van-cell__text {
         display: inline-block;
-        width: 1.08rem;
         line-height: 0.4rem;
         font-size: 0.28rem;
 
@@ -78,23 +73,31 @@
         // border:1px solid red;
         position: relative;
         .dj_yzCode {
-          width: auto;
+          width: 2rem;
+          height: 0.6rem;
+          line-height: 0.6rem;
+          border-left: 1px solid #e5e5e5;
           position: absolute;
           float: right;
           vertical-align: middle;
-          margin-top: -0.15rem;
-          right: 0.5rem;
+          margin-top: -0.3rem;
+          right: 0.3rem;
           top: 50%;
-          height: 0.3rem;
           .code-btn {
+            text-align: center;
             background: none;
             border: 0;
             font-size: 0.28rem;
-            line-height: 0.3rem;
             color: #f0c37a;
           }
         }
+        .van-cell:not(:last-child)::after{
+          border-bottom: 0px;
+        }
       }
+    }
+    .van-cell:not(:last-child)::after{
+      border-bottom: 1px solid #8e8e8e;
     }
     .van-hairline--top-bottom::after{
       border:0 !important;
@@ -106,10 +109,10 @@
     <div class="register_con">
       <van-cell-group class="con_container">
         <van-field
-          label="手机号"
+          label="手机号码"
           v-model="phoneNum"
           icon="clear"
-          placeholder="请输入手机号"
+          placeholder="手机号码"
           @click-icon="phoneNum = ''"
         />
         <div class="yzCode_div">
@@ -128,7 +131,7 @@
         </div>
       </van-cell-group>
       <div class="register_button">
-        <van-button size="large" @click="registerClick()">注册</van-button>
+        <van-button size="large" @click="registerClick()">注 &nbsp;&nbsp;册</van-button>
       </div>
     </div>
   </div>

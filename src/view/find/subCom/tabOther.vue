@@ -13,6 +13,12 @@
           margin: 0 auto;
           width: 3.3rem;
           height: 3.3rem;
+          overflow: hidden;
+          text-align: right;
+          img{
+            height: 3.3rem;
+            float: right;
+          }
         }
         .cardText {
           text-align: center;
@@ -56,7 +62,9 @@
           </van-col>
           <van-col v-for="(item,index) in it" :key="index" span="12" v-if="index!==0">
             <a :href="item.videoUrl">
-              <img class="cardImg" :src='comPath.imgPath+item.pathImage' alt="">
+              <div class="cardImg">
+                <img  :src='comPath.imgPath+item.pathImage' alt="">
+              </div>
               <p class="cardText">{{item.videoName}}</p>
             </a>
           </van-col>

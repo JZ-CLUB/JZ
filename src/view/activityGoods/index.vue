@@ -1,5 +1,7 @@
 <style lang="less">
+  @import "../../common/common";
   .goodTitle{
+    color: @white;
     width: 100%;
     height: 4.18rem;
     position: relative;
@@ -60,12 +62,17 @@
   .goods {
     background-color: #1a1a1a;
     padding: 0 20px 50px 20px;
-    font-family: "Microsoft YaHei";
     font-size: 14px;
+    color: @white;
     img{
       width: 100%;
     }
+    .tips{
+      color: @red;
+      font-size: 0.24rem;
+    }
     .intru{
+      color: @yellow;
       padding: 0.4rem 0.4rem 0.4rem 0;
       font-size: 0.28rem;
       line-height: 0.28rem;
@@ -140,17 +147,22 @@
       }
       &-row__item{
         min-width: 45%;
-        color: #c7a070;
+        color: @white;
         text-align: center;
-        border: 1px solid #c7a070;
+        border: 1px solid @white;
       }
       &-row__item.van-sku-row__item--active{
-        color: #d52d33;
-        border: 1px solid #d52d33;
+        color: @yellow;
+        border: 1px solid @yellow;
         background: transparent;
       }
       &__quota{
         color: #be2c36;
+      }
+      &-row__item--disabled{
+        background: transparent;
+        border-color: @gray;
+        color: @gray;
       }
 
     }
@@ -210,7 +222,11 @@
     </div>
     <div class="goods">
       <div class="intru">演出介绍</div>
-      <div v-html="goodsBody">{{goodsBody}}</div>
+      <div>
+        <div v-html="goodsBody">
+        </div>
+        <p class="tips">也可进行现场购票，票价{{priceArr | priceMin}}起</p>
+      </div>
       <van-goods-action v-show="goodsShow">
         <van-goods-action-big-btn primary @click="showShu">
           {{goodsShowtit}}
@@ -224,6 +240,7 @@
       </van-goods-action>
 
       <van-sku
+        close-on-click-overlay="true"
         v-model="showCustomAction"
         stepper-title="数量"
         :sku="sku"

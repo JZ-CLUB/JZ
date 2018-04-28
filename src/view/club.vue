@@ -1,11 +1,28 @@
-<style lang="less" scoped>
+<style lang="less">
+  @import "../common/common";
 .club{
+  .van-swipe__indicators>i{
+    background: none;
+    border: 1px solid @white;
+    width: 0.16rem;
+    height: 0.16rem;
+  }
+  .van-swipe__indicators{
+    left: 88%;
+
+    .van-swipe__indicator--active{
+      border: none;
+      background: @white;
+    }
+  }
+
   .ban{
-    height: 3.3rem;
-    width: 7.5rem;
+    height: 4.4rem;
+    /*width: 7.5rem;*/
     position: relative;
     margin: 0 auto;
     margin-bottom: 0.1rem;
+
     img{
       width: 100%;
       height: 100%;
@@ -13,7 +30,7 @@
     >div{
       width: 100%;
       height: 0.9rem;
-      line-height: 0.9rem;
+      /*line-height: 0.9rem;*/
       padding: 0 0.3rem 0 1.5rem;
       position: absolute;
       bottom: 0;
@@ -26,6 +43,7 @@
       .calender{
         position: absolute;
         left: 0;
+        top: 0;
         color: #252627;
         padding: 0.2rem 0;
         font-size: 0.18rem;
@@ -52,12 +70,67 @@
       }
     }
   }
+  .instrduce{
+    padding: 0.6rem 0.4rem;
+    .img{
+      width: 2.08rem;
+      height: 1.34rem;
+      background: url("../images/logo.png") no-repeat center center;
+      background-size: cover;
+      margin: 0 auto;
+    }
+    .success_zhuce_tit {
+      margin-top: 0.3rem;
+      width: 100%;
+      padding: 0rem;
+      display: flex;
+      justify-content: space-between;
+      span {
+        width: 0.17rem;
+        background: url("../images/arrow.png") no-repeat left top;
+        background-size: 0.17rem;
+        &.right {
+          background-image: url("../images/arrowB.png");
+          background-position: right bottom;
+        }
+      }
+      .first_tit {
+        font-family: xinyalan;
+        font-size: 0.1rem;
+        letter-spacing: 0.2rem;
+        color: @white;
+        text-align: center;
+        &.first_titEn{
+          letter-spacing: 0.03rem;
+          font-size: 0.09rem;
+        }
+      }
+    }
+    .cal{
+      height: 0.86rem;
+      text-align: center;
+      padding-top: 0.3rem;
+      .bg{
+        display: inline-block;
+        width: 0.54rem;
+        height: 0.86rem;
+        background: #323232;
+        color: @white;
+        text-align: center;
+        line-height: 0.86rem;
+      }
+      .i{
+        color: @wgray;
+      }
+
+    }
+  }
   .title{
     display: flex;
     justify-content: space-between;
     height: 0.76rem;
     line-height: 0.76rem;
-    padding: 0 0.3rem;
+    padding: 0 0.2rem;
     border-bottom: 0.01rem solid #F0C37A;
     p{
       font-size: 0.28rem;
@@ -67,7 +140,7 @@
     }
   }
   .list{
-    padding: 0 0.1rem;
+    /*padding: 0 0.1rem;*/
     .noData{
       text-align: center;
       line-height: 0.9rem;
@@ -132,13 +205,81 @@
         }
       }
     }
+    .ban{
+      background: #333333;
+      padding: 0.15rem;
+      height: 4.6rem;
+      img{
+        height: 3.3rem;
+        border: 1px solid @wgray;
+      }
+      >div{
+        position: relative;
+        background: none;
+        color: @white;
+        display: table-cell;
+        vertical-align:middle;
+        overflow: hidden;
+        margin-top: 0.15rem;
+        .calender{
+          color: @white;
+          .line{
+            top: 0.2rem;
+            right: 0.35rem;
+            overflow: hidden;
+            background: @white;
+          }
+        }
+      }
+    }
   }
 }
 </style>
 
 <template>
   <div class="club">
-    <div class="ban" v-for="(item,index) in goodsMainList"
+    <van-swipe :show-indicators="true" :autoplay="3000">
+      <van-swipe-item  v-for="(item,index) in goodsMainList" :key="index">
+      <div class="ban"
+           @click="$router.push({ name: 'activityGoods', params: { id:item.goodsId }})">
+        <img v-lazy="comPath.imgPath+item.goodsImage" alt="">
+        <!--<div>
+          <div class="calender">
+            <p>{{item.activityStartTime | timeTrans(2)}}日</p>
+            <p>{{item.activityStartTime | timeTrans(1)}}月</p>
+            <div class="line"></div>
+          </div>
+          {{item.goodsName}}
+        </div>-->
+      </div>
+      </van-swipe-item>
+    </van-swipe>
+
+    <div class="instrduce">
+      <div class="img"></div>
+      <div class="success_zhuce_tit">
+        <span class="left"></span>
+        <div>
+          <p class="first_tit">每晚为您呈现高品质的爵士乐</p>
+          <p class="first_tit first_titEn">— EXCELLENT LIVE JAZZ EVERY NIGHT —</p>
+        </div>
+        <span class="right"></span>
+      </div>
+
+      <div class="cal">
+        <p>
+          <span class="bg">{{curDate.getMonth()+1}}</span>
+          <span class="i">/</span>
+          <span class="bg">{{curDate.getDate()}}</span>
+          <span class="i"> — </span>
+          <span class="bg">{{lastDate.month}}</span>
+          <span class="i">/</span>
+          <span class="bg">{{lastDate.date}}</span>
+        </p>
+      </div>
+    </div>
+
+    <!--<div class="ban" v-for="(item,index) in goodsMainList"
          @click="$router.push({ name: 'activityGoods', params: { id:item.goodsId }})">
       <img v-lazy="comPath.imgPath+item.goodsImage" alt="">
       <div>
@@ -149,15 +290,15 @@
         </div>
         {{item.goodsName}}
       </div>
-    </div>
+    </div>-->
 
-    <div class="title">
+    <!--<div class="title">
       <p>推荐演出</p>
       <p>{{curDate.getMonth()+1}}<span>月</span>{{curDate.getDate()}}<span>日</span> — {{lastDate.month}}<span>月</span>{{lastDate.date}}<span>日</span></p>
-    </div>
+    </div>-->
 
     <div class="list">
-      <div class="card" v-for="(item,index) in goodsList"
+      <!--<div class="card" v-for="(item,index) in goodsList"
            @click="$router.push({ name: 'activityGoods', params: { id:item.goodsId }})">
         <div class="left">
           <p>{{item.activityStartTime | timeTrans(1) | EnMonthTrans}}.</p>
@@ -166,8 +307,22 @@
         <div class="con">
           <p v-for="(it,ind) in item.programList">{{it}}</p>
         </div>
-      </div>
+      </div>-->
 
+
+      <div class="ban" v-for="(item,index) in goodsList" :key="index"
+           @click="$router.push({ name: 'activityGoods', params: { id:item.goodsId }})">
+        <img v-lazy="comPath.imgPath+item.goodsImage" alt="">
+        <div>
+          <div class="calender">
+            <p>{{item.activityStartTime | timeTrans(2)}}</p>
+            <p>{{item.activityStartTime | timeTrans(1)}}</p>
+            <div class="line"></div>
+          </div>
+          {{item.programList | listSplit}}
+
+        </div>
+      </div>
 
       <div class="noData" v-if="noData">没有更多数据</div>
 
@@ -177,7 +332,7 @@
 
 <script>
   import '../common/dataFormate'
-  import {Toast, Icon, Cell, CellGroup} from 'vant';
+  import {Toast, Icon, Cell, CellGroup,Swipe, SwipeItem} from 'vant';
 
   export default {
     name: "club",
@@ -185,7 +340,9 @@
       [Toast.name]: Toast,
       [Icon.name]: Icon,
       [Cell.name]: Cell,
-      [CellGroup.name]: CellGroup
+      [CellGroup.name]: CellGroup,
+      [Swipe.name]: Swipe,
+      [SwipeItem.name]: SwipeItem
     },
     data() {
       return {
@@ -244,6 +401,10 @@
 
     },
     filters: {
+      listSplit(val,i){
+        if(!val) return
+        return val.toString().length>35?val.toString().substring(0,35)+'...' : val.toString()
+      },
       timeTrans(val,i) {
         if(val){
           let time = (new Date(val).Format("yyyy-MM-dd")).split('-')

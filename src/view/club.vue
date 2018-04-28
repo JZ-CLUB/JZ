@@ -47,7 +47,7 @@
         color: #252627;
         padding: 0.2rem 0;
         font-size: 0.18rem;
-        font-weight: 500;
+        font-weight: 600;
         p{
           line-height: 0.3rem;
           padding-left: 0.25rem;
@@ -221,6 +221,7 @@
         vertical-align:middle;
         overflow: hidden;
         margin-top: 0.15rem;
+        color: @wgray;
         .calender{
           color: @white;
           .line{

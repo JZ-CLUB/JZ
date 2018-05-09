@@ -1,17 +1,18 @@
 <style lang="less">
   @import "../../common/common";
+
   #myInfo_body {
     .myInfo_con_first {
       background: #181919;
       padding-bottom: 0.6rem;
-      .top{
+      .top {
         width: 7.5rem;
         height: 2.6rem;
         margin: 0 auto;
         background: url("../../images/myInfo_bg.jpg");
         background-size: cover;
         text-align: right;
-        span{
+        span {
           width: 0.42rem;
           height: 0.42rem;
           display: inline-block;
@@ -19,10 +20,10 @@
           background-size: cover;
         }
       }
-      .myInfo{
+      .myInfo {
         position: relative;
         padding-top: 1.35rem;
-        .headPic{
+        .headPic {
           width: 2.7rem;
           height: 2.7rem;
           background: #231815;
@@ -30,32 +31,32 @@
           position: absolute;
           top: 0%;
           left: 50%;
-          transform: translate(-50% ,-50%);
-          img{
+          transform: translate(-50%, -50%);
+          img {
             height: 1.3rem;
             margin: 0 auto;
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
           }
         }
-        .baseInfo{
+        .baseInfo {
           text-align: center;
           font-size: 0.20rem;
-          h2{
+          h2 {
             font-weight: normal;
             color: @white;
             font-size: 0.34rem;
             line-height: 0.9rem;
           }
-          p{
+          p {
             line-height: 0.4rem;
             color: @gray;
             display: flex;
             justify-content: center;
             align-items: center;
-            i{
+            i {
               margin-right: 0.1rem;
               width: 0.39rem;
               height: 0.3rem;
@@ -63,7 +64,7 @@
               background-size: cover;
             }
           }
-          .cardNum{
+          .cardNum {
             width: 5.2rem;
             height: 0.6rem;
             font-size: 0.28rem;
@@ -76,7 +77,7 @@
         }
       }
 
-      .Info_top{
+      .Info_top {
         padding-top: 0.7rem;
       }
       .myInfo_num {
@@ -88,7 +89,7 @@
           width: 50%;
           font-size: 0.28rem;
           color: #666666;
-          &:nth-child(1){
+          &:nth-child(1) {
             border-right: 0.01rem solid @gray;
           }
           li:nth-child(1) {
@@ -112,7 +113,7 @@
       background: #181919;
       .groupBox {
         background: #1a1a1a;
-        >div{
+        > div {
           display: flex;
           justify-content: space-between;
         }
@@ -152,40 +153,114 @@
         border: 0 !important;
       }
     }
+    .operate {
+      margin-top: 0.1rem;
+      background: #181919;
+      .item {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 0.9rem;
+        line-height: 0.9rem;
+        color: #989898;
+        font-size: 0.28rem;
+        &:last-child {
+          > p {
+            border-bottom: 0;
+          }
+
+        }
+        > span {
+          margin: 0 0.3rem;
+          width: 0.54rem;
+          height: 0.54rem;
+          background: url("../../images/myInfo_11.png") no-repeat center center;
+          background-size: cover;
+          &.quan {
+            background-image: url("../../images/myInfo_14.png");
+          }
+          &.shezhi {
+            background-image: url("../../images/myInfo_03.png");
+          }
+
+        }
+        > p {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-right: 0.3rem;
+          width: 6.36rem;
+          border-bottom: 1px solid #666767;
+          span:first-child {
+            width: 2rem;
+          }
+          span:last-child {
+            width: 0.18rem;
+            height: 0.32rem;
+            background: url("../../images/ar.png") no-repeat center center;
+            background-size: cover;
+          }
+        }
+      }
+    }
   }
 </style>
 <template>
   <div id="myInfo_body" v-if="load">
     <div class="myInfo_con_first">
       <div class="top">
-        <!--<span>
-
-        </span>-->
       </div>
       <div class="myInfo">
         <div class="headPic">
           <img src="../../images/myInfo_logo.png" alt="">
         </div>
-        <router-link to="/memberInfo">
-          <div class="baseInfo">
-            <h2>{{myInfo.memberTruename !== ''? myInfo.memberTruename :myInfo.memberName}}</h2>
-            <p><i></i>普通乐迷卡</p>
-            <!--<div class="cardNum">会员卡号 65371998</div>-->
-          </div>
-        </router-link>
+        <div class="baseInfo">
+          <h2>{{myInfo.memberTruename !== ''? myInfo.memberTruename :myInfo.memberName}}</h2>
+          <p><i></i>普通乐迷卡</p>
+          <!--<div class="cardNum">会员卡号 65371998</div>-->
+        </div>
       </div>
 
-        <div class="myInfo_num">
-          <ul class="">
-            <li>爵士豆</li>
-            <li>0</li>
-          </ul>
-          <ul class="">
-            <li>优惠券</li>
-            <li>0</li>
-          </ul>
-        </div>
+      <div class="myInfo_num">
+        <ul class="">
+          <li>优惠券</li>
+          <li>0</li>
+        </ul>
+        <ul class="">
+          <li>爵士豆</li>
+          <li>0</li>
+        </ul>
+      </div>
     </div>
+    <div class="operate">
+      <div class="item">
+        <span class="dou"></span>
+        <p>
+          <span>我的爵士豆</span>
+          <span></span>
+        </p>
+
+      </div>
+
+      <div class="item">
+        <span class="quan"></span>
+        <p>
+          <span>我的优惠券</span>
+          <span></span>
+        </p>
+
+      </div>
+      <router-link to="/memberInfo">
+        <div class="item">
+          <span class="shezhi"></span>
+          <p>
+            <span>设置</span>
+            <span></span>
+          </p>
+        </div>
+      </router-link>
+    </div>
+
   </div>
 </template>
 
@@ -194,11 +269,11 @@
   import {Row, Col, Icon, Cell, CellGroup, Toast} from 'vant';
 
   export default {
-    data () {
+    data() {
       return {
         load: false,
-        myInfo:{
-          memberName:'爵士之语'
+        myInfo: {
+          memberName: '爵士之语'
         }
       }
     },
@@ -211,12 +286,12 @@
       [Toast.name]: Toast
     },
     beforeCreate() {
-      Toast.loading({ mask: true,duration:0 });
+      Toast.loading({mask: true, duration: 0});
     },
     created() {
 
     },
-    beforeMount:function () {
+    beforeMount: function () {
       let vm = this
       sig(true).then(function () {
         vm.load = true
@@ -225,18 +300,18 @@
     },
     methods: {
       getMyInfo: function () {
-        let that=this
+        let that = this
         let data = {
           memberId: sessionStorage.getItem('memberId')
         }
         Ajax.post('target/memberapi/memberDetail', data)
           .then(function (response) {
-            if(response.status === 200){
+            if (response.status === 200) {
               let res = response.data
-              if(res.result===1){
+              if (res.result === 1) {
                 that.myInfo = response.data.data[0]
                 Toast.clear()
-              }else{
+              } else {
                 Toast(response.msg)
               }
             }

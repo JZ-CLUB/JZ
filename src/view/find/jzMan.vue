@@ -1,5 +1,6 @@
 <style lang="less" scoped>
   @import "../../common/common";
+
   #jzMan {
     .poSt {
       position: fixed;
@@ -7,7 +8,7 @@
       left: 0;
       z-index: 1000;
       background: #000000;
-      img{
+      img {
         width: 100%;
       }
       .sort {
@@ -37,24 +38,31 @@
           }
         }
         > div {
-          display: flex;
-          flex-flow: row wrap;
-          padding: 0.19rem;
           position: absolute;
           top: 0.68rem;
           right: 0;
-          background: rgb(0, 0, 0, 0.4);
+          height: 8.48rem;
+          background: rgba(0, 0, 0, 0.5);
+          div{
+            display: flex;
+            flex-flow: row wrap;
+            align-content: flex-start;
+            padding: 0.19rem;
+            background: #000000;
+          }
           p {
             width: 1.68rem;
             text-align: center;
+            height: 0.5rem;
             line-height: 0.5rem;
-            border: 0.02rem solid #F0C37A;
-            color: #F0C37A;
+            border: 0.02rem solid #828282;
+            color: #828282;
             font-size: 0.28rem;
             margin: 0.1rem 0.05rem;
             &.cur {
-              background: #F0C37A;
-              color: #1A1A1A;
+              background: #e9d08e;
+              color: #1a1a1a;
+              border: 0.02rem solid #e9d08e;
             }
           }
         }
@@ -64,13 +72,12 @@
       ol {
         li {
           padding: 0 0.3rem;
-          &:nth-child(odd)
-          {
-            background:#2c2c2c;
+          &:nth-child(odd) {
+            background: #2c2c2c;
           }
           a {
             display: block;
-            padding: 0.3rem 0rem 0.3rem 2.2rem;
+            padding: 0.3rem 0rem 0.3rem 2.4rem;
             color: @white;
             position: relative;
             &:visited {
@@ -79,8 +86,8 @@
             p {
               &.title {
                 font-size: 0.28rem;
-                line-height: 0.4rem;
-                height: 0.8rem;
+                line-height: 0.35rem;
+                height: 0.7rem;
                 word-break: break-all;
                 /*text-overflow: ellipsis;*/
                 display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
@@ -89,7 +96,7 @@
                 overflow: hidden; /** 隐藏超出的内容 **/
               }
               &.timeLong {
-                margin-top: 0.2rem;
+                margin-top: 0.1rem;
                 font-size: 0.2rem;
                 line-height: 0.2rem;
                 color: #B1ADA4;
@@ -104,11 +111,12 @@
                 }
               }
             }
-            img{
+            img {
               position: absolute;
               left: 0;
-              width: 1.34rem;
-              height: 1.34rem;
+              top: 0.11rem;
+              width: 1.38rem;
+              height: 1.38rem;
             }
             span {
               position: absolute;
@@ -117,8 +125,8 @@
               transform: translateY(-50%);
               &.num {
                 left: 1.5rem;
-                width: 0.9rem;
-                text-align: left;
+                width: 0.7rem;
+                text-align: center;
               }
               /*&.play {
                 width: 0.5rem;
@@ -139,19 +147,21 @@
 <template>
   <div id="jzMan">
     <div class="poSt">
-      <img src="../../images/goodsAct_bg_02.jpg" alt="">
+      <img src="../../images/clubBg.jpg" alt="">
       <div class="sort">
         <span @click="sort"><i></i>{{sortStr}}</span>
         <span @click="show=!show"><i></i>选集</span>
-        <div v-if="show">
-          <p
-            v-for="(item,index) in recordCount"
-            @click="selectWorks(index)" :class="{cur:act === index}">
-            {{index*20+1}}~{{index*20+20}}
-          </p>
-          <p @click="selectWorks(recordCount)">
-            {{recordCount*20+1}}~{{recordCount*20+floor}}
-          </p>
+        <div v-if="show" @click="show = false">
+          <div>
+            <p
+              v-for="(item,index) in recordCount"
+              @click="selectWorks(index)" :class="{cur:act === index}">
+              {{index*20+1}}~{{index*20+20}}
+            </p>
+            <p @click="selectWorks(recordCount)">
+              {{recordCount*20+1}}~{{recordCount*20+floor}}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -161,6 +171,7 @@
         <ol>
           <li v-for="(item,index) in list">
             <a :href="item.musicUrlId">
+              <img :src="item.pathImage" alt="">
               <span class="num" v-if="param.flag === 1">{{(index+1)+param.pageNo*20}}</span>
               <span class="num" v-if="param.flag === 2">{{(20-index)+param.pageNo*20}}</span>
               <p class="title">{{item.musicName}}</p>
@@ -261,7 +272,6 @@
       selectWorks(i) {
         let that = this
         if (that.act === i) {
-          console.log(222)
           that.show = false
           that.all = true
           that.act = -1

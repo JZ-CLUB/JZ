@@ -35,7 +35,7 @@
               margin: 0 4.16667%;
             }
             .cur{
-              color: #F0C37A;
+              color: #ffffff;
               border-bottom: 0.04rem solid #BE2C36;
 
             }
@@ -64,50 +64,31 @@
           text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
           font-size: 0.28rem;
           background: rgba(0, 0, 0, 0.6);
-          color: #F0C37A;
+          color: #ffffff;
           padding: 0 0.3rem;
           position: absolute;
           bottom: 0;
+          display: flex;
+          justify-content: space-between;
+          span:first-child{
+            width: 6rem;
+            text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
+          }
+          span:last-child{
+            font-size: 0.24rem;
+          }
         }
         .play {
           position: absolute;
           top: 50%;
           left: 50%;
-          width: 1.7rem;
-          height: 0.5rem;
+          width: 1.09rem;
+          height: 1.09rem;
+          background: url("../../images/playIcon.png") no-repeat center center;
           -webkit-transform: translate(-50%, -50%);
           -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-          > div {
-            height: 0.5rem;
-            background: rgba(128, 128, 128, 0.8);
-          }
-          .left {
-            width: 0.55rem;
-            border-bottom-left-radius: 0.5rem;
-            border-top-left-radius: 0.5rem;
-            float: left;
-            .jiao {
-              position: relative;
-              top: 50%;
-              left: 50%;
-              height: 0px;
-              width: 0px;
-              border-top: 0.095rem solid transparent;
-              border-right: 0.16rem solid #F0C37A;
-              border-bottom: 0.095rem solid transparent;
-              -webkit-transform: translate(-50%, -50%);
-              transform: translate(-50%, -50%);
-            }
-          }
-          .right {
-            width: 1.1rem;
-            float: right;
-            border-bottom-right-radius: 0.5rem;
-            border-top-right-radius: 0.5rem;
-            font-size: 0.24rem;
-            text-align: center;
-          }
+          background-size: cover;
         }
       }
     }
@@ -118,7 +99,7 @@
 <template>
   <div id="findDif">
     <div class="poSt">
-      <img src="../../images/goodsAct_bg_02.jpg" alt="">
+      <img src="../../images/clubBg.jpg" alt="">
       <div class="tab">
         <van-row class="tab-links">
           <van-col class="tabItem" span="2"> </van-col>

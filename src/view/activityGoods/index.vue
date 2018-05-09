@@ -240,7 +240,7 @@
       </van-goods-action>
 
       <van-sku
-        close-on-click-overlay="true"
+        :close-on-click-overlay="true"
         v-model="showCustomAction"
         stepper-title="数量"
         :sku="sku"
@@ -437,10 +437,10 @@
         Ajax.post('target/cartapi/addCart', data)
           .then(
             function (response) {
-              Toast.clear();
               if(response.data.result==1){
                 localStorage.setItem('cartIds',response.data.data[0].cartIds)
                 localStorage.setItem('goodsTitle',that.goods.title)
+                Toast.clear();
                 vue.$router.push({ name: 'toPay'})
               }else{
                 Toast(response.data.msg)

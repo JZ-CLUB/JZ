@@ -2,11 +2,31 @@
   .musicList {
     .cardBox {
       padding: 0 0.15rem;
+      .plays {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 1.09rem;
+        height: 1.09rem;
+        background: url("../../../images/playIcon.png") no-repeat center center;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        background-size: cover;
+        .time{
+          position: relative;
+          top: 1.1rem;
+          font-size: 0.24rem;
+          text-align: center!important;
+          color: #ffffff;
+        }
+      }
       .van-col-12 {
         margin: 0.2rem 0px 0 0;
         padding: 0 0.15rem;
         a{
-          color: #F0C37A;
+          color: #ffffff;
+          position: relative;
         }
         .cardImg {
           max-width: 100%;
@@ -15,6 +35,7 @@
           height: 3.3rem;
           overflow: hidden;
           text-align: right;
+          position: relative;
           img{
             height: 3.3rem;
             float: right;
@@ -22,10 +43,10 @@
         }
         .cardText {
           text-align: center;
-          padding-top: 0.1rem;
+          margin-top: 0.1rem;
           font-size: 0.2rem;
-          height: 0.8rem;
-          line-height: 0.4rem;
+          height: 0.7rem;
+          line-height: 0.35rem;
           word-break: break-all;
           text-overflow: ellipsis;
           display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
@@ -50,13 +71,9 @@
           <van-col v-for="(item,index) in it" :key="index" class="musicItem" span="24" v-if="index===0">
             <a :href="item.videoUrl">
               <img v-lazy="comPath.imgPath+item.pathImage" alt="">
-              <!--<div class="play">
-                <div class="left">
-                  <div class="jiao"></div>
-                </div>
-                &lt;!&ndash;<div class="right">03:09</div>&ndash;&gt;
-                &lt;!&ndash;<div class="right">{{item.time}}</div>&ndash;&gt;
-              </div>-->
+              <div class="plays">
+                <div class="time">03:09</div>
+              </div>
               <p>{{item.videoName}}</p>
             </a>
           </van-col>
@@ -64,7 +81,11 @@
             <a :href="item.videoUrl">
               <div class="cardImg">
                 <img  :src='comPath.imgPath+item.pathImage' alt="">
+                <div class="plays">
+                  <div class="time">03:09</div>
+                </div>
               </div>
+
               <p class="cardText">{{item.videoName}}</p>
             </a>
           </van-col>

@@ -1,5 +1,9 @@
 <style lang="less">
   @import "../common/common";
+  @font-face {
+    font-family: xinyalan;
+    src: url('../font/xinyalan.otf')
+  }
 .club{
   .van-swipe__indicators>i{
     background: none;
@@ -29,12 +33,9 @@
     }
     >div{
       width: 100%;
-      height: 0.9rem;
-      /*line-height: 0.9rem;*/
+      height: 0.6rem;
+      overflow: hidden;
       padding: 0 0.3rem 0 1.5rem;
-      position: absolute;
-      bottom: 0;
-      left: 0;
       font-size:0.28rem;
       background: -webkit-linear-gradient(left, rgba(240,195,122,0.74) , rgba(0,0,0,0.6), rgba(0,0,0,0.6)); /* Safari 5.1 - 6.0 */
       background: -o-linear-gradient(right, rgba(240,195,122,0.74) , rgba(0,0,0,0.6), rgba(0,0,0,0.6)); /* Opera 11.1 - 12.0 */
@@ -57,10 +58,10 @@
         }
         .line{
           position: absolute;
-          top: 0.15rem;
-          right: 0.45rem;
+          top: 0.1rem;
+          right: 0.5rem;
           width: 0.02rem;
-          height: 0.65rem;
+          height: 0.8rem;
           background: #2e2d2b;
           transform:rotate(45deg);
           -o-transform:rotate(45deg);
@@ -73,8 +74,8 @@
   .instrduce{
     padding: 0.6rem 0.4rem;
     .img{
-      width: 2.08rem;
-      height: 1.34rem;
+      width: 1.52rem;
+      height: 1.03rem;
       background: url("../images/logo.png") no-repeat center center;
       background-size: cover;
       margin: 0 auto;
@@ -110,6 +111,7 @@
       height: 0.86rem;
       text-align: center;
       padding-top: 0.3rem;
+      font-family: xinyalan;
       .bg{
         display: inline-block;
         width: 0.54rem;
@@ -171,7 +173,7 @@
           color: #252627;
           font-size: 0.36rem;
           &:first-child{
-            font-family: 'MicrosoftYaHei-Bold';
+            /*font-family: 'MicrosoftYaHei-Bold';*/
             font-size: 0.3rem;
             font-weight: bold;
           }
@@ -217,16 +219,17 @@
         position: relative;
         background: none;
         color: @white;
-        display: table-cell;
+        display: flex;
+        align-items: center;
+        height: 0.8rem;
         vertical-align:middle;
-        overflow: hidden;
-        margin-top: 0.15rem;
+        top: 0.15rem;
+        letter-spacing: 0.1rem;
         color: @wgray;
+        overflow: hidden;
         .calender{
           color: @white;
           .line{
-            top: 0.2rem;
-            right: 0.35rem;
             overflow: hidden;
             background: @white;
           }

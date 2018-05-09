@@ -237,8 +237,8 @@
       <div class="imgbox">
         <img
              :src="comPath.imgPath+codeImg" alt="">
-        <div>
-          二维码已失效
+        <div v-if="orderInfo.orderStateNum===70 || orderInfo.orderStateNum===80 || orderInfo.orderStateNum===0">
+          {{orderInfo.orderStateNum | ewmInfo}}
         </div>
       </div>
     </div>
@@ -448,7 +448,15 @@
       }
     },
     filters:{
-
+      ewmInfo(val,index){
+        let info=''
+        console.log(val)
+        if(val === 70){
+          info = '二维码已验证'
+        }else if(val === 80 || val === 80){
+          info = '二维码已失效'
+        }
+      }
     }
   }
 </script>

@@ -30,6 +30,18 @@
         debug: false
       };
 
+  function audioAutoPlay(id){
+    var audio = document.getElementById(id);
+    audio.play();
+    document.addEventListener("WeixinJSBridgeReady", function () {
+      audio.play();
+    }, false);
+    document.addEventListener('YixinJSBridgeReady', function() {
+      audio.play();
+    }, false);
+  }
+
+
   function Plugin( $context, options )
   {
 
@@ -56,7 +68,8 @@
     this.timer              = undefined;
 
     this.init();
-    this.play();
+    //console.log($("#audio"));
+    audioAutoPlay('audio');
   }
 
   Plugin.prototype = {

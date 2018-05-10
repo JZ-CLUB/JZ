@@ -2,9 +2,9 @@
   <div id="music" v-show="musicshow">
 
 
-    <div class='jAudio--player'>
+    <div class='jAudio--player' id="jAudio">
 
-      <audio autoplay></audio>
+      <audio autoplay id="audio"></audio>
 
       <div class='jAudio--ui'>
 
@@ -119,10 +119,24 @@
               //e.t.playlist[i].file = "http://audio.xmcdn.com/group18/M01/21/30/wKgJJVeF0OXTd52JACbG6HVeP8k020.m4a"
               e.t.playlist[i].thumb = e.comPath.imgPath+e.t.playlist[i].thumb;
               e.t.playlist[i].trackArtist = e.t.playlist[i].musicTime;
-              console.log(e.comPath.imgPath+e.t.playlist[i])
+              //console.log(e.comPath.imgPath+e.t.playlist[i])
             }
+
             $(".jAudio--player").jAudio(e.t);
+
+            function audioAutoPlay(id){
+              var audio = document.getElementById(id);
+              audio.play();
+              document.addEventListener("WeixinJSBridgeReady", function () {
+                audio.play();
+              }, false);
+              document.addEventListener('YixinJSBridgeReady', function() {
+                audio.play();
+              }, false);
+            }
+            audioAutoPlay('audio');
             Toast.clear();
+
           })
           .catch(function (error) {
             Toast('加载失败');

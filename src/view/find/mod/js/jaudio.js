@@ -171,13 +171,13 @@
       self.domAudio.src  = self.settings.playlist[index].file;
 
 
-      document.addEventListener("WeixinJSBridgeReady", function () {
+      /*document.addEventListener("WeixinJSBridgeReady", function () {
         if(self.currentState === "play" || self.settings.autoPlay=="true") self.play();
       }, false);
       document.addEventListener('YixinJSBridgeReady', function() {
         if(self.currentState === "play" || self.settings.autoPlay=="true") self.play();
-      }, false);
-
+      }, false);*/
+      if(self.currentState === "play" || self.settings.autoPlay=="true") self.play();
 
 
       self.highlightTrack();
@@ -211,12 +211,15 @@
       self.$domPlaylist.on("click", ".jAudio--playlist-item", function(e)
       {
         var item = $(this),
-            track = item.data("track"),
-            index = item.index();
-
-        if(self.currentTrack === index) return;
-
+          track = item.data("track"),
+          index = item.index();
+        // before
+        // if(self.currentTrack === index) return;
+        // after fix
+        if(self.currentTrack === index && self.currentState === "play") return;
         self.changeTrack(index);
+        // add
+        if(self.currentState === "pause") self.play();
       });
 
       // - volume's bar events

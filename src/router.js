@@ -159,7 +159,7 @@ const routes = [
     name: 'music',
     component: Music,
     meta: {
-      title: '每月歌单'
+      title: '音乐榜单'
     }
   },
   {

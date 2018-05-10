@@ -48,6 +48,7 @@
 
 
   </div>
+
 </template>
 <script>
 
@@ -117,6 +118,8 @@
               e.t.playlist[i].file = e.comPath.imgPath+e.t.playlist[i].file;
               //e.t.playlist[i].file = "http://audio.xmcdn.com/group18/M01/21/30/wKgJJVeF0OXTd52JACbG6HVeP8k020.m4a"
               e.t.playlist[i].thumb = e.comPath.imgPath+e.t.playlist[i].thumb;
+              e.t.playlist[i].trackArtist = e.t.playlist[i].musicTime;
+              console.log(e.comPath.imgPath+e.t.playlist[i])
             }
             $(".jAudio--player").jAudio(e.t);
             Toast.clear();
@@ -147,6 +150,8 @@
     color: #888;
     outline: none;
 
+
+
   }
 
 
@@ -172,7 +177,7 @@
     width: 100%;
     z-index: 1;
     position: relative;
-    padding: 100px 0.5rem 0.5rem 0.5rem;
+    padding: 100px 0.5rem 0.1rem 0.5rem;
     display: table;
   }
   .jAudio--player .jAudio--status-bar:after {
@@ -232,6 +237,7 @@
   .jAudio--player .jAudio--time {
     display: table;
     width: 100%;
+    color: #f0c37a;
   }
   .jAudio--player .jAudio--time:after {
     content: " ";
@@ -243,9 +249,10 @@
     width: 50%;
     display: block;
     float: left;
-    color: #ffffff;
+    color: #f0c37a;
     text-shadow: 0 1px 1px #000;
     font-size: 0.22rem;
+    font-weight: bold;
   }
   .jAudio--player .jAudio--time .jAudio--time-elapsed {
     text-align: left;
@@ -267,6 +274,7 @@
   .jAudio--player .jAudio--details p span {
     display: block;
     text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
+    font-size: 0.28rem;
   }
   .jAudio--player .jAudio--progress-bar {
     margin: 0.35rem 0;
@@ -349,6 +357,7 @@
   }
   .jAudio--player .jAudio--playlist .jAudio--playlist-item.active * {
     color: #ffffff;
+    font-size: 0.25rem;
   }
   /*.jAudio--player .jAudio--playlist .jAudio--playlist-item:not(.active):hover {*/
     /*background: #fafafa;*/
@@ -382,6 +391,26 @@
   .jAudio--player .jAudio--playlist .jAudio--playlist-meta-text p {
     font-size: 0.2rem;
   }
+  .jAudio--player .jAudio--playlist .jAudio--playlist-meta-text p.timeLong {
+    margin-top: 0.1rem;
+    font-size: 0.2rem;
+    line-height: 0.2rem;
+    color: #65625d;
+    font-weight: bold;
+    font-family: 'myFirstFont';
+  }
+
+  .jAudio--player .jAudio--playlist .jAudio--playlist-meta-text p i {
+    width: 0.2rem;
+    height: 0.2rem;
+    margin-right: 0.1rem;
+    /*margin-left: 0.1rem;*/
+    display: inline-block;
+    /*vertical-align: middle;*/
+    background: url("../../images/time.png") center center;
+    background-size: cover;
+  }
+
 
   .btn {
     position: relative;

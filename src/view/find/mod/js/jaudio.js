@@ -170,7 +170,15 @@
       self.currentTrack  = index;
       self.domAudio.src  = self.settings.playlist[index].file;
 
-      if(self.currentState === "play" || self.settings.autoPlay=="true") self.play();
+
+      document.addEventListener("WeixinJSBridgeReady", function () {
+        if(self.currentState === "play" || self.settings.autoPlay=="true") self.play();
+      }, false);
+      document.addEventListener('YixinJSBridgeReady', function() {
+        if(self.currentState === "play" || self.settings.autoPlay=="true") self.play();
+      }, false);
+
+
 
       self.highlightTrack();
 
@@ -301,7 +309,7 @@
           template += "<p>";
           template += "<span>" + trackName + "</span>";
           // template += " - ";
-          template += "<span>" + trackArtist + "</span>";
+          //template += "<span>" + trackArtist + "</span>";
           // template += "<span>" + trackAlbum + "</span>";
           template += "</p>";
 
@@ -331,7 +339,7 @@
 
         template += "<div class='jAudio--playlist-meta-text'>";
         template += "<h4>" + trackName + "</h4>";
-        template += "<p>" + trackArtist + "</p>";
+        template += "<p class='timeLong'><i></i>" + trackArtist + "</p>";
         template += "</div>";
         // template += "<div class='jAudio--playlist-track-duration'>" + trackDuration + "</div>";
         template += "</div>";

@@ -105,7 +105,7 @@
                   height: 0.2rem;
                   margin-right: 0.1rem;
                   display: inline-block;
-                  vertical-align: middle;
+                  /*vertical-align: middle;*/
                   background: url("../../images/time.png") center center;
                   background-size: cover;
                 }

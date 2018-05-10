@@ -72,7 +72,7 @@
           color: @yellow;
           text-align: center;
           padding-top: 0.1rem;
-          font-size: 0.12rem;
+          font-size:12px;
           height: 0.8rem;
           line-height: 0.35rem;
           word-break: break-all;

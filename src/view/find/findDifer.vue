@@ -57,6 +57,11 @@
           width: 7.5rem;
           height: 3.3rem;
         }
+        &.pd0{
+          img {
+            width: auto;
+          }
+        }
         p {
           width: 100%;
           height: 0.8rem;

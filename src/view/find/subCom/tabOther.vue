@@ -1,7 +1,9 @@
 <style lang="less" scoped>
   .musicList {
     .cardBox {
-      padding: 0 0.15rem;
+      .pd15{
+        padding: 0 0.15rem;
+      }
       .plays {
         position: absolute;
         top: 50%;
@@ -68,27 +70,30 @@
     >
       <div class="itemFive" v-for="(it,ind) in musicList" :key="ind">
         <van-row class="cardBox" >
-          <van-col v-for="(item,index) in it" :key="index" class="musicItem" span="24" v-if="index===0">
+          <van-col v-for="(item,index) in it" :key="index" class="musicItem pd0" span="24" v-if="index===0">
             <a :href="item.videoUrl">
               <img v-lazy="comPath.imgPath+item.pathImage" alt="">
-              <div class="plays">
+              <!--<div class="plays">
                 <div class="time">03:09</div>
-              </div>
+              </div>-->
               <p>{{item.videoName}}</p>
             </a>
           </van-col>
-          <van-col v-for="(item,index) in it" :key="index" span="12" v-if="index!==0">
-            <a :href="item.videoUrl">
-              <div class="cardImg">
-                <img  :src='comPath.imgPath+item.pathImage' alt="">
-                <div class="plays">
-                  <div class="time">03:09</div>
+          <div class="pd15">
+            <van-col v-for="(item,index) in it" :key="index" span="12" v-if="index!==0">
+              <a :href="item.videoUrl">
+                <div class="cardImg">
+                  <img  :src='comPath.imgPath+item.pathImage' alt="">
+                  <!--<div class="plays">
+                    <div class="time">03:09</div>
+                  </div>-->
                 </div>
-              </div>
 
-              <p class="cardText">{{item.videoName}}</p>
-            </a>
-          </van-col>
+                <p class="cardText">{{item.videoName}}</p>
+              </a>
+            </van-col>
+          </div>
+
         </van-row>
       </div>
     </van-list>

@@ -30,7 +30,7 @@
         <span>查看我的活动</span>
       </router-link>-->
       <router-link to="/">
-        <span>返回活动首页</span>
+        <span>查看最新活动</span>
       </router-link>
     </div>
   </div>

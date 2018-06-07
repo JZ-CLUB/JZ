@@ -216,6 +216,12 @@
       <p class="subTitle">{{orderGoodsList.specInfo}}数量:{{orderGoodsList.goodsNum}}</p>
     </div>
 
+    <van-cell-group class="draftBox">
+      <van-field :value="orderInfo.draft" disabled />
+    </van-cell-group>
+
+
+
 
     <div class="tips">
       【注】如有任何票务疑问，请联系JZ票务负责人 XXX ，电话：13011111111
@@ -249,7 +255,7 @@
 <script>
   import '../../common/dataFormate'
   import {
-    Cell, CellGroup, Toast, Card, Panel, Button, Dialog
+    Cell, CellGroup, Toast, Card, Panel, Button, Dialog,Field
   } from 'vant';
 
   export default {
@@ -260,7 +266,8 @@
       [Card.name]: Card,
       [Panel.name]: Panel,
       [Button.name]: Button,
-      [Dialog.name]: Dialog
+      [Dialog.name]: Dialog,
+      [Field.name]: Field
     },
     data() {
       return {
@@ -329,7 +336,8 @@
                 orderSn: res.data[0].orderSn,
                 paySn: res.data[0].paySn,
                 orderTotalPrice: res.data[0].orderTotalPrice,
-                orderStateNum: res.data[0].orderState
+                orderStateNum: res.data[0].orderState,
+                draft:'备注：'+res.data[0].deliverExplain
               }
               that.addressInfo = res.data[0].address
               that.orderGoodsList = res.data[0].orderGoodsList[0]

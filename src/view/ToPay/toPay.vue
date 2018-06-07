@@ -130,21 +130,6 @@
         color: #bf2b39;
       }
     }
-    .draftBox{
-      background: #1a1a1a;
-      margin-bottom: 0.15rem;
-      .van-cell{
-        background: #1a1a1a;
-        .van-field__control{
-          background: #1a1a1a;
-          color: #666666;
-        }
-      }
-      &::after{
-        border: none;
-        border-width: 0;
-      }
-    }
   }
 </style>
 <template>

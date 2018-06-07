@@ -7,32 +7,33 @@
     position: relative;
     /*background: url("../../images/goodsAct_bg_02.jpg") no-repeat center;*/
     /*background-size: cover;*/
+    overflow-y: hidden;
     img{
       display: flex;
       justify-content: center;
       max-width: 100%;
-      height: 4.18rem;
+      //height: 4.18rem;
       margin: 0 auto;
     }
     >div{
       position: absolute;
       bottom: 0;
       width: 100%;
-      height: 0.9rem;
+      //height: 0.9rem;
       background: rgba(0,0,0,0.4);
       color: #FFFFFF;
-      font-size: 0.32rem;
-      padding: 0 0.4rem;
-      line-height: 0.9rem;
+      font-size: 0.3rem;
+      padding: 0.2rem 0.4rem;
+      line-height: 0.35rem;
       display: flex;
       justify-content: space-between;
       .title{
         max-width: 5rem;
-        text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
+        //text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
       }
       .price{
         color: #F93B48;
-        font-size: 0.46rem;
+        font-size: 0.3rem;
         .pre{
           font-size: 0.24rem;
         }
@@ -66,6 +67,25 @@
     color: @white;
     img{
       width: 100%;
+    }
+    .gtitle{
+      width: 5.3rem;
+      float: left;
+      .goodsName{
+        font-size: 0.24rem;;
+      }
+    }
+    .gprice{
+      float: left;
+      color: #F93B48;
+      font-size: 0.3rem;
+      .pre{
+        font-size: 0.24rem;
+      }
+      .text{
+        font-size: 0.24rem;
+        color: #ffffff;
+      }
     }
     .tips{
       color: @red;
@@ -217,10 +237,20 @@
   <div style="background: #1a1a1a">
     <div class="goodTitle">
       <img :src="comPath.imgPath+imgBan" alt="">
-      <div><p class="title">{{goods.title}}</p> <p class="price"><span class="pre">¥</span> {{priceArr | priceMin}} <span class="text">起</span></p> </div>
+
     </div>
     <div class="goods">
-      <div class="intru">演出介绍</div>
+      <div >
+        <div class="gtitle">
+          <p class="title">{{goods.title}}</p>
+          <p class="goodsName">---{{goodsName}}</p>
+        </div>
+
+        <div class="gprice">
+          <p class="price"><span class="pre">¥</span> {{priceArr | priceMin}} <span class="text">起</span></p>
+        </div>
+      </div>
+      <div class="intru clear">演出介绍</div>
       <div>
         <div v-html="goodsBody">
         </div>

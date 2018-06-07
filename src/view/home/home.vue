@@ -70,16 +70,16 @@
         }
         .cardText {
           color: @yellow;
-          text-align: center;
+          text-align: left;
           padding-top: 0.1rem;
           font-size:12px;
-          height: 0.8rem;
-          line-height: 0.35rem;
+          height: 0.4rem;
+          line-height: 0.4rem;
           word-break: break-all;
           text-overflow: ellipsis;
           display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
           -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
-          -webkit-line-clamp: 2; /** 显示的行数 **/
+          -webkit-line-clamp: 1; /** 显示的行数 **/
           overflow: hidden; /** 隐藏超出的内容 **/
         }
       }
@@ -108,6 +108,7 @@
               <img class="cardImg" v-lazy=comPath.imgPath+item.goodsImage alt="">
             </div>
             <p class="cardText">{{item.goodsName}}</p>
+            <p class="cardText">{{item.activityStartTime | dateFormate}}-{{item.activityEndTime | dateFormate}}</p>
           </div>
         </van-col>
       </van-row>
@@ -117,6 +118,7 @@
 
 <script>
   import {sig} from '../../common/weixin'
+  import { Format } from '../../common/dataFormate'
   import {
     Search, Toast, Swipe, SwipeItem, Row, Col
   } from 'vant';
@@ -153,8 +155,10 @@
         load: false,
       };
     },
-    beforeMount:function () {
+    created:function () {
       let vm = this
+      vm.load = true
+      //vm.recommend()
       sig(true).then(function () {
         vm.load = true
         vm.recommend()
@@ -234,6 +238,11 @@
               // Toast('加载失败error')
             });
         }
+      }
+    },
+    filters:{
+      dateFormate(val){
+        return new Date(val).Format("yyyy.MM.dd")
       }
     }
   };

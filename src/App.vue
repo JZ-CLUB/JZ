@@ -5,19 +5,19 @@
 </template>
 
 <style>
-  @font-face
+  /*@font-face
   {
     font-family: myFirstFont;
     src: url('font/dongqing.otf')
-  }
+  }*/
   html{
     height: 100%;
   }
   body {
     margin:0 auto;
     height: 100%;
-  font-family:myFirstFont;
-  /*font-family:'微软雅黑';*/
+  /*font-family:myFirstFont;*/
+  font-family:'Microsoft Yahei';
   font-size: 16px;
   color:#f0c37a;
   background-color: #000000;

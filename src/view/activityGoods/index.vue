@@ -216,7 +216,6 @@
 <template>
   <div style="background: #1a1a1a">
     <div class="goodTitle">
-      <!--<img src="../../images/detailBan.jpg" alt="">-->
       <img :src="comPath.imgPath+imgBan" alt="">
       <div><p class="title">{{goods.title}}</p> <p class="price"><span class="pre">¥</span> {{priceArr | priceMin}} <span class="text">起</span></p> </div>
     </div>
@@ -375,8 +374,11 @@
       };
     },
     created: function() {
+      let that=this
       Toast.loading({mask: true, duration: 0});
-      this.send(this)
+      sig(true).then(function () {
+        that.send(that)
+      })
     },
     computed:{
     },
@@ -386,9 +388,7 @@
       },
       showShu() {
         let that = this
-        sig(true).then(function () {
-          that.showCustomAction= true;
-        })
+        that.showCustomAction= true;
       },
       handleBuyClicked(e){
         Toast.loading({mask: true, duration: 0});
@@ -432,14 +432,13 @@
           specId:specId,
           count:e.selectedNum
         };
-
-        // console.log(data);
         Ajax.post('target/cartapi/addCart', data)
           .then(
             function (response) {
               if(response.data.result==1){
                 localStorage.setItem('cartIds',response.data.data[0].cartIds)
                 localStorage.setItem('goodsTitle',that.goods.title)
+                localStorage.setItem('imgBan',that.imgBan)
                 Toast.clear();
                 vue.$router.push({ name: 'toPay'})
               }else{

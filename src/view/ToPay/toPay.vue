@@ -130,6 +130,21 @@
         color: #bf2b39;
       }
     }
+    .draftBox{
+      background: #1a1a1a;
+      margin-bottom: 0.15rem;
+      .van-cell{
+        background: #1a1a1a;
+        .van-field__control{
+          background: #1a1a1a;
+          color: #666666;
+        }
+      }
+      &::after{
+        border: none;
+        border-width: 0;
+      }
+    }
   }
 </style>
 <template>
@@ -159,7 +174,7 @@
     <div class="itemInfo">
       <div class="goodDetail">
         <div class="img">
-          <img src="../../images/detailBan.jpg" alt="">
+          <img :src="comPath.imgPath+imgBan" alt="">
         </div>
         <div class="con">
           <p>{{goodsTitle}}</p>
@@ -172,6 +187,10 @@
         <van-cell title="购买数量" :value="tickNum" />
       </van-cell-group>
     </div>
+
+    <van-cell-group class="draftBox">
+      <van-field v-model="draft" placeholder="请输入备注（选填）" />
+    </van-cell-group>
 
     <div class="tips">
       <p @click="show=true">点击阅读【购票须知】</p>
@@ -204,7 +223,7 @@
 </template>
 
 <script>
-  import {AddressList,Toast,Cell,CellGroup,Icon,SubmitBar,Popup} from 'vant';
+  import {AddressList,Toast,Cell,CellGroup,Icon,SubmitBar,Popup,Field} from 'vant';
 
   export default {
     components: {
@@ -214,10 +233,14 @@
       [CellGroup.name]: CellGroup,
       [Icon.name]: Icon,
       [SubmitBar.name]: SubmitBar,
-      [Popup.name]: Popup
+      [Popup.name]: Popup,
+      [Field.name]:Field
     },
     data() {
       return {
+        comPath: PublicPath,
+        imgBan:localStorage.getItem('imgBan'),
+        draft:'',
         flag: 0,
         chosenAddressId: '1',
         list:'',
@@ -278,7 +301,8 @@
           cartIds:localStorage.getItem('cartIds'),
           addressId:that.selectAddress.addressId,
           memberid:sessionStorage.getItem('memberId'),
-          paytype:1
+          paytype:1,
+          deliverExplain:that.draft
         }
         Ajax.post('target/orderapi/saveorder',data)
           .then(function (response) {

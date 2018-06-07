@@ -3,10 +3,6 @@
 
   #jzMan {
     .poSt {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1000;
       background: #000000;
       img {
         width: 100%;
@@ -43,6 +39,7 @@
           right: 0;
           height: 8.48rem;
           background: rgba(0, 0, 0, 0.5);
+          z-index: 1;
           div{
             display: flex;
             flex-flow: row wrap;
@@ -98,14 +95,14 @@
               &.timeLong {
                 margin-top: 0.1rem;
                 font-size: 0.2rem;
-                line-height: 0.2rem;
+                line-height: 0.24rem;
                 color: #B1ADA4;
                 i {
                   width: 0.2rem;
                   height: 0.2rem;
                   margin-right: 0.1rem;
                   display: inline-block;
-                  /*vertical-align: middle;*/
+                  vertical-align: middle;
                   background: url("../../images/time.png") center center;
                   background-size: cover;
                 }
@@ -146,25 +143,7 @@
 
 <template>
   <div id="jzMan">
-    <div class="poSt">
-      <img src="../../images/clubBg.jpg" alt="">
-      <div class="sort">
-        <span @click="sort"><i></i>{{sortStr}}</span>
-        <span @click="show=!show"><i></i>选集</span>
-        <div v-if="show" @click="show = false">
-          <div>
-            <p
-              v-for="(item,index) in recordCount"
-              @click="selectWorks(index)" :class="{cur:act === index}">
-              {{index*20+1}}~{{index*20+20}}
-            </p>
-            <p @click="selectWorks(recordCount)">
-              {{recordCount*20+1}}~{{recordCount*20+floor}}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <div v-if="!all" class="jzListBox">
       <div style="height: 4.96rem;"></div>
       <div class="list">
@@ -184,7 +163,25 @@
     </div>
 
     <scroller v-if="all" :on-infinite="refresh" :on-triggerPullToRefresh="aa" ref="my_scroller" class="jzListBox">
-      <div style="height: 4.96rem;"></div>
+      <div class="poSt">
+        <img src="../../images/clubBg.jpg" alt="">
+        <div class="sort">
+          <span @click="sort"><i></i>{{sortStr}}</span>
+          <span @click="show=!show"><i></i>选集</span>
+          <div v-if="show" @click="show = false">
+            <div>
+              <p
+                v-for="(item,index) in recordCount"
+                @click="selectWorks(index)" :class="{cur:act === index}">
+                {{index*20+1}}~{{index*20+20}}
+              </p>
+              <p @click="selectWorks(recordCount)">
+                {{recordCount*20+1}}~{{recordCount*20+floor}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="list">
         <ol>
           <li v-for="(item,index) in items">
@@ -203,12 +200,16 @@
 </template>
 
 <script>
+  import _ from 'lodash'
   import {
     Toast
   } from 'vant';
 
   export default {
     name: "jz-man",
+    computed:{
+
+    },
     data() {
       return {
         imageURL: 'https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg',

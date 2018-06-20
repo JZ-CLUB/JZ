@@ -243,7 +243,7 @@
       <div >
         <div class="gtitle">
           <p class="title">{{goods.title}}</p>
-          <p class="goodsName">---{{goodsName}}</p>
+          <p class="goodsName">{{goodsSubtitle}}</p>
         </div>
 
         <div class="gprice">
@@ -406,6 +406,7 @@
     created: function() {
       let that=this
       Toast.loading({mask: true, duration: 0});
+      //that.send(that)
       sig(true).then(function () {
         that.send(that)
       })

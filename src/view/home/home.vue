@@ -139,8 +139,8 @@
         activityList: [],
         disabled: false,
         sendData: {
-          searchType: 'allSearch',
-          keyword: '',
+          searchType: 'gcIdSearch',
+          keyword: '214,215,216,217',
           pageNo: 0,
           brandId: '',
           areaId: '',

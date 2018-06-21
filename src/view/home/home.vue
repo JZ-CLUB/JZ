@@ -23,7 +23,7 @@
       height: 4.18rem;
       /*position: relative;*/
       img {
-        /*max-width: 100%;*/
+        max-width: 100%;
         height: 4.18rem;
         margin: 0 auto;
       }
@@ -139,8 +139,8 @@
         activityList: [],
         disabled: false,
         sendData: {
-          searchType: 'gcIdSearch',
-          keyword: '214,215,216,217',
+          searchType: 'allSearch',
+          keyword: '',
           pageNo: 0,
           brandId: '',
           areaId: '',

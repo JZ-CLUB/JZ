@@ -155,7 +155,6 @@
     }
     .operate {
       margin-top: 0.1rem;
-      background: #181919;
       .item {
         display: flex;
         justify-content: flex-start;
@@ -164,11 +163,14 @@
         line-height: 0.9rem;
         color: #989898;
         font-size: 0.28rem;
+        background: #181919;
         &:last-child {
+          margin-top: 0.1rem;
+        }
+        &:last-child ,&:nth-child(2){
           > p {
             border-bottom: 0;
           }
-
         }
         > span {
           margin: 0 0.3rem;
@@ -190,7 +192,7 @@
           align-items: center;
           padding-right: 0.3rem;
           width: 6.36rem;
-          border-bottom: 1px solid #666767;
+          border-bottom: 1px solid #666666;
           span:first-child {
             width: 2rem;
           }

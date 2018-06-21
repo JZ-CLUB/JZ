@@ -217,7 +217,7 @@
     </div>
 
     <van-cell-group class="draftBox">
-      <van-field :value="orderInfo.draft" disabled />
+      <van-field v-if="orderInfo.draft" :value="orderInfo.draft" disabled />
     </van-cell-group>
 
 
@@ -337,7 +337,7 @@
                 paySn: res.data[0].paySn,
                 orderTotalPrice: res.data[0].orderTotalPrice,
                 orderStateNum: res.data[0].orderState,
-                draft:'备注：'+res.data[0].deliverExplain
+                draft:(res.data[0].deliverExplain? ('备注：'+ res.data[0].deliverExplain): false)
               }
               that.addressInfo = res.data[0].address
               that.orderGoodsList = res.data[0].orderGoodsList[0]

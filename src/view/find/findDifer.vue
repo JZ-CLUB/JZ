@@ -1,10 +1,10 @@
 <style lang="less">
   #findDif {
     .poSt {
-      position: fixed;
+      /*position: fixed;
       top: 0;
       left: 0;
-      z-index: 1000;
+      z-index: 1000;*/
       background: #0E0E0E;
       img{
         width: 100%;
@@ -59,7 +59,7 @@
         }
         &.pd0{
           img {
-            width: auto;
+            /*width: auto;*/
           }
         }
         p {
@@ -119,7 +119,7 @@
       </div>
     </div>
     <div class="">
-      <div style="height: 4.96rem;"></div>
+      <!--<div style="height: 4.96rem;"></div>-->
       <keep-alive>
         <div :is="currentTab"></div>
       </keep-alive>

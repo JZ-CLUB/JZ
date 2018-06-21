@@ -13,7 +13,7 @@
       <div class="musicItem" v-for="(item,index) in musicList" :key="index">
         <a :href="item.videoUrl">
           <img v-lazy="comPath.imgPath+item.pathImage" alt="">
-          <!--<div class="play"></div>-->
+          <div class="play"></div>
           <p>
             <span>{{item.videoName}}</span>
             <!--<span>03:09</span>-->

@@ -73,9 +73,9 @@
           <van-col v-for="(item,index) in it" :key="index" class="musicItem pd0" span="24" v-if="index===0">
             <a :href="item.videoUrl">
               <img v-lazy="comPath.imgPath+item.pathImage" alt="">
-              <!--<div class="plays">
-                <div class="time">03:09</div>
-              </div>-->
+              <div class="plays">
+                <!--<div class="time">03:09</div>-->
+              </div>
               <p>{{item.videoName}}</p>
             </a>
           </van-col>
@@ -84,9 +84,9 @@
               <a :href="item.videoUrl">
                 <div class="cardImg">
                   <img  :src='comPath.imgPath+item.pathImage' alt="">
-                  <!--<div class="plays">
-                    <div class="time">03:09</div>
-                  </div>-->
+                  <div class="plays">
+                    <!--<div class="time">03:09</div>-->
+                  </div>
                 </div>
 
                 <p class="cardText">{{item.videoName}}</p>

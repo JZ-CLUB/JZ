@@ -183,12 +183,26 @@
     <van-popup class="showDiv" v-model="show" position="top" :overlay="true">
       <h2 class="showDiv__tit">购票须知</h2>
       <p>【购票须知】</p>
-      <p class="showDiv__con">一、售出门票当日有效，一张门票只可入园一次，副劵自行撕
-        毁即视无效。</p>
-      <p class="showDiv__con">二、售出门票概不退换，门票遗失，自行负责。</p>
-      <p class="showDiv__con">三、门票对园区内需另行付费的项目无效，门票可作为商业发
-        票及报销凭证使用。</p>
-      <p class="showDiv__con">四、本门票最终解释权······</p>
+
+      <div v-if="gcId==='213'">
+        <p class="showDiv__con">一、所有网上购票观众携带购票二维码到前台进行验证，验证通过后入场。门票一经出售，概不退换（因不可抗力导致的演出推移、延时或取消除外，主办方也将提前通知）
+          毁即视无效。</p>
+        <p class="showDiv__con">二、现场具体座位由前台工作人员进行安排，观众由服务人员引领至相应座位入座。</p>
+        <p class="showDiv__con">三、因场地座位有限，在座位空余情况下，会有拼桌现象，敬请谅解。</p>
+        <p class="showDiv__con">四、JZ Club提供餐饮服务，入场后即可点餐。谢绝自带食品与酒水进入场地。</p>
+        <p class="showDiv__con">五、门票发票须演出当日凭桌卡开具。</p>
+      </div>
+
+
+      <div v-else>
+        <p class="showDiv__con">一、请在指定购票渠道购票，否则出现不良后果如假票等，由购票者自行承担。门票一经出售，概不退换（因不可抗力导致的演出推移、延时或取消除外，主办方也将提前通知）。</p>
+        <p class="showDiv__con">二、每人一票，儿童130cm以下可免票入场。进门一次有效，无副券作废，请观众着装整洁，服从现场工作人员管理，依次入场。</p>
+        <p class="showDiv__con">三、请勿在条码及其周围1厘米内涂写、折叠、损坏，否则造成条码无法识别而不能入场，由购票者自行承担责任。</p>
+        <p class="showDiv__con">四、请自觉接受安全检查。严禁携带枪支、弹药、管制刀具等违禁物品；严禁携带打火机等易燃易爆物品；严禁携带液态物品入场；严禁携带任何酒水饮料入场。</p>
+        <p class="showDiv__con">五、以上规定如与具体活动发生冲突时，以活动要求为准。</p>
+        <p class="showDiv__con">六、任何购买、持有或使用门票的人均被认为已经阅读、理解并接受了以上条款。</p>
+      </div>
+
     </van-popup>
 
     <van-submit-bar  v-if="flag === 0 "
@@ -241,6 +255,7 @@
         totalPrice:0,
         goodsTitle:localStorage.getItem('goodsTitle'),
         show: false,
+        gcId:'215'
       }
     },
     created() {
@@ -259,6 +274,7 @@
           .then(function (response) {
             let res=response.data;
             if(res.result==='1'){
+              that.gcId=res.gcId
               that.totalPrice = Number(res.goodsPrice)*100*Number(res.goodsNum)
               that.tickNum = res.goodsNum
 

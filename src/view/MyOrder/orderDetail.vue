@@ -224,7 +224,7 @@
 
 
     <div class="tips">
-      【注】如有任何票务疑问，请联系JZ票务负责人 XXX ，电话：13011111111
+      <!--【注】如有任何票务疑问，请联系JZ票务负责人 XXX ，电话：13011111111-->
     </div>
 
     <van-cell class="totalPrice" :value="'¥'+ orderInfo.orderTotalPrice ">
